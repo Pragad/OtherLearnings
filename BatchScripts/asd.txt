@@ -1,0 +1,59 @@
+"dir" 
+ Volume in drive C is OSDisk
+ Volume Serial Number is 504C-1A5A
+
+ Directory of C:\Pragadheesh\DEV
+
+12/17/2013  12:54 PM    <DIR>          .
+12/17/2013  12:54 PM    <DIR>          ..
+12/17/2013  12:54 PM                 8 asd.txt
+11/22/2013  02:53 PM    <DIR>          Cpp
+08/14/2013  12:16 AM    <DIR>          GIT
+12/17/2013  12:54 PM               240 test.bat
+12/17/2013  12:53 PM               235 test.bat~
+               3 File(s)            483 bytes
+               4 Dir(s)  22,205,685,760 bytes free
+ Volume in drive C is OSDisk
+ Volume Serial Number is 504C-1A5A
+
+ Directory of C:\Pragadheesh\DEV
+
+12/17/2013  12:54 PM    <DIR>          .
+12/17/2013  12:54 PM    <DIR>          ..
+12/17/2013  12:54 PM               531 asd.txt
+11/22/2013  02:53 PM    <DIR>          Cpp
+08/14/2013  12:16 AM    <DIR>          GIT
+12/17/2013  12:54 PM               240 test.bat
+12/17/2013  12:53 PM               235 test.bat~
+               3 File(s)          1,006 bytes
+               4 Dir(s)  22,205,685,760 bytes free
+ Volume in drive C is OSDisk
+ Volume Serial Number is 504C-1A5A
+
+ Directory of C:\Pragadheesh\DEV
+
+12/17/2013  12:54 PM    <DIR>          .
+12/17/2013  12:54 PM    <DIR>          ..
+12/17/2013  12:54 PM             1,054 asd.txt
+11/22/2013  02:53 PM    <DIR>          Cpp
+08/14/2013  12:16 AM    <DIR>          GIT
+12/17/2013  12:54 PM               240 test.bat
+12/17/2013  12:53 PM               235 test.bat~
+               3 File(s)          1,529 bytes
+               4 Dir(s)  22,205,685,760 bytes free
+'dir "*.txt"' 
+ Volume in drive C is OSDisk
+ Volume Serial Number is 504C-1A5A
+
+ Directory of C:\Pragadheesh\DEV
+
+12/17/2013  12:54 PM             1,593 asd.txt
+               1 File(s)          1,593 bytes
+               0 Dir(s)  22,205,685,760 bytes free
+dir '"*.pdf"' 
+ Volume in drive C is OSDisk
+ Volume Serial Number is 504C-1A5A
+
+ Directory of C:\Pragadheesh\DEV
+
+File Not Found

@@ -1,0 +1,8 @@
+C:\PRAGADHEESH\DEV> dir *.* /b
+asd.txt
+Cpp
+ddir.bat
+GIT
+output.txt
+test.bat
+test.bat~

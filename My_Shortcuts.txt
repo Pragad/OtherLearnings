@@ -1,0 +1,951 @@
+CyclSVL server:
+
+End of line: ctrl + e
+Beginning of line: ctrl + a
+Move by a word
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+VIM:
+
+VIM MACRO to Put all function headers at the top of a file
+    makyyggP`a]] 
+
+Find which VIMRC file is loaded
+:echo $MYVIMRC
+
+redo -> ctrl + r
+set nu;
+set nonu
+how to open a file that is p4 opened in a faster way than selecting the file path
+see column position in vim
+
+INSERT MODE
+    up 
+    down
+    left 
+    right
+
+Go to changed line in vim (with perforce dir) instead of finding the line number and going there
+
+Correcting messed up indentation at one go
+stackoverflow.com/questions/506075/how-do-i-fix-the-indentation-of-an-entire-file-in-vi
+
+Delete Char:
+x
+X
+
+[m: - Go to top of a function
+% - go to matching paranthasis
+If you want to yank everything except the { use yi{ (or yi}). If you to include the curly braces use ya{ (or ya}).
+
+The i and a modifiers mean in and all. 
+
+Highlight all occurances of a word
+Find a word; find next; find previous
+Split screen
+Copy past a word
+Replace a word by another word
+See the name of the file and the name of the function
+
+Recursively look for files with a specific extension:   
+find $directory -type f -name "*.in"
+
+ctrl+f
+ctrl+b
+
+vimdiff
+Ctrl+w v - open side by side view
+Change between them:
+
+Ctrl+w h or l
+
+indentation / replace tab with spaces
+
+
+Beginning of line:
+    0
+    
+Select multiple lines from middle and indent all of them
+
+G - goto end of a file
+moving around in Vim
+http://vim.wikia.com/wiki/All_the_right_moves
+
+find and replace
+
+e - end of word1G
+
+b - beginning of word
+
+yw: yank a word
+
+vwwwwy
+viwp - 
+
+viwy AND viwp
+
+REMOVE HIGHLIGHT AFTER SEARCH
+
+ctrl - d - SHIFT TAB / UNINDENT
+> to indent in visual mode
+
+
+To clear the last used search pattern:
+ :let @/ = ""
+
+browse: old
+
+"+y for yanking (copying) and "+p for pasting
+
+:browse old
+
+In normal mode, move the cursor to any word. Press * to search forwards for the next occurrence of that word, or press # to search backwards.
+
+Using * (also <kMultiply>, <S-LeftMouse>) or # (also <S-RightMouse>) searches for the exact word at the cursor (searching for rain would not find rainbow).
+
+Use g* or g# if you don't want to search for the exact word. 
+
+
+:vsp filename or :vs filename for a vertical split
+
+Ctrl-W s for horizontal splitting
+
+Ctrl-W v for vertical splitting
+
+Ctrl-w q to close one
+
+I'm assuming you mean from the command line. From vim --help:
+
+-o[N]                Open N windows (default: one for each file)
+-O[N]                Like -o but split vertically
+
+So type this to open files split horizontally, for example:
+
+vim -o file1.txt file2.txt file3.txt
+
+:e complete_file_path
+
+# - find previous occurance of text under cursor
+If you had:
+
+delete until exclamation point!
+
+And the cursor was at the first space and you typed df!, you would get:
+
+delete
+
+Also dtc. This will delete upto but not including c. Using dt! on the same example above would give you:
+
+delete!
+
+Just about any "motion" can be used for the d, c, y and similar commands
+
+just do :e ctrl+r% then backspace over the filename, and press enter.
+:Sex
+
+MOVEMENT:
+w W
+e E
+b B
+ge - goto end of previous word
+gE - goto end of previous word spearated by whitespace
+f/ - takes us to the very next slash
+F - goes backwards
+; - repeat the actions using ; i.e. repeat the above f/ action.
+t/ - like f but TILL the character; can't repeat using ; as above. instead have to use l+;
+T - goes backwards
+
+ge, f, t, ;
+    t - t with ; doesnot work. So use l + ; 
+
+Ctrl+u and ctrl+d - half page up and down
+
+H - Head
+M - Middle of Screen
+L - Last of Screen
+gg - Top like 1G
+
+* - on a word makes it a search pattern
+# - same as * but backwords
+g*
+g# - same as * and # but matches even PART of WORD
+
+/\<search_string>\ - search a word alone
+? - search backwards
+
+
+[[ - previous curly brace in col 0 - NOT matching brace
+[] - next closing brace in backwords order
+][ - next closing brace in forward
+% - goto matching brace
+ma - marks - mark a line with 'ma'
+'a - goto marked line
+== - properly indent a line
+'' - last place where we were in
+PLUGIN:
+    matchit - better use of %
+VIMRC:
+    :set cpoptions+=$ - puts $ sign at the end of change word or whatever
+
+BASIC EDITING:
+    Shift + i - I - insert at the beginning of a line
+    o - Insert a new line and go to Insert mode
+    Shift + o - Insert a new line above the cursor and insert mode 
+    . - repeat the last performed action
+    c - basically marks a boundary and you can change till that.
+        like cw - marks a word. and you can replace the word with whatever you want.
+    Shitf + C - change till end of line
+    r - single character replace
+    J - joins a line with the line below it; it puts a space
+    gj - if you don't want to put a space at the end
+    Blockwise highlighting:
+        gv
+        
+
+NICE LINK:
+http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/
+0 - go to beginning of line
+^ - go to first character on the line
+3fa - third occurence of a
+
+w   jump by start of words (punctuation considered words)
+W   jump by words (spaces separate words)
+e   jump to end of words (punctuation considered words)
+E   jump to end of words (no punctuation)
+
+http://vim.wikia.com/wiki/Quick_yank_and_paste
+
+VIM BUFFERS:
+http://stackoverflow.com/questions/8957523/how-to-simplify-copy-and-paste-in-vim
+0p
+1p
+2p ...
+
+CTRL-R {0-9a-z"%#*+:.-=}					*i_CTRL-R*
+		Insert the contents of a register.  Between typing CTRL-R and
+		the second character, '"'' will be displayed to indicate that
+		you are expected to enter the name of a register.
+    
+STACKOVERFLOW:
+G100kdgg - delete last but 100 lines
+Gdgg - delte entire file
+dG - if in the first line of the file
+
+: % y + - Select all
+FufFile
+ ~
+    Toggle case of the character under the cursor, or all visually-selected characters. 
+
+3~
+    Toggle case of the next three characters. 
+
+g~3w
+    Toggle case of the next three words. 
+
+g~iw
+    Toggle case of the current word (inner word – cursor anywhere in word). 
+
+g~$
+    Toggle case of all characters to end of line. 
+
+g~~
+    Toggle case of the current line (same as V~). 
+
+The above uses ~ to toggle case. In each example, you can replace ~ with u to convert to lowercase, or with U to convert to uppercase. For example:
+
+U
+    Uppercase the visually-selected text. 
+    First press v or V then move to select text. 
+    If you don't select text, pressing U will undo all changes to the current line. 
+
+gUU
+    Change the current line to uppercase (same as VU). 
+
+gUiw
+    Change current word to uppercase. 
+
+g~3w
+    Toggle case of the next three words. 
+
+g~iw
+    Toggle case of the current word (inner word – cursor anywhere in word). 
+
+g~$
+    Toggle case of all characters to end of line. 
+
+g~~
+    Toggle case of the current line (same as V~). 
+
+u
+    Lowercase the visually-selected text. 
+    If you don't select text, pressing u will undo the last change. 
+
+guu
+    Change the current line to lowercase (same as Vu). 
+
+Title Casing:: Capitalize first letter of each word:
+s/\<./\u&/g
+    \< matches the start of a word
+    . matches the first character of a word
+    \u tells Vim to uppercase the following character in the substitution string (&)
+    & means substitute whatever was matched on the LHS
+
+
+Search and Replace from current line
+.,$s/user/device/gc
+
+Change each 'foo' to 'bar', but ask for confirmation first. 
+:%s/foo/bar/gc
+
+Count number of matches of a pattern:
+:%s/pattern//gn
+
+Increment a number:
+k^yWjP^<ctrl-a>j
+0knllyt j0nep<ctrl-a>yt $pj@r
+
+Ignore Octal numbers.
+set nrformats-=octal
+
+:let i = 1 | g/^$/execute "normal i>item" . i | let i = i + 1
+
+optionally execute :w|source % to immediately reload
+
+Setting fonts in GVIM:
+:set guifont=* - This opens the dialog box
+:echo &guifont - This shows what needs to by put in vimrc
+
+VIM CASTS:
+http://vimcasts.org/episodes/show-invisibles/
+Enable Invisible character:
+	:set list
+	:set nolist
+	:set list!
+
+
+VIM:
+http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim?rq=1
+    W - 
+    y'a - Keeping Marks.
+     A mark is set to any cursor location using the m command. Each mark is designated by a single lower case letter. Thus ma sets the 'a' mark to the current location, and mz sets the 'z' mark. You can move to the line containing a mark using the ' (single quote) command. Thus 'a moves to the beginning of the line containing the 'a' mark. You can move to the precise location of any mark using the ` (backquote) command. Thus `z will move directly to the exact location of the 'z' mark.
+
+    { - beginning of a para
+    } - end of a para
+    d/foo - cut from current line till where foo is present
+    ? - search backwards
+    y?foo - copy from current line to most recent (previous) occurence of foo
+    :127,215 s/foo/bar
+
+    :% is synonymous with :1,$ (all the lines).
+    :.,+21g/foo/d -  "delete any lines containing the string "foo" from the current one through the next 21 lines"
+    :.,$v/bar/d - "from here to the end of the file, delete any lines which DON'T contain the string "bar."
+    :% g/foo/m$ - all the "foo" lines will have been moved to the end of the file.
+    :% g/^   /-1j - for every matching line, go up one line and join them).
+    :% g/foo/s/bar/zzz/g -- for every line containing "foo" substitute all "bar" with "zzz."
+    :'a,'bg/foo/j - join any line containing the string foo to its subsequent line, if it lies between the lines between the 'a' and 'b' marks.
+    :r foo - Read the contents of file FOO and put it here
+    IMP - More powerful is the :r! command. This reads the results of a command. It's the same as suspending the vi session, running a command, redirecting its output to a temporary file, resuming your vi session, and reading in the contents from the temp. file.
+    ! - This we can sort all the lines in our file using 1G!Gsort (G is the vi "goto" command; it defaults to going to the last line of the file, but can be prefixed by a line number, such as 1, the first line). This is equivalent to the ex variant :1,$!sort
+    {!}fmt (reformat the current paragraph).
+
+    For example I have a seven line file (36 characters) which runs a file through wc, and inserts a C-style comment at the top of the file containing that word count data. I can apply that "macro" to a file by using a command like: vim +'so mymacro.ex' ./mytarget
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+AWK:
+http://www.hcs.harvard.edu/~dholland/computers/awk.html
+awk "{ sum += $1 } END { print sum }" file
+
+awk "{ sum += $5 } END { print sum }" 4c_Inside_Encrypt.txt
+
+awk "BEGIN {max = 0} {if ($3>max) max=$3} END {print max}" 3a_Inside_Decrypt.txt
+
+Sum of a text file that has only numbers:
+    cat sum | awk "{ sum+=$1} END {print sum}"
+
+http://stackoverflow.com/questions/1632113/what-is-the-difference-between-sed-and-awk
+1) What is the difference between awk and sed ?
+
+Both are tools that transform text. BUT awk can do more things besides just manipulating text. Its a programming language by itself with most of the things you learn in programming, like arrays, loops, if/else flow control etc You can "program" in sed as well, but you won't want to maintain the code written in it.
+
+2) What kind of application are best use cases for sed and awk tools ?
+
+Conclusion: Use sed for very simple text parsing. Anything beyond that, awk is better. In fact, you can ditch sed altogether and just use awk. Since their functions overlap and awk can do more, just use awk. You will reduce your learning curve as well.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+FIND:
+
+http://www.thegeekstuff.com/2009/03/15-practical-linux-find-command-examples/
+http://www.thegeekstuff.com/2009/06/15-practical-unix-linux-find-command-examples-part-2/
+
+find . -type f -name "*.java"
+
+Finding TOP 5 big files:
+    find . -type f -exec ls -s {} \; | sort -n -r | head -5
+
+Finding TOP 5 small files:
+    find . -type f -exec ls -s {} \; | sort -n  | head -5
+
+Find all directories
+    find . -type d
+
+Find all the hidden files and directories
+    find . -type f -name ".*"
+    find -type d -name ".*"
+
+Find files by size; Bigger then 100M and smaller than 100M
+    find ~ -size +100M
+    find ~ -size -100M
+
+Alias to Remove the files named a.out frequently.
+    alias rmao="find . -iname a.out -exec rm {} \;"
+
+Remove big archive files using find command
+    find / -type f -name *.zip -size +100M -exec rm -i {} \;"
+
+Find files whose content got updated within last 1 hour
+    find . -mmin -60
+    find / -mtime -1 - finds all the files (under root file system /) that got updated within the last 24 hours (1 day).
+
+Find files which are modified after modification of a particular FILE
+    find -newer /etc/passwd
+
+Find files which are accessed after modification of a specific FILE
+    find -anewer /etc/hosts
+
+Find a file or directory on the system using this command
+    Find a file myfile.txt in current directory and its subdirectories.
+    find . -name “myfile.txt”
+    Find all files in Documents directory that are larger that 25MB in size
+    find . -size +25M -exec du -h {} \;
+    Find all .doc files on the system that have been modified in the last 5 days.
+    find . –name “*.doc” –mtime -5
+    Find all .txt files on the system that were modified in last 15 minutes
+    find . –name “*.txt” –mmin -15
+    Find all files that contain a string “I am inside file”.
+    find . -name "*" -exec grep -i -H "I am inside file" {} \;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+CUT:
+http://www.folkstalk.com/2012/02/cut-command-in-unix-linux-examples.html
+    cut -c4 file.txt : just 4th char
+    cut -c4,6 file.txt : 4th AND 6th char
+    cut -c4-7 file.txt : 4th TO 7th char
+    cut -c-6 file.txt  : Prints first SIX characters
+    cut -c10- file.txt : Prints characters from TENTH position to the end.
+    cut -d' ' -f2 file.txt        : Prints SECOND field ('f2') of each line that is separated by SPACE
+    cut -d' ' -f2,3 file.txt      : Prints SECOND and THIRD filed of each line that is separated by SPACE
+    cut -d' ' -f1-3 file.txt
+    cut -d' ' -f-3 file.txt       : Prints FIRST THREE fileds
+    cut -d' ' -f2- file.txt       : Prints from SECOND field till the end
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+GREP
+1) 
+To find the number of occurances of a string in several files
+    cat * | grep -c "resending the auth" sktlogd*
+
+2) Total
+    grep -o "resending the auth" sktlogd* | wc -l
+
+This command is used to search all the lines in all files in a specified location containing a string.
+    Search for a specific string “myname” in a file myfile.txt
+    grep “myname” myfile.txt
+    Search for a specific string “myname” with ignoring the case in a file myfile.txt
+    grep -i “myname” myfile.txt
+    Search for a specific string “myname” in a all files in current directory
+    grep “myname” *
+    Search for full word “myword” in a file myfile.txt
+    grep -w “myword” myfile.txt
+    Search a string “myname” in all files in all subdirectories recursively
+    grep -r “myname” *
+
+* grep "CIFS_*" ./*/mlog/sktlog* | grep -v "CIFS_AUTH_Dbg"  > ~/burts/b911489/2015_05_new/CIFS_non_auth_sktlogd.txt
+* grep -r "text_string" *
+* grep -i text_string_1 */*.cpp | grep -i text_string_2 | grep -i text_string_3
+* grep "lif_base16\|lif_base13" ./*/mlog/message* | more
+* grep "vs_base2" ./*/mlog/command-history* | grep "lif_base13" | more
+* grep "NBLADE_Chk" ./*/mlog/sktlog* | grep "Apr 29 2015 19:5" | grep -i "CIFS"
+* grep "CIFS_AUTH_Dbg" ./*/mlog/sktlog* | grep "Apr 29 2015 19:5" | more
+* grep 'CIFS_Err\|CIFS_Warn\|CIFS_AUTH_Err' ./*/mlog/sktlog*  > ~/burts/grep_full_CIFS_ErrWarn.txt
+* grep "calenstnsru240" ./*/mlog/command-history* | more
+* grep "calenstnsru1402" ./*/mlog/command-history*  | more
+* To grep on all node logs
+* grep "CifsOperationTimedOut" ./*/mroot/etc/log/ems* | more
+
+grep 303157003 mgwd* 
+grep "Tue Jul 22 2014 11:" ./*/mroot/*/*
+grep "Jul 22 2014 11:" ./*/*
+grep "cifs-share-get-iter" ~/temp | wc -l
+grep "held for" ./*/mlog/mgwd* | grep "Jul 18 2014 08:15" | more
+grep "Failed to get RDB Txn for dns" ./csiqa-3220-01.rtp.netapp.com/mlog/mgwd*
+grep "<cifs-session-file-get-iter>" ./*/mroot/etc/mlog/mgwd*
+grep "Jun 27 2014 03:2" ./*/mroot/etc/mlog/skt* | grep "cst-3250-15"
+find 03_fcj/infrastructure/ -name \*.log -exec grep -H "network interface migrate" {} \; | grep "lif_base1|"
+
+pgrep secd
+ps aux | grep secd
+
+If I grep for this IP, it got created only at 12:46:58, where as the test ran at 11:07:49.
+[praveenl@cycrh6rtp10 Nodes]$ grep "10.232.38.58" ./*/mroot/*/messages* | more 
+
+grep "CIFS_AUTH_Dbg" ./*/mlog/sktlog* | grep "Apr 29 2015 19:5" | more
+grep 'CIFS_Err\|CIFS_Warn\|CIFS_AUTH_Err' ./*/mlog/sktlog*  > ~/burts/grep_full_CIFS_ErrWarn.txt
+
+> If I just grep for cifs-share-get-iter, there are 526 entries.
+> [praveenl@cycrh6rtp08 ~]$ grep "cifs-share-get-iter" ~/temp | wc -l
+> 526
+> If I sum the 9th column (total-records), it's 73081.
+> If I sum the 7th column (total-clock-time), it's 152,633 ms ~= 153 seconds (2 minutes 33 seconds).
+> [praveenl@cycrh6rtp08 ~]$ grep "cifs-share-get-iter" ~/temp > 
+> ~/cifs_zapi
+> [praveenl@cycrh6rtp08 ~]$ cat cifs_zapi | awk -F, '{print $9}' | awk '{total = total + $1}END{print total}'
+> 73081
+> [praveenl@cycrh6rtp08 ~]$ cat cifs_zapi | awk -F, '{print $7}' | awk '{total = total + $1}END{print total}'
+> 152633
+> This matches the starting and ending time stamp of cifs-share-get-iter - 09:03:10 and 09:05:44, which means it took 154 seconds to return 73,081 records.
+> This is a good time to return 70K+ entries.
+
+
+grep "wafl.iron.start" ./*/mroot/etc/log/mlog/mess* | grep "Nov 08 2014 03:" | more
+
+For BSD or GNU grep you can use -B num to set how many lines before the match and -A num for the number of lines after the match.
+grep -B 3 -A 2 foo README.txt
+If you want the same number of lines before and after you can use -C num.
+grep -C 3 foo README.txt
+
+Differences between grep, pgrep, egrep, and fgrep (Linux):
+grep
+
+grep is an acronym that stands for "Global Regular Expressions Print". grep is a program which scans a specified file or files line by line, returning lines that contain a pattern. A pattern is an expression that specifies a set of strings by interpreting characters as meta-characters. For example the asterisk meta character (*) is interpreted as meaning "zero or more of the preceding element". This enables users to type a short series of characters and meta characters into a grep command to have the computer show us what lines in which files match.
+
+The standard grep command looks like:
+
+grep <flags> '<regular expression>' <filename>
+
+grep prints the search results to the screen (stdout) and returns the following exit values:
+
+0    A match was found.
+1    No match was found.
+>1   A syntax error was found or a file was inaccessible 
+     (even if matches were found).
+
+Some common flags are: -c for counting the number of successful matches and not printing the actual matches, -i to make the search case insensitive, -n to print the line number before each match printout, -v to take the complement of the regular expression (i.e. return the lines which don't match), and -l to print the file names of files with lines which match the expression.
+egrep
+
+egrep is an acronym that stands for "Extended Global Regular Expressions Print".
+
+The 'E' in egrep means treat the pattern as a regular expression. "Extended Regular Expressions" abbreviated 'ERE' is enabled in egrep. egrep (which is the same as grep -E) treats +, ?, |, (, and ) as meta-characters.
+
+In basic regular expressions (with grep), the meta-characters ?, +, {, |, (, and ) lose their special meaning. If you want grep to treat these characters as meta-characters, escape them \?, \+, \{, \|, \(, and \).
+
+For example, here grep uses basic regular expressions where the plus is treated literally, any line with a plus in it is returned.
+
+grep "+" myfile.txt
+
+egrep on the other hand treats the "+" as a meta character and returns every line because plus is interpreted as "one or more times".
+
+egrep "+" myfile.txt
+
+Here every line is returned because the + was treated by egrep as a meta character. normal grep would have searched only for lines with a literal +.
+fgrep
+
+fgrep is an acronym that stands for "Fixed-string Global Regular Expressions Print".
+
+fgrep (which is the same as grep -F) is fixed or fast grep and behaves as grep but does NOT recognize any regular expression meta-characters as being special. The search will complete faster because it only processes a simple string rather than a complex pattern.
+
+For example, if I wanted to search my .bash_profile for a literal dot (.) then using grep would be difficult because I would have to escape the dot because dot is a meta character that means 'wild-card, any single character':
+
+grep "." myfile.txt
+
+The above command returns every line of myfile.txt. Do this instead:
+
+fgrep "." myfile.txt
+
+Then only the lines that have a literal '.' in them are returned. fgrep helps us not bother escaping our meta characters.
+pgrep
+
+pgrep is an acronym that stands for "Process-ID Global Regular Expressions Print".
+
+pgrep looks through the currently running processes and lists the process IDs which matches the selection criteria to stdout. pgrep is handy when all you want to know is the process id integer of a process. For example, if I wanted to know only the process ID of my mysql process I would use the command pgrep mysql which would return a process ID like 7312.
+
+VIM:
+
+To turn off autoindent when you paste code, there's a special "paste" mode.
+
+									    Type
+
+:set paste
+
+Then paste your code. Note that the text in the tooltip now says -- INSERT (paste) --.
+
+After you pasted your code, turn off the paste-mode, so that auto-indenting when you type works correctly again.
+
+:set nopaste
+
+ctrl+o - preivous cursor positions
+ctrl+i - next cursor postions
+ctrl+V - Select a specific column of text
+:.,$s/access_based_enumeration/namespace_cachin/gc
+:s/fake-open/search-short-names/gc
+s/a/X/ will return => Xbcabc
+s/a/X/g will return => XbcXbc
+
+
+:diffthis - enter this on both the files that are opened in vertical view. It will show the diff
+:set scrollbind - to scroll two views together
+:set noscrollbind - to unbind the above
+:diffoff
+
+w!
+p4 edit file name
+then :load file name
+
+    "kyy
+Or you can append to a register by using a capital letter
+    "Kyy
+You can then move through the document and paste it elsewhere using
+    "kp
+
+VIM DIFF:
+do - Get changes from other window into the current window.
+
+dp - Put the changes from current window into the other window.
+
+]c - Jump to the next change.
+
+[c - Jump to the previous change.
+
+Ctrl W + w - Switch to the other split window (CTRL-W CTRL-W does the same
+thing, in case you let go of the CTRL key a bit later)
+http://stackoverflow.com/questions/5288875/vimdiff-what-are-the-most-frequently-used-commands-shortcuts-that-could-get-a-n/5292629#5292629
+
+List only directories:
+    ls -d */
+
+List only hidden files
+    ls -a | grep '^\.'
+
+Macro:
+
+    q indicates to start the recording
+    a indicates to store the recordings in register a
+    When you do q a, it will display “recording” at the bottom of the vi.
+
+:reg
+In vim, the macros are just stored in registers. You can recall the content of any register and execute it as a macro (which is what the @ does). To see a list of what is in your registers, use :reg.
+
+Delete a specific set of lines (Lines that do not have a number in it)
+VIM: Match patterns
+g!/^[0-9]/d
+
+For example, to delete all lines containing "profile" (remove the /d to show the lines that the command will delete):
+:g/profile/d
+:g/pikki/d
+
+
+See command history:
+q:
+
+Stop the recording
+
+Type: q
+
+@a repeats the macro “a” one time.
+
+:sort - sorts all lines in the file
+
+The following command will sort all lines and remove duplicates (keeping unique lines):
+:sort u
+
+
+Recursive Macro:
+    qa@aq
+
+    ex:
+
+    qa0gUwj@aq
+
+
+Vim highlight a list of words OR Highlight multiple words
+http://www.vim.org/scripts/script.php?script_id=2666
+http://vim.wikia.com/wiki/Highlight_multiple_words
+
+    You could use the :match command.
+    :match Todo /word1/
+
+    The first parameter of the command is the highlight-group (to see all available groups :highlight). The second parameter is a search pattern.
+
+    You can put these in any file and load it via :source.
+
+    Another way is to change the regular expression (thx @zpon):
+
+    :match Todo /word1\|word2\|word3/
+
+    If you want to highlight them differently:
+
+    :match Todo /word1/
+    :2match Error /word2/
+    :3match Title /word3/
+
+
+------------------------------------------------------------------------------------------------------------------------
+Bash Shortcuts:
+Ctrl + a – go to the start of the command line
+Ctrl + e – go to the end of the command line
+Ctrl + k – delete from cursor to the end of the command line
+Ctrl + u – delete from cursor to the start of the command line
+Ctrl + w – delete from cursor to start of word (i.e. delete backwards one word)
+Ctrl + y – paste word or text that was cut using one of the deletion shortcuts (such as the one above) after the cursor
+Ctrl + xx – move between start of command line and current cursor position (and back again)
+
+Alt + b – move backward one word (or go to start of word the cursor is currently on)
+Alt + f – move forward one word (or go to end of word the cursor is currently on)
+Alt + d – delete to end of word starting at cursor (whole word if cursor is at the beginning of word)
+Alt + c – capitalize to end of word starting at cursor (whole word if cursor is at the beginning of word)
+Alt + u – make uppercase from cursor to end of word
+Alt + l – make lowercase from cursor to end of word
+Alt + t – swap current word with previous
+Ctrl + f – move forward one character
+Ctrl + b – move backward one character
+Ctrl + d – delete character under the cursor
+Ctrl + h – delete character before the cursor
+Ctrl + t – swap character under cursor with the previous one
+
+
+    Ctrl + r – search the history backwards
+    Ctrl + g – escape from history searching mode
+    Ctrl + p – previous command in history (i.e. walk back through the command history)
+    Ctrl + n – next command in history (i.e. walk forward through the command history)
+    Alt + . – use the last word of the previous command
+
+    !! - run last command
+    !blah – run the most recent command that starts with ‘blah’ (e.g. !ls)
+    !blah:p – print out the command that !blah would run (also adds it as the latest command in the command history)
+    !$ – the last word of the previous command (same as Alt + .)
+    !$:p – print out the word that !$ would substitute
+    !* – the previous command except for the last word (e.g. if you type ‘find some_file.txt /‘, then !* would give you ‘find some_file.txt‘)
+    !*:p – print out what !* would substitute
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+runas /u:cifsqa\cifsu20 cmd
+
+
+CMD PROMPT:
+COPY:
+
+find / -type d -name "ora10*"
+
+taskkill /F /IM netmist_pro.exe /T
+
+del /S /F /Q pragadhe\*
+
+Excel: Expand all columns i.e. autofit all columns keyboard shortcut
+Alt + o + c + a
+
+POWERSHELL:
+Get-ChildItem -Path C:\pragadhe -Include * -File -Recurse | foreach { $_.Delete()}
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Screen Session:
+Rename Screen Session:
+C-a :sessionname mySessionName
+
+Screen's -X switch lets you rename a session without attaching it.
+
+$ screen -X sessionname foobars
+$ screen -ls
+There is a screen on:
+    8890.foobars    (22/12/11 18:39:22) (Detached)
+1 Socket in /var/run/screen/S-user.
+
+Kill Screen session:
+ screen -X -S 17928.pts-51.cycrh6svl25 quit
+
+Kill all screen session:
+killall -15 screen or pkill -15 screen
+
+This will kill all the detached screens:
+screen -ls | grep detached | cut -d. -f1 | awk '{print $1}' | xargs kill
+
+Scroll up the screen
+termcapinfo xterm ti@:te@
+termcapinfo xterm-color ti@:te@
+
+Shortucts:
+http://aperiodic.net/screen/quick_reference
+
+http://unix.stackexchange.com/questions/6065/gnu-screen-new-window-name-change
+I can change the name of a window with Ctrl-a Shift-a
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+TMUX Session:
+https://gist.github.com/henrik/1967800
+https://gist.github.com/andreyvit/2921703
+http://www.dayid.org/os/notes/tm.html
+
+$ tmux ls
+$ tmux kill-session -t 0
+$ tmux new -s myname
+tmux a  #  (or at, or attach)
+tmux a -t myname
+
+prefix + d - detaches and goes back to putty
+
+Scroll:
+Ctrl-b then [ then you can use your normal navigation keys to scroll around (eg. Up Arrow or PgDn). Press q to quit scroll mode.
+Alternatively you can press Ctrl-b PgUp to go directly into copy mode and scroll one page up (which is what it sounds like you will want most of the time)
+You can also scroll up/down line by line using Shift-k and Shift-j (if you're already in scroll mode).
+
+VERY IMP:
+Ctrl-b [ - takes you to TMUX mode. And then you can do your VIM scrolling
+
+
+:new<CR>  new session
+s  list sessions
+$  name session
+
+`tmux rename-window (prefix + ,)`
+
+
+`tmux split-window (prefix + %)`
+    splits the window into two vertical panes
+
+`tmux split-window -h (prefix + ")`
+    splits the window into two horizontal panes
+
+`tmux swap-pane -[UDLR] (prefix + { or })`
+    swaps pane with another in the specified direction
+
+`tmux select-pane -[UDLR]`
+    selects the next pane in the specified direction
+
+`tmux select-pane -t :.+`
+    selects the next pane in numerical order 
+
+^b then x to kill the current pane (or window if it only has one pane)
+
+^b then [ to enter copy mode, then four arrow keys to move, even past the visible point, which is great for scrolling--I don't use it much for copying/pasting.
+
+C-a &          kill the current window
+
+C-a p          previous window
+C-a n          next window
+C-a l          ‘last’ (previously used) window
+C-a w          choose window from a list
+
+
+http://superuser.com/questions/196060/selecting-text-tmux-copy-mode
+You use space bar for the beginning of the selection and enter for the end.
+copy:
+
+    Ctrlb[
+    Space
+    Enter
+
+paste:
+    Ctrlb]
+
+http://vim.wikia.com/wiki/Using_the_Windows_clipboard_in_Cygwin_Vim
+http://stackoverflow.com/questions/17255031/how-to-copy-from-tmux-running-in-putty-to-windows-clipbard
+
+Before pasting into the terminal, try :set paste (and then :set nopaste after you're done). This will turn off the auto-indent, line-wrap, etc. features that are messing up your paste.
+
+
+VIMPERATOR:
+0. _vimperatorrc is located at C:/Users/%USERNAME%/
+   To load the _vimperatorrc in firefox
+   :source C:/Users/%USERNAME%/_vimperatorrc
+   
+1. Go to previous browsed tab:
+
+2. Copy URL:
+    y
+
+3. Temporarily disable Vimperator
+   Shift + Esc
+   
+4. Right Click
+    ;c
+
+5. Exit the view source mode in Vimp
+    g f
+
+6. Move across tabs:
+    C-p
+    C-n
+    g$
+    g0
+    [num]gt - got to num tab
+
+7. Close current tab and Undo it
+    d
+    u
+
+8. Reload the page
+    r
+
+9. :addon - Displays addons
+    
+f - Follow Links in Same TAB
+
+
+F - Follow links in New TAB
+H - go to the previous page (like Back Button)
+o - Open
+t - tabopevsim make -pro n6 -ir . 66  -auton
+:back - Equivalent of Back button
+ZZ - ??
+3<C-o> will go back 3 pages
+(ma to set mark a on a web page, 'a to go there
+ QuickMarks support (quickly go to previously marked web pages with go{a-zA-Z0-9}
+
+Selecting
+Once you are there, type c to enter CARET mode where you can use hjkl to move around and use v to select just like vim.
+
+http://davidchuprogramming.blogspot.com/2009/01/vim-firefox-vimperator.html
+    [num]gt or C-n: go to next or nth (if num is provided) tab;
+    gT or C-p: go to the previous tab;
+    gf or :view: view the source in the current tab;
+    g0 or g^: go to the first tab;
+    g$: go to the last tab;
+    o or t: open a link in the current or new tab. You can type in a link in the command area then press enter key;
+    O or T: similar as above with the current link displayed;
+    y: yank the current link;
+    :sav[eas]>: save the current link to disk;
+    /: start search in Vimperator command area;
+    n or N: search forward or backward;
+    :st[op] or C-c: stop current loading;
+    r or R: fore to reload the current page(R for skipping the cache);
+    d or :quita[ll]: close the current tab or all tabs;
+    u or :undoa[ll]: undo closing one or all tabs;
+    :restart: restart Firefox;
+
+
+Less command:
+-i : ignores case
+/smb2.*write.*\~\$reporting
+
+-----------------------------------------------
+Pushd Popd and Dirs
+http://unix.stackexchange.com/questions/77077/how-do-i-use-pushd-and-popd-commands
+
+dirs -v
+cd ~4
+
+df -h | grep pragadhe
+du -h file_name
+
+top : Top Running Processes
+uname -a
+

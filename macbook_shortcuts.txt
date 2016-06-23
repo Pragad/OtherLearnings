@@ -1,0 +1,202 @@
+How to use Macbook Pro
+
+0. MAC KEYS
+    ⌘  - Command
+    ⇧  - Shift
+    ⌃  - Control
+    ⌥  - Option
+    ⇪  - Capslock
+
+1. Scroll up with 3 fingers.
+    Goto Dashboard; Can add new ones
+
+2. Go to Desktop
+    Fn + F3
+
+3. Take Screenshot by selecting a portion on the screen
+    Cmd + Shift + 4
+
+4. Hide/Show Dock
+    Hold down Command and Option keys, and then press the D key
+
+5. Finder:
+    Cmd + Shift + g : Go to a folder by entering its path
+    Cmd + [ - Go Backward
+    Cmd + ] - Go Forward
+
+    Cut & Paste:
+        Command+C copies the files or documents, note they won’t be ‘cut’ yet
+        Command+Option+V pastes the documents into the new location, cutting it from the prior locating and moving it to the new location
+
+6. Terminal Commands:
+    a. Find current shell:
+       http://stackoverflow.com/questions/3327013/how-to-determine-the-current-shell-im-working-on
+       echo $0
+       echo $SHELL
+
+    b. Reload/Refresh bashrc without logging out
+       source ~/.bash_profile
+       . ~/.bash_profile
+
+    c. Move word by word
+        Esc+F to move to the beginning of the next word - Mapped it to ⌥ + f
+        Esc+B to move to the beginning of the current word ⌥  + b
+
+    d. Mounted Drive will be under /Volumes
+
+7. Show hidden files on terminal
+    ls -ld .?*
+
+8. Keyboard shortcuts
+    a. Text Selection:
+        Move word by word: Opt + Arrow keys
+
+9. Hide Current Window
+    Cmd + h
+
+10. Hide all other windows
+    Cmd + Option + h
+
+11. iterm
+    https://iterm2.com/features.html
+    a. Split Panes
+        http://cantus.us/use-iterm2-for-split-panes/
+        Cmd + d - vertically
+        Cnd + Shift +d - horizontally
+
+        Cmd + Opt + arrorw OR
+        Cmd + [ and Cmd + ]
+
+    b. block Select
+        Block Selct a Column
+        Alt+Cmd
+
+12. Find my Macbook's details:
+    In terminal: system_profiler | more
+    Apple Icon: about this mac
+
+13. Firefox:
+    a. Cmd + Option + Arrow Keys: Like Ctrl + tab && ctrl + shift + tab
+    b. Speed Dial:
+        Ctrl + Number - Open in Current Window
+        Ctrl + Shift + Number - Open in New Window
+
+14. Spectacle:
+    a. Cmd + Option + Arrow Keys: Move window accordinlgy
+    b. Cmd + Option + f: Maximize the windows
+
+15. Find and kill a process
+    a. ps -ef | grep firefox
+    b. kill -9 pid
+
+16. GIT
+    http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1
+    http://readwrite.com/2013/10/02/github-for-beginners-part-2
+    http://githowto.com/making_changes
+    a. git config --global merge.tool vimdiff
+    b. git config --global core.editor vim
+         git config --list
+         user.name=syncmr
+         user.email=talk2pragadheesh@gmail.com
+         credential.helper=osxkeychain
+         core.editor=vim
+         merge.tool=vimdiff
+    c. git remote add origin https://github.com/username/myproject.git
+    d. git remote -v
+    e. git push origin master
+    f. git diff
+
+    Adding Modifications to GIT:
+        a. git add Readme.txt
+        b. git commit -m "Message"
+        c. git push origin master
+
+    Adding a folder/directory to git
+        a. git init
+	b. git status - should now be happy but will list untracked files.
+	c. git add Readme.txt
+       git add --all : This adds all the files
+	d. git commit -m “Add Readme.txt”
+	e. git remote add origin https://github.com/SyncMr/MyShortcuts.git
+	e. git remote add origin https://github.com/SyncMr/Algos.git
+	f. git remote -v
+	g. git push origin master
+
+      Updating a file:
+        i. Edit your file
+	   git status should now show the file in RED
+	j. After editing your file add it again,
+	   git add macbook_shortcuts.txt
+	   git status should now show the file in GREEN
+	k. Commit the file to git
+	   git commit -m "Added pushd popd stuffs to shortcut"
+	l. Now once again push it to the online git
+	   git push origin master
+
+    m. If you have uploaded files from another computer then you will get the 
+       following error "Updates were rejected because the remote contains work that you do" 
+       So pull the contents to your local repo and then update git
+       git pull origin master
+       git push
+
+    //Using GIT to sync VIM
+    http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
+
+17. BASH Shortcuts
+    source ~/.bash_profile - How to reload .bash_profile from the command line
+
+    Ctrl + A    Go to the beginning of the line you are currently typing on
+    Ctrl + E    Go to the end of the line you are currently typing on
+    Ctrl + L    Clears the Screen, similar to the clear command
+    Ctrl + U    Clears the line before the cursor position. If you are at the end of the line, clears the entire line.
+    Ctrl + H    Same as backspace
+    Ctrl + R    Let’s you search through previously used commands
+    Ctrl + C    Kill whatever you are running
+    Ctrl + D    Exit the current shell
+    Ctrl + Z    Puts whatever you are running into a suspended background process. fg restores it.
+    Ctrl + W    Delete the word before the cursor
+    Ctrl + K    Clear the line after the cursor
+    Ctrl + T    Swap the last two characters before the cursor
+    Esc + T  Swap the last two words before the cursor
+    Alt + F  Move cursor forward one word on the current line
+    Alt + B  Move cursor backward one word on the current line
+
+18. VIM Read/Shorctus
+    http://vim.wikia.com/wiki/Using_command-line_history
+    dougblack.io/words/a-good-vimrc.html
+
+    How do you reload your .vimrc file without restarting vim
+        :so %
+        :so $MYVIMRC
+
+    :netrw shortcuts - http://vimcasts.org/episodes/the-file-explorer/
+        Trigger by :edit . OR :E OR :e
+        - : Moves up a directory regardless of cursor position
+        :sp. : Split horizontally
+        :vsp. : Split vertically. OR :vsplit .
+
+        IF interested from Current Working directory,
+        :Sex OR :Vex
+
+        To create a new file in the current directory,
+        % - Will prompt file name
+        d - To create a new directory
+        R - Rename
+        D - delete the file
+
+    Find Loaded plugins:
+        :scriptnames : list all plugins
+        : list all plugins
+    Find VIM version
+        vim --version
+
+    Making use of the command line history
+        q:
+        q/
+        ctrl-c twice to close the window
+
+19. pushd and popd
+    popd - Just changes the order of the stack. It can also pop the first element
+    out of the stack
+    pushd - Pushes the path into the stack
+    dirs - shows the stack list
