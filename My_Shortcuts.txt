@@ -1,227 +1,224 @@
-CyclSVL server:
+Bash Shortcuts:
 
-End of line: ctrl + e
-Beginning of line: ctrl + a
-Move by a word
+    1. End of line          : ctrl + e
+    2. Beginning of line    : ctrl + a
+    3. Move by a char       : ctrl + f, ctrl + b
+    4. Move by a word       : alt + f, alt + b
+    5. Delete a character   : ctrl + d
+
+    6. Navigating Directories
+        a. Pushd Popd and Dirs
+           http://unix.stackexchange.com/questions/77077/how-do-i-use-pushd-and-popd-commands
+
+           $ pushd dir1
+           ~/somedir/dir1 ~/somedir
+           $ dirs
+           ~/somedir/dir1 ~/somedir
+           dirs -v
+           cd ~4
+
+    7. df vs du
+       http://serverfault.com/questions/57098/du-vs-df-difference
+            df -h | grep pragadhe
+            du -h file_name
+
+    8. Top running process
+            top
+       The top program provides a dynamic real-time view of a running system.
+       It can display system summary information, as well as a list of processes or threads currently being managed by the kernel
+
+    9. Get system identification
+            uname -a
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+VIM Shortcuts:
+
+    1. VIM MACRO to Put all function headers at the top of a file
+           makyyggP`a]] 
+       ma   - Record a macro in a register 'a'
+       kyy  - Go one line above and copy the line
+       ggP  - Go to the top of file and paste it
+       `a   - Go back to line where we are left
+       ]]   - Go to the next Brance in the 0th position
+
+    2. Find which VIMRC file is loaded
+           :echo $MYVIMRC
+
+    3. Search for a line containing two words
+           :set magic 
+       /foo.*bar
+
+       The 'magic' setting determines how VIM treats special characters in regular expressions.
+       When it's off VIM treats all chars literally, meaning that the expression you wrote foo.*bar will actually search for that string.
+       However, when 'magic' is on then special regex chars get their special meaning and it works more like you expect.
+
+    4. Redo
+           ctrl + r
+
+    5. Line numbers
+           set nu
+           set nonu
+
+    6. Correcting messed up indentation at one go
+       stackoverflow.com/questions/506075/how-do-i-fix-the-indentation-of-an-entire-file-in-vi
+           gg=G
+       =, the indent command can take motions.
+       So, gg to get the start of the file, = to indent, G to the end of the file
+
+    7. Delete Char:
+           x
+           X
+
+    8. Go to top of a function
+           [m
+
+    9. Go to matching paranthasis
+           %
+
+    10. If you want to yank everything except the { use yi{ (or yi}). If you to include the curly braces use ya{ (or ya}).
+            yi{ OR ya{ OR yi} OR ya}
+        The i and a modifiers mean in and all. 
+
+    11. See the name of the file
+            :f
+
+    12. Recursively look for files with a specific extension:   
+            find $directory -type f -name "*.in"
 
 
+    13. Diff inside vim
+            vimdiff
+    14. Open side by side view and Switch between them
+            Ctrl+w v
+            Ctrl+w h or l
 
-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-VIM:
-
-VIM MACRO to Put all function headers at the top of a file
-    makyyggP`a]] 
-
-Find which VIMRC file is loaded
-:echo $MYVIMRC
-
-redo -> ctrl + r
-set nu;
-set nonu
-how to open a file that is p4 opened in a faster way than selecting the file path
-see column position in vim
-
-INSERT MODE
-    up 
-    down
-    left 
-    right
-
-Go to changed line in vim (with perforce dir) instead of finding the line number and going there
-
-Correcting messed up indentation at one go
-stackoverflow.com/questions/506075/how-do-i-fix-the-indentation-of-an-entire-file-in-vi
-
-Delete Char:
-x
-X
-
-[m: - Go to top of a function
-% - go to matching paranthasis
-If you want to yank everything except the { use yi{ (or yi}). If you to include the curly braces use ya{ (or ya}).
-
-The i and a modifiers mean in and all. 
-
-Highlight all occurances of a word
-Find a word; find next; find previous
-Split screen
-Copy past a word
-Replace a word by another word
-See the name of the file and the name of the function
-
-Recursively look for files with a specific extension:   
-find $directory -type f -name "*.in"
-
-ctrl+f
-ctrl+b
-
-vimdiff
-Ctrl+w v - open side by side view
-Change between them:
-
-Ctrl+w h or l
-
-indentation / replace tab with spaces
-
-
-Beginning of line:
-    0
+    15. Beginning of line:
+            0
     
-Select multiple lines from middle and indent all of them
+    16. Goto end of a file
+            G 
 
-G - goto end of a file
-moving around in Vim
-http://vim.wikia.com/wiki/All_the_right_moves
+    17. Moving around in Vim
+        http://vim.wikia.com/wiki/All_the_right_moves
 
-find and replace
+    18. Remove highlight after search
+            ,/
 
-e - end of word1G
+    19. To indent
+            >>
+            <<
 
-b - beginning of word
+    20. To clear the last used search pattern:
+            :let @/ = ""
 
-yw: yank a word
+    21. See previously opened files
+            :browse old
 
-vwwwwy
-viwp - 
+    22. For yanking (copying) and for pasting
+            "+y, "+p
 
-viwy AND viwp
+    23. Search Forward and Backward
+            *
+            #
 
-REMOVE HIGHLIGHT AFTER SEARCH
-
-ctrl - d - SHIFT TAB / UNINDENT
-> to indent in visual mode
-
-
-To clear the last used search pattern:
- :let @/ = ""
-
-browse: old
-
-"+y for yanking (copying) and "+p for pasting
-
-:browse old
-
-In normal mode, move the cursor to any word. Press * to search forwards for the next occurrence of that word, or press # to search backwards.
-
-Using * (also <kMultiply>, <S-LeftMouse>) or # (also <S-RightMouse>) searches for the exact word at the cursor (searching for rain would not find rainbow).
-
-Use g* or g# if you don't want to search for the exact word. 
+    24. If you don't want to search for the exact word
+            g*
+            g#
 
 
-:vsp filename or :vs filename for a vertical split
+    25. Vertical Split
+            :vsp filename or :vs filename for a vertical split
+            Ctrl-W s for horizontal splitting
+            Ctrl-W v for vertical splitting
+            Ctrl-w q to close one
 
-Ctrl-W s for horizontal splitting
+    26. Open Multiple Files
+            -o[N]                Open N windows (default: one for each file)
+            -O[N]                Like -o but split vertically
+            vim -o file1.txt file2.txt file3.txt
 
-Ctrl-W v for vertical splitting
+    27. complete_file_path
+        Not sure how it is different from :f
+            :e 
 
-Ctrl-w q to close one
+    28. To edit a filename
+            :e ctrl+r% then backspace over the filename, and press enter.
 
-I'm assuming you mean from the command line. From vim --help:
+    29. Split window and open integrated file explorer
+            :Sex
 
--o[N]                Open N windows (default: one for each file)
--O[N]                Like -o but split vertically
+    30. MOVEMENT:
+            w jump by start of words (punctuation considered words)
+            W jump by words (spaces separate words)
+            e jump to end of words (punctuation considered words)
+            E jump to end of words (no punctuation)
 
-So type this to open files split horizontally, for example:
+            b B
+            ge - goto end of previous word
+            gE - goto end of previous word spearated by whitespace
+            f/ - takes us to the very next slash
+            F - goes backwards
+            ; - repeat the actions using ; i.e. repeat the above f/ action.
+            t/ - like f but TILL the character; can't repeat using ; as above. instead have to use l+;
+            T - goes backwards
 
-vim -o file1.txt file2.txt file3.txt
+            Ctrl+u and ctrl+d - half page up and down
 
-:e complete_file_path
+            H - Head
+            M - Middle of Screen
+            L - Last of Screen
+            gg - Top like 1G
 
-# - find previous occurance of text under cursor
-If you had:
+            * - on a word makes it a search pattern
+            # - same as * but backwords
+            g*
+            g# - same as * and # but matches even PART of WORD
 
-delete until exclamation point!
-
-And the cursor was at the first space and you typed df!, you would get:
-
-delete
-
-Also dtc. This will delete upto but not including c. Using dt! on the same example above would give you:
-
-delete!
-
-Just about any "motion" can be used for the d, c, y and similar commands
-
-just do :e ctrl+r% then backspace over the filename, and press enter.
-:Sex
-
-MOVEMENT:
-w W
-e E
-b B
-ge - goto end of previous word
-gE - goto end of previous word spearated by whitespace
-f/ - takes us to the very next slash
-F - goes backwards
-; - repeat the actions using ; i.e. repeat the above f/ action.
-t/ - like f but TILL the character; can't repeat using ; as above. instead have to use l+;
-T - goes backwards
-
-ge, f, t, ;
-    t - t with ; doesnot work. So use l + ; 
-
-Ctrl+u and ctrl+d - half page up and down
-
-H - Head
-M - Middle of Screen
-L - Last of Screen
-gg - Top like 1G
-
-* - on a word makes it a search pattern
-# - same as * but backwords
-g*
-g# - same as * and # but matches even PART of WORD
-
-/\<search_string>\ - search a word alone
-? - search backwards
+            /\<search_string>\ - search a word alone
+            ? - search backwards
 
 
-[[ - previous curly brace in col 0 - NOT matching brace
-[] - next closing brace in backwords order
-][ - next closing brace in forward
-% - goto matching brace
-ma - marks - mark a line with 'ma'
-'a - goto marked line
-== - properly indent a line
-'' - last place where we were in
-PLUGIN:
-    matchit - better use of %
-VIMRC:
-    :set cpoptions+=$ - puts $ sign at the end of change word or whatever
+            [[ - previous curly brace in col 0 - NOT matching brace
+            [] - next closing brace in backwords order
+            ][ - next closing brace in forward
+            % - goto matching brace
+            ma - marks - mark a line with 'ma'
+            'a - goto marked line
+            == - properly indent a line
+            '' - last place where we were in
 
-BASIC EDITING:
-    Shift + i - I - insert at the beginning of a line
-    o - Insert a new line and go to Insert mode
-    Shift + o - Insert a new line above the cursor and insert mode 
-    . - repeat the last performed action
-    c - basically marks a boundary and you can change till that.
-        like cw - marks a word. and you can replace the word with whatever you want.
-    Shitf + C - change till end of line
-    r - single character replace
-    J - joins a line with the line below it; it puts a space
-    gj - if you don't want to put a space at the end
-    Blockwise highlighting:
-        gv
+    31. PLUGIN:
+            matchit - better use of %
+
+    32. VIMRC:
+            :set cpoptions+=$ - puts $ sign at the end of change word or whatever
+
+    33. BASIC EDITING:
+            Shift + i - I - insert at the beginning of a line
+            o - Insert a new line and go to Insert mode
+            Shift + o - Insert a new line above the cursor and insert mode 
+            . - repeat the last performed action
+            c - basically marks a boundary and you can change till that.
+                like cw - marks a word. and you can replace the word with whatever you want.
+            Shitf + C - change till end of line
+            r - single character replace
+            J - joins a line with the line below it; it puts a space
+            gj - if you don't want to put a space at the end
+
+    34. Blockwise highlighting:
+            gv
         
+    35. NICE LINK:
+        http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/
+            0 - go to beginning of line
+            ^ - go to first character on the line
+            3fa - third occurence of a
 
-NICE LINK:
-http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/
-0 - go to beginning of line
-^ - go to first character on the line
-3fa - third occurence of a
-
-w   jump by start of words (punctuation considered words)
-W   jump by words (spaces separate words)
-e   jump to end of words (punctuation considered words)
-E   jump to end of words (no punctuation)
-
-http://vim.wikia.com/wiki/Quick_yank_and_paste
-
-VIM BUFFERS:
-http://stackoverflow.com/questions/8957523/how-to-simplify-copy-and-paste-in-vim
-0p
-1p
-2p ...
+    36. VIM BUFFERS:
+        http://stackoverflow.com/questions/8957523/how-to-simplify-copy-and-paste-in-vim
+            0p
+            1p
+            2p ...
 
 CTRL-R {0-9a-z"%#*+:.-=}					*i_CTRL-R*
 		Insert the contents of a register.  Between typing CTRL-R and
@@ -937,15 +934,4 @@ Less command:
 /smb2.*write.*\~\$reporting
 
 -----------------------------------------------
-Pushd Popd and Dirs
-http://unix.stackexchange.com/questions/77077/how-do-i-use-pushd-and-popd-commands
-
-dirs -v
-cd ~4
-
-df -h | grep pragadhe
-du -h file_name
-
-top : Top Running Processes
-uname -a
 
