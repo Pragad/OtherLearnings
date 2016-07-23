@@ -1,0 +1,71 @@
+1.1 What is Cloud?
+    - Have large amount of data
+    - Not easy to move data around
+    - So bring Computer Cycles closer to data
+
+    - Today's cloud computing is very close to Data Processing
+
+3.1 Map Reduce:
+    - Map split the task into Maps
+    - Reduces based on the key.
+    - Arranges similar key to same reduce task.
+    - Eg: Word Count: Hello world hi world
+    - Map Task: 4 words with 1 count to each word
+    - Word: Hello world hi world
+            1     1     1  1   
+
+    - Now Hello & hi goes to Reducer 1;
+    - world and world goes to Reduces 2;
+
+    - Reduce task is called once for each key
+    - So number of keys = number of reduce tasks
+
+    Eg: Count of URL access frequency.
+    How much percent a URL is being visited from total URLs
+    Map 1           : Process all URLs and put a count(1) next to it; <URL, 1>
+    Multiple Red 1  : With URL as key, count total number of time a URL is visited
+                      Each URL could be given to a reducer. <URL, count>
+
+    Now we have to find the UNIQUE URLs
+    Map 2           : Process <URL, URL_count> and produce <1, <URL, URL_Count>
+    Single Red 1    : Take all the results from map and sum it to find total uniq URLs
+    Result          : <URL, URL_count / total Uniq URL count>
+
+3.3. Programming Map Reduce:
+    For a user,
+    - Write Map function; 
+    - Write Reduce function
+    - Submit Job and wait for result
+
+    Internally:
+    1. How to Parallelize the Map tasks
+        - Easy. All Map tasks are independent of each other
+
+    2. Transfer results from Map to Reduce
+        - All output records with same Key are given to same reduce
+        - Use paritioning function
+
+    3. Parallelize Reduce
+        - Easy. Each reduce tasks is independent of each other
+
+    4. Implement storage for Map input and Map Output (Reduce Input) and Reduce Output
+        - GFS, HDFS etc
+        - Map Input: Got from Distributed File System
+        - Map Output: Goes to LOCAL DISK
+        - Red Input: Read from Local Disk
+        - Red Output: Goes to DFS
+
+        - Using the local file system makes things FASTER.
+        - It avoid high overhead of the underlying DFS.
+
+    - REDUCE TASKS can't start BEFORE MAP tasks are complete. True most of the time
+
+    YARN:
+        - Glboal Resource Manager:
+            Scheduling
+        - Per server Node Manager
+            Each server runs a node manager
+            Responsible for all Server specific management
+        - Per application Job Manager
+            Negotiate Containers with Resource Manager
+            Communicates with Node manager to find if any of them have died. If so reschedule them
