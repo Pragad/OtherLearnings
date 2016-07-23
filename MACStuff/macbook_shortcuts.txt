@@ -233,6 +233,10 @@ How to use Macbook Pro
         ii. Karabiner
     
     b. Script to take Custom Screenshot that prompts for file name and locaiton
+       https://discussions.apple.com/thread/7287386?start=0&tstart=0
+        - Open Automator and create a "Run AppleScript" Service.
+        - Create a services and open it to get installed
+        - Once Installed you can add shortcut to it (cmd + shift + 5)
 
     c. Karabiner Changes to change the behavior of Capslock
         i. Control_L to Control_L + When you type Control_L only, send Esc
