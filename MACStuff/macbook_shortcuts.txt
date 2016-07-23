@@ -200,3 +200,11 @@ How to use Macbook Pro
     out of the stack
     pushd - Pushes the path into the stack
     dirs - shows the stack list
+
+20. Setting up MAC:
+    a. Software to be installed:
+        i. Spectacle
+        ii. Karabiner
+    
+    b. Script to take Custom Screenshot that prompts for file name and locaiton
+
