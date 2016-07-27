@@ -69,3 +69,85 @@
         - Per application Job Manager
             Negotiate Containers with Resource Manager
             Communicates with Node manager to find if any of them have died. If so reschedule them
+
+3.4 Fault Tolerance
+    Speculative Execution:
+        The slowest task slows all other processes just delaying the job completion
+        So keep track of each tasks
+        Replicate the one that is running the slowest in some other problem
+        Once one of the replicated job is complete, the task gets mared as complete.
+        And the slower replica gets killed.
+
+    Locality
+        - A rack can have multiple machines
+        - A scheduler determines where the task should be run
+            - In a machine that contains a replica
+            - OR on the same rack so that it is faster
+            - OR Anywhere
+
+Week 2:
+1 Gossip Protocol:
+    1.1 Multicast Problem
+        Requirements for multicast problem:
+        - Fault tolerant and reliable
+            - Nodes could crash,
+            - Packets could get lost
+        - Should be scalable
+
+        If you want to sent to 'n' nodes, if we do in a linearly, then complexity is O(n)
+        So have a tree based solution.
+
+        But if a middle node fails, then all its child won't get the information.
+        - So we should constantly be repairing the tree.
+            - Use ACKs and NACKs (Negative Acks)
+        
+        SRM:
+            - Uses NAKs
+            - uses random delays and
+            - exponential backoffs when multiple NACKs should be sent to avoid NAK storms.
+
+        RMTP:
+            - Uses ACKs
+            - ACKs are sent only to designated receivers.
+
+    1.2 Gossip Protocol
+        - A node selects a random set of nodes (b) and multicasts data to them
+        - UDP transmission is used.
+        - Sends data periodically every few seconds to random (b) nodes
+
+        - A nice way of multicast implementation
+        - Fault tolerant
+
+    2.1 Group Membership List
+        - A list of processes is maintained.
+        - If a process fails, we should detect it and notify everyone else.
+        
+        Failure Detection:
+            - Require 100% Completeness
+                - When a process fails that process is detected, eventually, by at least one other non-faulty process.
+                - When we have a failure, we MUST detect it
+            - Slightly less 100% Accuracy is acceptable
+                - When a process is detected as having failed, that process has in fact failed.
+                - In other words, it says that there are no mistaken failure detections or there are no false positives.
+                - Because even if we kick out a NON FAULTY guy, it's okay. He will rejoin
+
+    2.2 Heartbeating
+        Centralized Heartbeat:
+            - A central system to which all process sends heartbeats
+            - Problem: The central system could get overloaded / fail
+
+        Ring Heartbeating:
+            - Send heart beat to both left and right neighbors
+            - Both could fail
+
+        All to All Heartbeating
+            - To all other processes in the system
+            - Equal load per number
+            - Protocol is complete
+
+            Problem:
+            - What if one process receives messages very slowly
+            - Then it could marked that everything has failed.
+            - So very high false positive
+
+    2.3 Gossip Style Membership

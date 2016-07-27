@@ -97,6 +97,7 @@ How to use Macbook Pro
     http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1
     http://readwrite.com/2013/10/02/github-for-beginners-part-2
     http://githowto.com/making_changes
+    https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
     a. git config --global merge.tool vimdiff
     b. git config --global core.editor vim
          git config --list
@@ -257,6 +258,12 @@ How to use Macbook Pro
 
     f. Firefox Load Speed dial home page on New Tab
         - Tab Mix Plus addon: Events -> Load on New Tab: Home Page (chrome://speeddial/content/speeddial.xul)
+    
+    g. Install Macvim
+       This has clipboard support
+       sudo chown -R $USER /usr/eocal
+       brew install macvim --with-override-system-vim
+       alias vim='mvim -v'
 
 21. .DS_Store file in MAC
     http://apple.stackexchange.com/questions/69467/consequences-of-deleting-ds-store
