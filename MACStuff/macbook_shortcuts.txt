@@ -11,7 +11,7 @@ How to use Macbook Pro
     Goto Dashboard; Can add new ones
 
 2. Go to Desktop
-    Fn + F3
+    Cmd + F3
 
 3. Take Screenshot by selecting a portion on the screen
     Cmd + Shift + 4
@@ -267,3 +267,21 @@ How to use Macbook Pro
 
 21. .DS_Store file in MAC
     http://apple.stackexchange.com/questions/69467/consequences-of-deleting-ds-store
+
+22. Opening images and scrolling using Arrow keys
+    http://apple.stackexchange.com/questions/37914/move-through-images-in-a-folder-with-preview-app
+
+    Hit Space to open an image instead of enter
+
+23. How Do I Disable The Empty Trash Sound Effect In OS X
+    Open the Sound preference pane and select the Sound Effects tab.
+    If you uncheck "Play user interface sound effects" your Mac will stop playing sounds when emptying the trash, taking a screenshot, etc.
+
+24. Copying the current directory's path to the clipboard
+http://apple.stackexchange.com/questions/47216/copying-the-current-directorys-path-to-the-clipboard
+
+	try
+		tell application "Finder" to set the clipboard to POSIX path of (target of window 1 as alias)
+	on error
+		beep
+	end try

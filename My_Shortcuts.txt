@@ -85,7 +85,6 @@ VIM Shortcuts:
     12. Recursively look for files with a specific extension:   
             find $directory -type f -name "*.in"
 
-
     13. Diff inside vim
             vimdiff
     14. Open side by side view and Switch between them
@@ -220,17 +219,13 @@ VIM Shortcuts:
             1p
             2p ...
 
-CTRL-R {0-9a-z"%#*+:.-=}					*i_CTRL-R*
-		Insert the contents of a register.  Between typing CTRL-R and
-		the second character, '"'' will be displayed to indicate that
-		you are expected to enter the name of a register.
-    
-STACKOVERFLOW:
-G100kdgg - delete last but 100 lines
-Gdgg - delte entire file
-dG - if in the first line of the file
+    37. Few VIM macros
+        G100kdgg - delete last but 100 lines
+        Gdgg - Goto last line delte entire file
+        dG - delete entire file if in the first line of the file
 
-: % y + - Select all
+    38. Select All
+        : % y +
 FufFile
  ~
     Toggle case of the character under the cursor, or all visually-selected characters. 
@@ -378,6 +373,10 @@ FIND:
 
 http://www.thegeekstuff.com/2009/03/15-practical-linux-find-command-examples/
 http://www.thegeekstuff.com/2009/06/15-practical-unix-linux-find-command-examples-part-2/
+http://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard
+
+    To find all files with case insensitive string "foo" in the filename:
+        find . -type f -iname "*aas*"
 
 find . -type f -name "*.java"
 
