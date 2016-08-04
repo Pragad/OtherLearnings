@@ -342,6 +342,8 @@ Week 4:
             - It is used by the Coordinator to find the REPLICA servers to which a query should be forwarded.
             - Different Types:
               Simple Strategy and Network Topology Strategy
+              Network Topology Strategy:
+                - Go over the ring clockwise until you hit the first SERVER on a different rack
 
         SNITCHES:
             - To map IP addresses to RACKS and Data Centers

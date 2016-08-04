@@ -285,3 +285,6 @@ http://apple.stackexchange.com/questions/47216/copying-the-current-directorys-pa
 	on error
 		beep
 	end try
+
+25. Open Google Chrome from terminal with addons disabled
+    open -a Google\ Chrome --args --disable-extensions

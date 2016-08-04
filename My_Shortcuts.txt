@@ -375,8 +375,11 @@ http://www.thegeekstuff.com/2009/03/15-practical-linux-find-command-examples/
 http://www.thegeekstuff.com/2009/06/15-practical-unix-linux-find-command-examples-part-2/
 http://stackoverflow.com/questions/5905054/how-can-i-recursively-find-all-files-in-current-and-subfolders-based-on-wildcard
 
-    To find all files with case insensitive string "foo" in the filename:
-        find . -type f -iname "*aas*"
+To find all files with case insensitive string "foo" in the filename:
+    find . -type f -iname "*aas*"
+
+Finding Case Insensitive search
+    find . -type f -iname "*base*"
 
 find . -type f -name "*.java"
 
