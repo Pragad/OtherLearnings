@@ -318,7 +318,7 @@ P2P Systems:
         So while Chord or Pastry have O(log(N)) for all for both memory and lookup, Kelips has O(square root(N)) for memory and O(1) for lookup cost.
 
 Week 4:
-    4.1 Why Key/Value Store:
+    4.1.1 Why Key/Value Store:
     - Data is Large and Unstructured
     - Don't need Joins.
     - Foreign key is rarely used.
@@ -328,7 +328,128 @@ Week 4:
     NoSQL: Not Only SQL
         - Colum
 
-    4.2 Cassandra
+    4.1.2 Cassandra
         - Developed by FB
+        COORDINATOR:
+            - The client sends its queries to one of the servers in the system.
+            - It need not be one of the replicas. This server is called the coordinator.
+            - The coordinator need not be on a per data center basis, it could be on a per client basis or on a per query basis, it doesn't really matter.
+            - When Client sends a query, coordinator just forwards it to all or some of the replicas.
+            - IMP:  The coordinator again may be per-key, per-client, or per-query.
+
+        PARTITIONER:
+            - Mapping from KEY to a SERVER
+            - It is used by the Coordinator to find the REPLICA servers to which a query should be forwarded.
+            - Different Types:
+              Simple Strategy and Network Topology Strategy
+
+        SNITCHES:
+            - To map IP addresses to RACKS and Data Centers
+
         Writes:
             - Hinted Handoff Mechanism
+              - Happens when Client sends a write to a coordinator and the replicas are down
+            - The coordinator receives his write, uses the PARTITIONER to find out which of the replicas that map to that particular key
+            - Coordinator keeps a copy of the WRITE till the replica that is down comes up
+            - This is done for a small duration.
+
+            - Replica logs the write to a diskfile to protect from failures
+
+        MEMTABLE:
+            - It is an IN-MEMORY REPRESENTATION of multiple key-value pairs
+            - It is the one that holds all key-value pairs
+            - it is maintained as WRITE BACK CACHE instead of WRITE THROUGH CACHE
+
+            WriteBack Cache - Storing temporarily in memory
+            WriteThrough Cache - Writing directly to disk. Slower
+
+        Access Table OR SSTable:
+            - a ROW could be split across multiple access tables.
+            - Once Memtable becomes full or reached a timeout, you flush its contents to disk
+            - CREATE an ASSIST table or a SORTED String Table. This is stored on the disk.
+            - Searching for a KEY in this data file could take long as it has KEY and VALUES
+
+            - So an INDEX file is mainted to Store Key and position of data 
+            - Use BLOOM FILTER to store efficiently
+            - This helps in telling if the key is present or not
+
+        Membership:
+            - Every server maintains a LIST OF ALL OTHER SERVERS in the cluster
+            - Uses Gossip style memebership
+            - Suspicion mechanism is used to ensure ACCURACY
+
+    4.1.3 CAP Theorem
+        Cassandra favors Availability than Consistency (can tolerate a hit)
+        
+        Quorum:
+            - More than 50% of replica should response
+            - ANY
+            - ALL
+            - One : At least one replica. Can't be the coordinator
+            - Quorum
+            - Local_Quorum
+            - Each_Quorum
+
+    4.1.4 Consistency Spectrum
+        - Per Key Sequential
+
+        - CRDT - Commutative Replicated Data Type
+            - Writes need not be ordered.
+            - Writes in any order will give the same result
+
+        - Red-Blue Consistency
+            - Blue ops are COMMUTATIVE
+            - Red ops should be executed in the same order
+
+        - Causal Consistency:
+
+    4.1.5 HBase
+        - API functions:
+            - Get/Put
+            - Scan (row range, filter)
+            - MultiPut
+
+        - Prefers Consistency over Availability
+
+        - HBase Table
+            - Split into REGIONS
+              Regions are a collection of ROWS
+            - You don't want to store the entire ROW. So you split it into REGIONS
+            - Column Family:
+                - Subset of Columns with similar query pattern
+
+            - One STORE per combination of ColumnFamily + Region
+
+    4.2 Time and Ordering
+    4.2.1 Why Synchronization:
+        - Violation of Correctness:
+            - When you miss the bus
+        - Violation of Fairness:
+            - When you wait too long for the bus
+
+        - Each system has its own Clock
+        - It is easy to ORDER events within a PROCESS
+        - But it is difficult to ORDER events ACROSS processes
+
+        Clock Skew vs Clock Drift
+        - Clock Skew
+            - Difference in Values of two clock
+        - Clock Drift:
+            - Difference in speed
+
+    4.2.2 Cristian's Algorithm
+        - External Synchronization
+        - By the time we get the response from External Server, time would have moved on
+
+        IMP:
+        - NEVER change the CLOCK to old value
+        - Can change the Speed of clock (Both Increase and Decrease)
+    
+    4.2.3 NTP
+        - One of the standard
+
+    4.2.4 Lamport Timestamp
+        - Alternative to Synchronizing clocks
+        - Order the events
+
+    4.2.5 Vector Clocks
