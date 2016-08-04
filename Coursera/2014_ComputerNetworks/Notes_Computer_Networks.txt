@@ -1,0 +1,1508 @@
+Week 1:
+	Video 2:
+		Statistical Multiplexing:
+			Giving resources to more than possible. 30 nodes while possible to only 20. Gain = 1.5x
+	Video 3:
+		Hosts, Links, Routers/Switch/Hub and Apps
+		Full duplex, half duplex and simplex
+		Message Broadcast
+	Video 4:
+		Sockets
+            Blocking calls - recv, connect, accept; Bind, Listen, Accept
+    Video 5:
+        Traceroute: Explanation with Example
+    Video 6:
+        Protocol Layers:
+            HTTP -> TCP -> IP -> 802.11
+            Every layer has some information as to what the next layer should be.
+            TCP layer has the port number to tell if to go to HTTP or something else; This is called DEMULTIPLEXING KEYS
+            DisAdv: Information hiding. Some apps would like to know if the underlying protocol is wired or wireless. But it gets hidden due to protocol layering
+    Video 7:
+
+Week 2:
+    Video 1: Physical Layer:
+        Digital bits will gets sent as analog signals.
+        So the bits needs to be represented as analog signal in some way
+            Wires Wireless
+            Propagation
+            Modulation Schemes
+       Latency - Sending a message over the link:
+            Transmission Delay: Putting a message on the wire. M/R
+            Propagation Delay: Going to the other end of the wire. L/ (2/3c). i.e. D
+            So Latency = M/R + D
+       Bandwidth Delay Product: Amount of Data in flight
+            Message take up space on the wire. So some amount of bits are in the wire. This amount of data in flight is BDP
+            R * D
+    Video 2: Wires and wireless
+        WiFi uses ISM band
+RTT=M/R + 2D
+Where M is a message in bits, R - rate of link in bits per second, be accurate 8 bits = 1 byte (B)!
+As ACK is a small packet we can not take M/R for it, we use M/R for the Message only.
+We use 2D as the Message and ACK (they both) propogate across the link.
+
+The delay is D in sec, or in ms, ns - be accurate with milli and nano!
+Message length is M in bits, bytes or KB, MB as well.
+Short reply message  = ACK
+        
+    Video 3: Propagation of signals
+        Fourier Analysis: Signals are represented in frequency space
+        Lesser Bandwidth / Fewer frequencies -> Degrades the signal
+
+        When a signal is sent: 3 EFFECTS
+            1. Attenuation
+            2. Bandwidth: higher frequency won't get passed
+            3. Noise
+            4. Delay 
+        Wireless Properties:
+            Light has a much higher frequency ang goes in straight like shinig a torch
+            Sound has a lower frequency and can go around
+            Sending wirelss signals higly depends on the environment
+            802.11 - MICROWAVE BAND
+            Multipath fading - OFDM
+                Either two signals add up and give a stronger signal or 
+                    Might get subtracted and cancel the original signal.
+                this happens when signals take multiple paths and multiples signals reach the receiver
+
+
+    Video 4: Modulation - i.e. REPRESENTING BITS AS SIGNALS
+        NRZ - Non Return to 0
+            i.e. 1 is represented as High
+                 0 - represented a Low
+
+		Clock Recovery: Manchestor coding/Scrambling
+            4B/5B - Map every 4bits to 5 bits. This avoids long runs of 0s.
+
+4B5B encoding table:
+
+0000 11110
+0001 01001
+0010 10100
+0011 10101
+0100 01010
+0101 01011
+0110 01110
+0111 01111
+1000 10010
+1001 10011
+1010 10110
+1011 10111
+1100 11010
+1101 11011
+1110 11100
+1111 11101 
+                    Map every 4 data bits into 5code bits
+            NRZI - Invert Non Return to 0. This is to avoid long runs of Zero and One.
+            To avoid repeated 0s we came up with a new mapping. But that does not avoid repeated 1s. So you INVERT the signal whenever a 1 comes
+        Baseband modulation: Signal is put on a wire and  transferred
+        Passband modulation: In case of wireless, we have to put the signal over a higher frequency carrier wave
+            Carrier is some signal that is oscillating at a desired frequency.
+            Frequency shift keying: how fast
+            Amplitude shift keying: How high, i.e. how much up and down
+            Phase shift keying: changing the cycle. i.e from up down to down up
+
+    Video 5: Key Limits
+        how quickly information can be sent over a physical channel.
+        So useful to know the max speed at which we can send signals / what is possible to achieve. 
+        Bandwidth, Strength, Noise
+        More signalling levels means More information
+        Nyquist Limit:
+            Symbol rate = 2B. A symbol is nothing but a waveform used to convey information. It can be more than one bit or even less than one bit in certain cases.
+            A noiseless case:
+                R = 2B log V
+                Consider if we have V different signal levels, then we have logV bits
+        Shannon capacity:
+            Considers noise
+            No. of different signalling levels = S + N at the receiver
+            S+N compared against the noise (N). If the ratio is large then we can distinguish many different signal levels.
+            Sigal to Noise Ratio: If S/N = 1000 -> we take log to base 10. which give 30dB. 10log(S/N).
+            Capacity C = B log2(1 + S/N) bit/sec. This would be the max capacity
+            SO WE CAN TRANSFER SIGNALS UPTO A CERTAIN RATE BUT NOT HIGHER
+            Wired vs Wireless:
+                With wires and fibres we can engineer the parameter, change the bandwidth
+                So we can fix the DATA RATE.
+            Wireless:
+                SNR can vary greatly (Signal to Noise Ratio). So we cannot design a system considering the worst case.
+
+    Video 7: Link Layer:
+        Framing: Delimit the start and end of a frame/messages:
+        Byte count, byte stuffing, bit stuffing
+        Byte Count - Can't handle error
+        So Byte Stuffing: A special character to denote the start and end of the frame
+        Bit Stuffing: Insert a 0 after FIVE 1s; Slightly more efficient than BYTE STUFFING but more complicated
+        PPP - Point to Point Protocol
+            Flag is 0x7E and ESC is 0x7D
+            IMP: After Adding or Removing ESC, we XOR with 0x20. This just flips the 5th bit
+                Completely removed the occurance of the FLAG character 0x7E from the contents of  the frame. so now we can just search for the byte stream for 0x7E, and when you see it, you have got the start of the frame. It can't occur inside the grame because we have modified in some way by using this convention.
+
+    Video 8: Error handling
+        Detect errors with code - Add check bits 
+        Correct errors with code - Add more check bits
+        Retransmit lost frame
+        
+        Sending a duplicate is not going to help as it would just help in detecting if an error is present and it has a 50% overhead.
+        By Sending TWO copies of data, we can know that an error has occurred. But cannot detect the error. We can detect errors but cannot correct errors. With 2 errors it can fail.
+
+        So we add R DIFFERENT CHECK BITS
+        R = fn(D)
+        CodeWord = D dataBits + R check bits
+        SYSTEMATIC BLOCK CODE - Operates on a block of data and it gets appended to the message
+            But there could be an error in the CHECK BIT ITSELF
+        Intuition for Error Codes:
+            D date Bits and R check bits. So no. of codewords = 2 ^(D+R) code words can be sent and received
+            But the really correct codewords that get sent are 2 ^ D. So if we randomly choose code words from the whole space the probability is very low. i.e. 
+                2 ^ (D+R) - sample space
+                2 ^ D     - Correct code words
+                Probability = 1/(2^R)
+        Hamming Distance: Distance we have to change to get one string from another.
+            For a code of distance d+1, upto D errors will always be detected
+            For a code of distance 2d+1, upto d erros can always be corrected by mapping to the closest word
+
+    Video 9: Error Detection: 
+        Burst errors
+        Parity - Add one check bit. This will be sum of all other bit in MODULO 2.
+                 Hamming Distance - Flipping one bit, will make the parity sum wrong. But flipping another bit, will bring back the correct parity. So distance = 2
+                 So Detect ONE error. Cannot correct any error.
+                 Larger Errors: Catch all odd errors.
+
+        CHECKSUM - 
+                 Instead of summing up to a SINGLE BIT, we use 16bits. TCP, UDP, IP etc uses checksum. 
+                 Checksum - Sum up all data and then negate it. 1's COMPLEMENT ADDITION
+                 1s Complement - Just negate all bits
+                 Distance = 2; Because by changing two bits we can fool the sum
+                 We can find ALL BURST ERRORS UPTO 16
+
+        CRC
+                 Take N bits and generate K check bits, so that n+k bits are evenly divisibly by C.
+                 CRCs are using in ADSL, Ethernet, 802.11, Cable
+
+    Video 10: Error Correction:
+        Hamming Codes: Read more
+                       Parity BITS will be in positions of 2. In a 7Bit, code, check positions 1,2,4
+                       Check position in ONE covers all positions that has a ONE in the binary expression.
+                       Check position in TWO covers all positions that has SECOND bit set in the binary expression. i.e. 2, 3, 6, 7
+                       Hamming codes are fairly simple.
+        Convolutional Codes: Read more
+                       Mix of input bits
+        LDPC: Low Density Parity Check Code
+        IMP: When to use ERROR CORRECTION and when to use ERROR DETECTION
+            If a huge burst of error occurs, then better to detect error and retransmit
+            If very small error, then instead of retransmitting the whole thing, just do an error correction
+                Also useful when there is not time to do a retransmission
+            
+
+Week 3: 
+    Video 1: Overview of Link layer
+    Video 2: Retransmissions: 
+        ARQ - Automatic Repeat Request
+        Timeouts
+        Sending ACKs back.
+            Along with ACKs send the frame number as well.
+        Stop and Wait:
+            Allows only one frame to be outstanding from the sender.
+            Not good for a network with high bandwidth
+        Sliding Window:
+            To get over the probem of STOP and WAIT, we use SLIDING WINDOW, where we have W outstanind frames.
+            Stop-and-wait allows only one frame to be outstanding at a time; sliding window allows up to a full window of frames to be outstanding. For this reason, sliding window performs better than stop-and-wait on links with a high bandwidth-delay product.
+            RATE = 1Mbps; D = 50ms.
+                So RTT or 2D = 100ms
+                # frames per sec = RATE / 2D
+                                 = 1Mbps / 100ms
+                                 = 10^(3)Mbpms / 100 = 10 frames per sec
+                And if we consider a frame to be 10000bits, then all we can achieve is 100kbps. But we have a bandwidth of 1Mbps. So increasing the bandwidth is not going to affect anything
+            RTT - Round Trip Delay = 2D
+
+        Links frame messages and use codes and possibly retransmissions to detect and correct errors. Switching may occur in the link layer as in the case of Ethernet switches. But congestion control is a function of the network layer as it builds across many links.
+
+    Video 3:
+        Multiplexing: Sharing the bandwidth
+            TDM: time division multiplexing
+                Different users send at different time. Round Robin TDM multiplexing.
+                Multiple users sending in series.
+                Needs synchronization between the users
+            FDM: Frequency division multiplexing
+                Users transmit simultaneously on different frequencies.
+                Multiple users sending in parallel.
+            TDM/FDM are useful for continuous traffic. Not for bursty traffic.
+
+TDM and FDM divide bandwidth up in different ways: FDM gives each of N users 1/Nth of the bandwidth all the time, while TDM gives each of N users all the bandwidth for 1/Nth of the time. Both schemes deliver the same bandwidth over time, but TDM has a higher peak bandwidth.
+
+You know how long your window is (given) and you know the rate so you can work out how much data you can send in a single slot.
+
+You know how many slots there are (given) and that the sender happens to be perfectly aligned with the required slot so there is no delay at the start. Imagine that the message can be sent in 4 slots and there are 5 slots in total:
+
+send 1 - wait 4 - send 1 - wait 4 - send 1 - wait 4 - send 1
+
+How many time slots does it take in total? Multiply the time slots by the slot length to give the latency.
+
+Unfortunately, I got this one wrong on my last retry, but I think I learned something about the algorithm that wasn't covered in the lecture or book (since only the scenario of the activity of a single frame is covered), but I am unclear on some details. 
+
+    A and B send a frame and they collide
+    A and B re-send a frame and they collide
+    A successfully sends a frame
+    A sends a frame and B re-send a frame and they collide
+
+After this scenario, A is randomizing over 2-slots, not 4.
+
+To me, this suggests that BEB starts over again after a successful send (rather than retaining its last worst-case)! Either that, or it always starts a send sequence optimistically over a single slot.
+
+When I think about it, it makes sense, since the system needs to be adaptive and this does that by keeping it simple. But it should be noted then, that in a busy system, it might be reasonable to expect collisions all the time, rather than settling down into a more stable scenario (since a new send seems to not participate in BEB until collision--inferred by the scenario above). I guess this hinges on the following question (although, I think it'd be useful to walk through the correctness of this):
+
+Does A step down immediately to 0, or, say, if it's last interval was length 16, on successful send, would it step down to 8, then 4, etc, first? or does it simply start EVERY frame by optimistically sending over single slot?
+
+Yes, it drops back to start condition after a successful send. If it dropped back only a single step this would potentially leave the link idle where there was just a short period of contention. Remember that only one of the nodes involved in the original collision can drop back on any transmission slot so the others will still be holding their higher values. This means that overall the spacing will stay high as long as there is a high collision rate but the delay can respond quickly to improvements in network load.
+            2G network - TDM inside FDM. 
+            But with TDM and FDM, a user cannot gain the maximum utilization. 
+
+            What we needs is,
+            Statistical Multiplexing:
+                Multiple access schemes
+                    Multiplex network traffic based on user's demands.
+                    i.e. Two users each need R bandwidth. But combining it, they would need a bandwidth R" < 2R
+
+By statistically multiplexing bursty data traffic rather than using a fixed FDM or TDM scheme, more users can be supported by a given network because each user can access bandwidth that is momentarily unused by other users.
+
+                Randomized Multiple Access - Used for Wifi 802.11
+                Contention Free Multiple Access - Nodes take turns in well defined order
+
+    Video 4:
+        Randomized Multiple Access
+            Multiple nodes are ready to send information. So how do they decide as whom should be sending.
+            a distributed system. No central control.  No overall view of what is going on in the system.
+
+While all factors make the problem harder, the fundamental difficulty is that there is no central party with overall knowledge to coordinate the nodes; they must do it themselves, even though each node knows only what it observes directly.
+            
+            Randomized Multiple Access: is the basis for classic Ethernet.
+
+        ALOHA Network:
+            If anyone has the info, send it. 
+            If ACK received, all is good.
+            Else wait for a random time and then retransmit
+            Works well when the network is NOT BUSY most of the time, i.e. Low LOAD
+            But not efficient under High LOAD
+Collisions, and subsequent resends, waste bandwidth in Aloha. Few collisions will occur if the load is low; many collisions will occur if the load is high.
+
+        WAYS TO IMPROVE ALOHA:
+            CSMA: Carrier Sense Multiple Access
+                Listen to the medium to see if it is busy
+                BDP - how much information can fit
+                    CSMA works good only is BDP is < 1 (much less than ONE)
+                    
+CSMA improves on ALOHA by sensing for transmissions before sending. This does not eliminate collisions but reduces them, especially if the bandwidth-delay product is small, making CSMA more bandwidth efficient than ALOHA.
+
+            CSMA/CD:
+                Not only listen, but also detect collisions. Little harder for wifi
+To have all hosts reliably detect collisions, transmissions must continue for a minimum time. Hence frames have a minimum size, achieved by padding if necessary. 
+
+            CSMA Persistence:
+                What should a node do, when it detects that ther is traffic in the network.             BEB: Binary Exponential Backoff
+             ETHERNET:
+                1-persistent CSMA/CD with BEB. BEB doubles the CSMA/CD re-sending interval for successive collisions to match the interval to the number of competing senders.This adaption enables it to work well for both large and small networks so the number of queued senders should decrease as each sender succeeds.
+            
+            For Multiple Access:
+                We need, source address and Destination address
+                Checksum - error detection
+                Preamble - to identify the start
+            Modern Ethernet:
+                Based on switches / Switched Ethernet
+
+    Video 5:
+        Wireless Multiple Access Protocols:
+           Hidden and exposed terminals are caused by differing coverage areas, which is a problem for wireless networks; the coverage of wired networks is engineered to eliminate these problems. 
+        Detecting Collisions: Take a long time and not immediate
+        MACA - Multiple Access with collision Avoidance
+            MACA uses the RTS/CTS exchange to stimulate activity at the receiver. The CTS, from the receiver, is then used to determine which nodes should stay silent to avoid collisions.
+            CSMA/CA is used in 802.11 (WiFi). It inserts random gaps when transmitting to try and avoid collisions. This is different than the RTS/CTS collision avoidance mechanism of MACA, which can optionally be used in 802.11,
+                  
+    Video 6:
+        In wireless: Multiple access is solved using randomization
+        Different Approach: Based on turns instead of randomization
+            Random access: Not good when HIGH OVERLOAD
+        Ordering:
+            Token Ring: A token gets passed anti-clockwise
+                Also we can make one node send TWO frames at every chance. 
+            DisADV:
+                Token gets lost/ corrupted. Solution: Issue new token if no token for a long time.
+                High overhead at low load.
+Turn-taking protocols order transmission opportunities to eliminate collisions. Service is predictable and has a fixed overhead. While performance is better at high load, the fixed overhead is larger than that of randomized schemes at low load.
+
+    Video 7: LAN Switches:
+         Switches operate in the LINK layer.
+         Hubs VS Switches:
+            Hub - two hosts can't send at the same time. 
+            SEE IMAGES
+        What ports are in a switch
+            Switch has buffereing either on the i/p or the o/p side, when multiple messages from source are sent to the same destination.
+            Buffering is FINE for SHORT-TERM mismatches. But if too many hosts, i/p buffer would get filled up. 
+
+Hubs join all input wires, without the need to interpret frames or buffer them. Switches interpret frames, buffer them, and send them to the correct output. Switches are more complex than hubs.
+
+        Switch Forwarding:
+            Frames don't carry the PORT addresses. 
+            BACKWARD LEARNING:
+                Backward learning uses the source ADDRESS carried on incoming frames to learn the destination PORT to use for the given address. When the destination address on a frame has not been learned, the frame is broadcast to all ports (except the incoming port). Hubs can be connected to switches and backward learning will still work properly.
+
+    Video 8: LOOPS in a network
+        Switch Forwarding with LOOPS.
+        Switches collectively find a spanning tree.
+            Spanning TREE has no loops.
+            How will all the switches decide and find a spamming tree.
+            The switches are distributed and no central control.
+            It all overcomes switch failures
+
+        Spanning Tree Algorithm:
+            The spanning tree defines a loop-free portion of the topology that is used for reachability. There are often many possible spanning trees for a given topology: the spanning tree algorithm is defined to let all nodes form one, unique spanning tree.
+
+Week 4:
+    Video 1: Network Layer Overview
+        Routing vs Forwarding:
+            Process of deciding which way traffic should go; best way by communicating with other nodes; global process
+            Expensive
+        Forwarding:
+            What to do, when we get a packet. After routing we get a table and forwarding is just using the table.
+            First Routing happens and the forwarding happens.
+
+    Video 2: Network Services:
+        1. Connectionless / Datagram Model:
+            Most popular datagram model is the IP
+            Forwarding table: See the screenshot
+        2. Connection oriented / Virtual circuit:
+            three phases:
+                a. Connection establishment - finding a path through the network. And circuit info is stored in all the routers along the path
+                b. Data transfer along the path
+                c. Circuit is deleted after the transfer is done.
+                They don't need a full address, instead just need a short address like Circuit no. 7.
+                These short labels need to be unique just across the link.
+                Multiple circuits can send along one link.
+                MPLS - multi protocol label switching
+       Connection oriented and connection-less models can be combined by adding specific header to the packets. 
+                *# - How ISPs work?
+        Store and Forward Packet Switching:
+            Receive a full packet and store them temoporarily - Routers
+            Uses Statistical Multiplexing to share bandwidth
+        Datagram vs Virtual Circuits:
+            QoS - Not a single packet but for a group of packets. 
+                So easier to add in virtual circuit model.
+
+       Video 3: Internetworking
+           Connecting multiple smaller networks into a larger network
+               Switches can already handle different link speeds in the context of a single network. All of the other statements relate to joining different types of networks.
+                ICMP 
+                IHL - internet header length
+
+        Video 4: IP addresses and IP prefixes
+            IP prefixes - are block of addresses
+            Ip addresses are allocated in blocks called prefixes
+            24bit prefix would have 32-24 = 8 bits left over.
+                So this would have 2^8 addresses
+                More specific prefix 
+                    Smaller number of ip addresses
+                Less specific prefix:
+                A /24 prefix has 32-24=8 bits for hosts. A /16 prefix has 32-16=16 bits for hosts. So a /16 prefix contains more addresses.
+
+                Public IP address:
+                    Can be used in a global internet.
+                    Cannot make it up.
+                    Has to be allocated by someone. Almost exhausted, hence came ipv6
+                Private IP addresses:
+                    Can be allocated by the user
+                    Need public address to talk to the global internet.
+                    NAT does the work of translating public to private IP addresses.
+                Allocating Public addresses
+                    RIR: regional bodies
+                        They have IPs given by IANA. It then allocates ip addresses to companies in their regions. The companies apply for ip addresses and they get them.
+                        Finally once the company has the ip addresses, it allocates the ips to the customers / ISPs / computers. -> this work is done by DHCP
+
+        Video 5: IP Forwarding: How routers forward packets
+            Forwarding vs Routing:
+                Forwarding is just the process of sending packets as it arrives. 
+                Routing is the process of determing the path etc
+
+            Use prefixes to ensure scaling.
+            All IP addresses on ONE NETWORK BELONG TO THE SAME PREFIX.
+            Prefixes in the table can overlap.
+            So comes LONGEST MATCHING PREFIX
+                For each packet, find the longest prefix that matches the destination address.
+            Flexibility of longest matching prefix:
+        
+        Video 6: ACP and DHCP
+            ARP translates IP to link address
+            DHCP provides IP addresses
+
+            Ethernet address is on the NIC.
+            So when a node wakes up, it can get the ethernet address from the NIC
+            DHCP is a service that leases IP addresses and also provides other host configuration.
+                Given an IP address of a node, ARP figures out its ethernet address
+                Knowing only the destination IP address isn’t sufficient for link layer communication, because the link layer needs to know the MAC address, which it finds using ARP.
+                ARP uses broadcast messages 
+            ARP and DHCP are discovery protocols
+                So it uses broadcast
+
+        Video 7: Packet Fragmentation:
+            Issue because of the heterogenity of various networks.
+            Networks can have different maximum packet sizes
+            A large packet sent in one network might not fit in another network
+            Fragmentation happens at the routers.
+
+                The packet size problem arises because different networks support different size packets.
+                Larger packet sizes are preferred because they are better for efficiency
+                A packet is fragmented or dropped when it encounters a router that cannot support the packet size 
+
+            Fragmentation is large work for the routers.
+            If a smaller fragment is lost, then we lose the whole data
+
+Increases the processing load on the router that has to fragment the packet
+Reduces the probability of the entire packet being received by the destination
+Increases the processing load on the router that has to reassemble fragments
+Fragments make inefficient use of network links that can support larger packets 
+Fragments are not reassembled by routers; they are reassembled by the host at the destination            
+
+            Path MTU discovery:
+                Send a large packet, if cannot fit, the router will reply telling that max size that it can take.
+                Here DF - Don't Fragment flag will be set, so that if a router can not transmite the packet, a error message will be triggered.
+
+        Video 8: ICMP
+            Internet Control Message Protocol - Error handling
+
+
+        Video 10: NAT:
+Middleboxes allow us to add new types of functionality into the network
+Middleboxes make networks more complex
+Middleboxes do not fit into the layering model
+Enterprises use middleboxes to control many hosts on the network 
+           NAT box is configured with an external IP which it maps the internal IP to.
+It is the combination of IP address and port that needs to be unique externally (and internally).
+NATs are useful for dealing with IP address exhaustion issues
+The NAT table maps internal address and port to an external address and port
+Externally visible port numbers for different connections should be unique 
+
+
+A routing algorithm should use all available links to find the “best” paths
+Spanning trees improve routing efficiency by eliminating all loops from the network
+Routing algorithms adapt to network failures by computing new routes in response to them
+Routing can be viewed as a technique for allocating network bandwidth 
+
+
+Unicast routing computes paths from a given source to a single destination
+A goal of a routing algorithm is to utilize all of the nodes and the links in the network
+Coordination is difficult because nodes can talk directly only to their neighboring nodes 
+Routing is designed to find paths even when individual links and routers fail. Thus there can be no single master node.
+
+
+    Week 5:
+        Video 1: 
+Spanning trees provide a way to navigate the network without loops, but some spanning trees may be efficient and others not efficient; simply being a spanning tree is not a sufficient condition for efficient routes. Routing algorithms are designed to find the efficient routes, which may take the form of spanning trees from each source or to each destination.
+A routing algorithm should use all available links to find the “best” paths
+Routing algorithms adapt to network failures by computing new routes in response to them
+Routing can be viewed as a technique for allocating network bandwidth 
+
+Unicast routing computes paths from a given source to a single destination
+A goal of a routing algorithm is to utilize all of the nodes and the links in the network
+Coordination is difficult because nodes can talk directly only to their neighboring nodes 
+Routing is designed to find paths even when individual links and routers fail. Thus there can be no single master node.
+        Video 2:
+            Shortest Path:
+                
+            Sink Trees and Source Trees
+
+        Video 3:
+            Dijkstra's algorithm computes shortest paths from one source node to all other destinations in the network.
+The distance of a node, once it has been extracted, will not change
+When a node is extracted, the distances to its neighbors are relaxed
+The node with the lowest distance is the one that gets extracted first 
+            Relaxation of a node: 
+                Vists all of its neighbors and sees if the cost can be lowered
+
+        Video 4:
+            Distributed Setting:
+                Where, the whole network is not visible and instead only information about the neighbors
+                All nodes run the same algorithm concurrently
+            Distance Vector Routing:
+                Each node maintains a vector of distances and next hops
+                This is a distributed version of Bellman Ford
+                Very slow convergence after failures
+                Every exchange we find one more hop longer - Adding routes
+                Removing routes:
+                    Other nodes need to forget and time out
+                Problem:
+                    Partitions: when the path breaks. 
+Distance vector routing is used in a distributed and decentralized setting
+For some cases of node failures, distance vector routing will be able to correct the path
+Distance vector algorithm identifies the best neighbor to use for routing to a destination 
+
+            Link state algorithms are used in practice
+Stephen, remember what the question asks: "What is the size of a single link state packet?".
+
+and the information provided:
+
+Link state packets have format of: a) 8-bits representing the number of neighbors connected to node, b) for each neighbor the identity of neighbor represented by 16-bits and the cost of link to neighbor also represented by 16-bits.
+
+So, how many neighbours?
+
+Lemme help you a little bit... how many routers are connected to the each router? Simple: 5. How is represented the link state packet? By the identity plus the link cost. Then, you have to add a byte representing the number of routers. So, do the math and it match one of the answer listed.
+                
+
+            Video 5:
+                Flooding
+Flooding is inefficient because a node could possibly receive multiple copies of the same packet
+Flooding stops when the messages reach nodes that have already forwarded or have no other neighbors to whom they can forward
+A node should not flood a packet that it has flooded before 
+The flooding algorithm would not fail if there were loops in the network
+               
+        Video 6:
+            Link State Routing:
+            Distance Vector routing spread the work of computing the routes out across all the nodes of the network
+            In link state, we give everyone a copy of the toplogy and let everyone compute their own routes. So we are really replicating a lot of work in someway as opposed to having work
+            co-operatively as in Distance Vector routing.
+
+            Phase 1: Flooding:
+                Every node send the local portion of the topology information as FLOODING TO all other nodes
+            Phase 2: Forwarding table
+                Each node will compute it own forwarding table (by running djkstra's)
+                LSP - Link State Packets
+
+Each node has to flood its LSP describing its position in the topology
+Nodes learn of failed links upon receipt of the LSPs
+Nodes learn of new links upon receipt of the LSPs 
+
+        Video 7:
+            Equal path multi state routing:
+                DAG - directed acyclic graph
+Both Dijkstra’s algorithm and distance vector routing can be extended to compute equal-cost multi-paths
+ECMP routing can potentially improve performance
+The amount of forwarding state maintained by each node is the same in both ECMP and single path routing
+“Jitter” is avoided in ECMP by sending packets corresponding to a given flow along a single path 
+
+        Video 9:
+            Routing decisions are made individually by nodes and not by a routing region
+Hierarchical routing provides savings in forwarding-table size
+False:Compared to traditional routing, there are no drawbacks to hierarchical routing
+False:It introduces the concept of a “region”, where a “region” is the entity that computes routes from nodes outside the region to the nodes in the region
+False:Hierarchical routing is used to lower the cost of paths 
+
+        Video 10:
+            Things that we can do with IP prefixes - 
+            Splitting into smaller subnets/joining together into a larger aggregation network
+            routers keep track of the prefix length
+                use them for longest prefix matching algo
+                So routers can change the length of prefix whenever needed without affecting the hosts
+False: The length of the IP prefix containing a given address block remains the same across different ISPs
+False: Aggregation increases the size of the forwarding tables
+IP prefixes can be used to group IP address blocks, which in turn helps reduce forwarding state and routing computation
+False: Prefix aggregation is typically used to combine prefixes from different regions 
+
+        Video 11:
+            Routing when there are multiple parties in the network
+            Transit Service and Peer Service
+Transit service is an agreement between an ISP and a customer, where the ISP provides the customer with connectivity to the rest of the Internet
+With peering agreements, an ISP accepts traffic from its peer only if the traffic is meant for the ISP’s customers
+Internet-wide routing has to respect the individual policies of different ISPs 
+
+        Video 12:
+            BGP: Broder Gateway Protocol
+                Path vector protocol.
+                Closely related to distance vector model
+False: BGP is a routing protocol used only inside individual ISPs and not across different ISPs
+False: A BGP route announcement contains only the distance to a prefix but not the intermediate ASes on the path to the prefix
+False: ISPs do not exercise control over the prefix announcements they reveal to their neighboring ISPs
+Border routers of ISPs select paths based on economic considerations leading to routes that are not necessarily the shortest routes 
+-------------------------------------------------------------------------------------
+There are two parts to VoIP, the control mechanism and the speech packets. The establishment of the route between the parties has to be done over TCP since every packet is vital to set up the parameters of the call (endpoints, session initiation protocol, voice codec etc.). Once all the pieces are in place and the control mechanism has set up the route for the speech packets, then UDP takes over using Real Time Protocol. As Gerry says, as long as the majority of the UDP packets get through in the right order then the speech will sound continuous. At the end of the call (hangup) you switch back from UDP to TCP so that the call can be ended in a secure and normal manner, again all packets are important.
+Human speech is intelligible at 64Kbps. The loss of a few packets here and there would almost be insignificant. Maybe there would be a blip or crackle sound on the line or dead air.
+Plus VOIP has the advantage of automatic recovery. If the recipient can't understand, he just asks for the person on the other side to repeat it.
+
+What I understood from this was that protocols that include IP address or port information in the body of their messages, rather than just the header, could cause problems as the NAT only rewrites the headers, it doesn't even look at the payload. An example of this would be the PORT command in FTP.
+------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------- ------------------------------------------------------------------------------------ 
+
+    Week 7:
+        Video 1: Transport layer overview
+            Transport layer is just using the network simply to get information between the hosts; All the information sent is not examined by the devices in the network.
+            In like and network, the bits are examined and used.
+
+            Differnt types of transport servies: UDP and TCP
+            Reliable _ TCP - tcp fixes if the message is broken
+            TCP:
+                Reliable and in order;
+                infinite stream of bytes;
+                flow control matches sender to receiver;
+                Congestion control matches sender to network
+            SOCKETS AND PORT:
+                Ports are where applications attach to the transport layer
+                Sockets serve these different ports
+                ports are 16bit identifiers
+                An application is identified using an IP and port
+
+                Clients:
+                    Clients can use any port
+
+                Services:
+                    Ports are <1024. These ports needs administrative services. Well know ports
+                    80 - http protocol
+TCP provides reliable and in-order delivery of segments
+TCP supports the delivery of content of arbitrary length
+False: TCP segments are sent out of the source node immediately after they are generated
+TCP ensures that the sending rate is matched with the network capacity 
+
+        Video 2: UDP
+            Provides datagram service
+            Used for bytesteam type abstractions
+            Eg: VOIP, RPC, DNS, DHCP etc
+
+            UDP Buffering:
+                Until the app calls recieve or send, the info would be buffered temporarily insdie the kernel
+            CHECKSUM:
+                Covers not only the UDP but also the IP header.
+                Value of 0 in the checksum - means no checksum
+TCP: Applications that communicate bytestreams reliably
+UDP: Applications that don’t need reliability or bytestreams
+Not Supported: Applications that want reliability and use messages instead of bytestreams 
+
+        Video 3: TCP: How connections are Setup
+            Connection Establishment:
+                Sender and Receiver synchronizing themselves so that they can start the transfer
+                SYN is considered to take 1 byte in sequence number space
+                Aggree on stuffs like,
+                    Max msg size and various othe parameters
+                    All of this operation is done with SEGMENTS
+                    
+                    SEGMENTS:
+                        Transfer of CONTROL information rather than DATA
+                        This is called SIGNALING
+                        
+            TCP: Three way handshake:
+                is use to setup a connection.
+                - Each side probes the other by sending a sequence number.
+                - The other side sends response with the ACK
+                - The client again sends an ACK to tell that it received the ACK
+
+                TCP State Machine:
+False: Connection is established at both ends when the server responds to a client’s SYN with its own SYN message
+False: Connection is established at the server when it first receives a SYN from the client
+False: The server’s SYN message has a sequence number that is 1 higher than the client’s SYN
+Connection is established at the server only when it receives an ACK to its SYN message 
+                TCP also allows simulataneous OPENS of client and server. this is P2P
+                
+        Video 4: Connection Release
+            How to release connections / How to tear them down
+            Main task - close connections in a orderly way
+            two set of FINS are transmitted
+            Similar state machine - screen shots
+            Time Wait: So that everything gets closed properly
+connection release requires at least two messages per direction
+Connection release messages are retransmitted if they are lost
+Each FIN/ACK message pair closes one direction of the data transfer
+False: The receiver of a FIN message immediately sends a FIN message of its own 
+
+        Video 5: Sliding Window Algorithm for a reliable Data Transfer
+            ARQ - Automatic Repeat Request, 
+                retransmitting frames until we get an ACK
+
+            Limitation of STOP and Wait:
+                Onlu one frame at a time. 
+                this is useful only for a LAN
+                Not efficient if BD >> 1
+
+                Ex: R = 1Mbps, D = 50ms
+                RTT = 2D = 100ms
+                packets / sec: 10packets per second. 
+                if every pack is 1250bytes (10kB), information transfer rate = 100kbps
+
+                If R = 10Mbps
+                VERY IMP: SINCE DELAY = 100ms, NOT MATTER WHAT RATE IS, we can only
+                send 10pakcets a second
+                
+                See SCREEN SHOTS
+                Pipelining
+                2BD = W
+
+                Sender:
+                LFS - Last Frame Sent
+                LAR - Last ACK Received
+
+                Reciever : Keeps only a single packet buffer
+                Just one variable: LAS - LAST ACK SENT
+                We look at the sequence number, if it is the next one, we accept it else we ignore it.
+                Receiver can be of another type:
+                    Accept more packets. ACK conveys the highest
+                    Have buffer upto W segments 
+                    For stop and Wait:
+                    We needed just two sequence numbers, we need just 0 and 1.
+                    Here we would need atleast W sequence numbers for Selective Repeat and W sequence numbers for ACKs of earlier packets. So 2W
+
+Sliding window is a generalization of stop and wait
+Sliding window improves performance by pipelining packets
+The optimal sliding window is proportional to the round trip time
+False: The optimal sliding window is inversely proportional to the network bandwidth 
+
+Selective repeat does not discard out of order packets
+ACKs in selective repeat provide hints about out of order packets
+Selective repeat lowers number of retransmitted packets
+False: Selective repeat requires smaller buffers at the receiver 
+
+            Go-Back-N
+                All we need is LAS - Last Ack Sent
+
+            Selective Repeat:
+                Buffers out-of-order segments to reduce retransmission
+                Send hints about out-of-order packets
+
+                Buffer for W segments
+                Just LAS
+                    
+
+
+        Video 6: Flow control
+            Slow down over enthusiatic sender
+            Sliding window is already doing a lot of pipelining to keep the network busy
+            Avoid loss by telling the sender the available space in W.
+False: Flow control is used to deal with congestion in the network
+False: Flow control window does not influence the number of outstanding packets transmitted by the sender
+Flow control prevents sender from overwhelming the receiver
+False: Flow control does not require any additional information other than the ACK number sent by the receiver 
+            
+
+        Video 7: Retransmission:
+            Use a timer when a segment is sent
+            How to set the value of the timeout
+                If too long:
+                    Wasting network capacity
+                If too short:
+                    Too many retransmissions
+                RTT plays a big factor in deciding the Timeout value.
+
+                Adaptive Timeout:
+Too long a timeout would result in wasted network capacity
+Too short a timeout would result in unnecessary retransmissions
+Timeout should adapt to network conditions
+False: Timeout should be set to be exactly equal to the round trip time 
+                
+        Video 8 TCP: and how it works
+            A reliable bytesteams service
+            Based on connections - how we set them up and tear them apart
+            Sliding window reliability 
+            Flow control to slow receivers
+            * congestion control
+
+            Reliable Bytesteam:
+                Message boundaries are not preserved between send() and recv()
+                Sender sends 2048 bytes as 4 calls. Receiver can receive using a single receive
+                reliable bytestream in bi-directional
+                So we can piggyback control information like ACK numbers etc
+            TCP:
+                Ports
+                Sequence number - for sliding window
+                Sliding window:
+                    ACK that comes is a cumulative ack
+                    Tells the next expected byte number
+
+                    three duplicate ACKs gets treated as a loss
+                Window size - number of buffer space remaining
+TCP provides reliability by retransmitting lost packets
+TCP provides in-order delivery of bytes
+False: TCP preserves message boundaries for data sent using multiple sends
+TCP supports bi-directional data transfer 
+
+The TCP header includes the source and destination ports, but not the source and destination IP Addresses, which is what I think is implied by answer. IP Addresses are in the IP layer. TCP identifies the ports on the source and destination end point machines through which the connection flows.
+
+Week 8:
+    Video 1:
+        Bandwidth Allcation Problem:
+            1. Both the transport and Network layer should work together
+                Network layer : congestion manifests inside the routers
+                    Only the network layer/router can tell that congestion is happening.
+                Transport layer: 
+                    This is the one that causes the congestion by offering the load
+
+            Number of senders and load is constantly changing
+Switch buffers overflow when congestion occurs
+When packets are dropped due to congestion, retransmissions are needed
+During congestion collapse, goodput reduces even as the load is increased
+False: Packet delays remain constant even as increased loads cause congestion 
+
+    Video 2: Fairness of Bandwidth Allocation
+        Fair and Efficient:
+            Efficient - Congestion, using all of the network and no congestion
+            Fairness - all senders should get some reasonable share of the network
+            Efficient vs Fairness:
+                Avoid starvation.
+
+            Equal per Flow:
+                Bottleneck:
+                    Link which is limiting the bandwidth, the one with the slowest 
+                    Flows may have different bottlenecks
+                Max-min fair allocation:
+                    Allocation that maximizes the minimum
+                    all flows with a bottle neck should get that bottleneck
+                    increasing the rate of one flow should decrease the rate of another flow
+Fair allocations might not make efficient use of network bandwidth
+Efficient allocation of bandwidth could be unfair
+Max-min fair allocation maximizes the minimum flow allocation
+False: In max-min fair allocation, a link that is fully utilized is equally shared by all of the flows traversing it 
+
+    Video 3: Additive increase multiplicative decrease:
+        In a network allocate some of the capacity so that it is efficient and fair
+        - any solution will be using the feedback from the network layer and transport layer
+        - Open loop vs Closed loop
+        - Open loop:
+            reserve bandwidth before use
+        - Closed loop
+            use feedback to adjust rates
+        - Windows vs Rate based (sliding window size based vs rate based.)
+        - AIMD:
+            multiplicative decrease in case of congestion
+            routers send a 0/1 feedback to tell if the network is congested or not
+            Everyone one ends up with a fair allocation even though other parties does not
+            know the details of other hosts/ network
+
+        - Hear about congestion:
+            - Packet loss: hear about congestion a bit late
+            - Packet delay: hear a bit early; but hard to hear the delay
+            - router indication: hear a bit early; but extra work for router
+The plot of the bandwidth increase/decrease forms a sawtooth pattern
+AIMD converges to an allocation that is efficient and fair when hosts run it
+TCP uses AIMD
+False: AIMD statically pre-determines a fixed bandwidth allocation for a network flow 
+                    
+    Video 4: TCP Congestion Control
+        - TCP Reno/tahoe:
+            uses dynamic size sliding window
+            just update the software
+            - fix the timeout
+            - introduced a notion of congestion window on top of sliding window
+                - prevents the sender from overriding the network
+
+It uses packet loss as the network feedback signal to implement AIMD
+It avoids congestion collapses by modifying the software-side of the network host
+To limit queues or loss, it introduces congestion window (cwnd) on top of the sliding window mechanism
+False: Router modifications are needed to implement TCP Tahoe/Reno 
+        - SACK - Selective Ack
+        TCP Vegas:
+            Delay based
+        Windows Uses: 
+            Delay based as well as packet loss
+
+    Video 5: ACK Clocking:
+        - used in sliding window
+        - ACKs are clocking out the data segment
+        - ACKS are maintaining the spread of spacing
+            which is deciding by the slow link
+        - So next time the sender sends new packets, it will send only at the speed of the
+          sender. So the new packets are spread out. A new packets gets sent only after a
+          ACK. So for every new ACK, if a new packet gets sent, then the sender is indirectly
+          sending at the speed of the slow link. No more buffering at the slow link.
+        - In sliding window, acks are clocking out the data segments
+        - help the network run with low level os loss and low levels of delay
+        - TCP uses a sliding windows that controls many segments are inside the network
+            This sliding window version of TCP is called as congestion window (cwnd)
+ACK clocking can be used to figure out the packet spread introduced by the bottleneck link
+ACK clocking allows sender to transmit at a rate that matches the bottleneck link rate
+False: ACK inter-arrival time is the same as the spacing between data packets when inserted into the network by the sender
+TCP uses ACK clocking to determine a congestion sliding window that matches the network bottleneck rate 
+
+    Video 6: TCP Slow start
+        - TCP to implement AIMD
+        - TCP uses slow start as a part of additive increase
+            - Sender implement a congestion window and adjust the size of the window
+            - cwnd / RTT = RATE
+        - We WANT TO QUICKLY GET TO THE IDEAL CONGESTION WINDOW
+            - Ideal can vary based on RTT 
+            - Can't take a guess
+            - A fixed size sliding window does not work
+            - Use congestion window with small bursts and increasing it with Additive increase
+                - BUT CAN TAKE A LONG TIME
+                - SOLUTION:
+                    SLOW START
+                    doubling the cWind every round trip time
+                    So we have exponential growth because of doubling.
+                    Start off slowly and exponentially going towards the ideal.
+                    This reaches much more quickly than ADDITIVE INCREASE
+
+                    In case of congestion, we go back and start using AI (Additive Increase)
+                    ssthresh = cwnd / 2 to switch to AI
+                    Expect loss for cwnd = @BD + queue
+            TCP Tahoe
+                Slow start followed by Additive Increase
+                    Slow start - cwnd = 1
+                    cwnd += 1 packet per ACK
+                Additive Increase:
+                    cwnd += 1/cwnd packets per ACK (approximately 1 packet per round trip)
+                ssthresh:
+                    when the congestion window reaches this threshold we switch from slow
+                    start to AI, i.e. when cwnd > ssthresh
+                    IN CASE OF A LOSS:
+                        SET ssthresh = cwnd/2
+Slow-start solution addresses the problem that additive increase takes a long time before converging to an efficient threshold
+With slow-start, loss timeout indicates that cwnd is too large
+False: Additive increase converges to an efficient sliding-window faster than the slow-start approach
+Slow-start approach increases the sliding-window size exponentially 
+
+                Misfourtune of Timeout and doing 
+                    After a timeout, we go back and do a SLOW START, again from a small value.
+                    After a loss, we are NOT DOING MULTIPLICATIVE DECREASE. 
+                    we are doing Additive increase though.
+                    FIX:
+                        Detect loss before a timeout to get full AIMD
+                        TCP Reno does this
+
+    Video 7: Fast Retransmit/Fast recovery
+        Sender sends a congestion window
+        Sender uses the congestion window
+            cwnd/RTT to set it rate
+        Congestion control is a complicate thing to achieve in TCP
+
+        IMP: Timeouts are relatively large when compared to the time TIME NEEDED to ACK
+        a packet
+        So by timeout, the ACK clock would have run down. Hence we start all the way
+        again from slow start.
+
+        HOW:
+        TCP uses cumulative ACK:
+            cumulative ACK:
+            Highest in-order sequence number received.
+            In case of LOSS:
+                the cum ACK gets stuck at a value.
+
+You should realize that, while ACK numbers will often progress regularly in units of the packets size, the only guarantee is that the cumulative ACK will not decrease. It can stay the same due to retransmissions, out of order packets; it can increase by less than a full packet due to overlapping transmissions, etc.
+
+
+"The sender ACKs with the next sequence/byte that it is waiting for. This wasn't as clear as maybe it could have been described. So, when the sender receives ACK 5000, it should be interpreted as the receiver saying, "I have everything up to, but not including 5000. I may have more beyond that, but I won't confirm what I have beyond 5000 until I have 5000."
+
+When the sender receives duplicate ACKs for 5000, it knows that the receiver is getting additional information, but it still doesn't have 5000, which could be late or lost. It waits for 4 ACKs (i.e., 3 duplicates), before it assumes that 5000 is completely lost, and then it resends 5000."
+
+        Fast Retranmit:
+            If three DUPLICATE ACKs, then we can consider it as a LOSS and do a RETRANSMIT
+            IMP: see video at 6:00 - 6:30
+ACKs provide information only on what data has arrived and not on what was lost
+Fast retransmit does not improve performance over a baseline scheme that uses slow start upon packet loss
+True: Fast retransmit provides some tolerance to reordering but still detects loss quickly
+When receiving duplicate ACKs, the sender should not increase the congestion sliding window in order to maintain a constant network load 
+
+        TCP Reno
+            Can repair one loss per RTT
+            Multiple losses cause a timeout
+        TCP New  Reno
+            Repair multiple losees without timeout
+            uses ACK heuristics
+        SACK: TCP with Selective ACK
+            Receiver tells which packet is received.
+            So don't have to do any guess work.
+
+    Video 8: Explicit Congestion Notification                        
+        How routers can help hosts to avoid congestion
+
+        Congestion avoidance VS congestion control:
+            Classic TCP:
+                TCP drives the network into congestion, to see when it happens and how
+                it can be recovered.
+            Congestion Control:
+                Low levels of loos, low levels of delay
+
+        Different types of SIGNALS:
+            1. Packet Loss:
+                Hear about congestion late. After the damage is done.
+            2. Packet delay:
+                Infer that a congestion has occurred. 
+                Hear about the congestion early
+                Not very clear as some slight guess work is involved.
+            3. Router indication:
+                Downside: Need router support
+               
+        ECN - Explicit Congestio nNotification
+            Router detect the onset of congestion by monitoring its queue
+            Router can get an estimate of the queueing size that it would be getting
+            It should be near zero. If it is increasing persistenly,
+                then a congestion has occurred.
+            So it will mark the packets
+                Host will know that the packet is marked and it experienced congestion.
+            So HOST tells the sender that congestion has occured.
+            HOST will send a congestion signal to the RECEIVER
+            SENER will half its conestion window etc
+
+            When router is getting congested, it is not wise to send more packets.
+            In other methods, we notify the congestion by sending more packets.
+ECN reduces packet loss in the network
+ECN can reduce packet delays arising out of congestion
+ECN reduces retransmissions in the network
+False: ECN removes the need for AIMD control at the TCP sender 
+
+Week 9:
+    Video 1: Application Layer Overview:
+Neither TCP nor UDP is a great fit for applications that need short reliable request-response messages
+Session is a series of related network operations performed by an application
+An application uses headers to identify the type of content if different content types are served by it
+False: In today’s applications, session and presentation tasks are performed by strictly layered components that are distinct from the application layer 
+
+    Video 2: DNS Part 1:
+DNS should allow for independent administration by multiple parties
+Latency of DNS queries should be low
+DNS operations should incur small load on DNS servers
+False: DNS should allow us to determine the geographic location of a given host name 
+
+Top-level domains consist of both generic codes and country codes
+DNS names are hierarchical
+A zone is a contiguous portion that is administered by the same entity
+False: All DNS names in a subtree of the DNS hierarchy are served by the same administrative entity 
+
+        ZONES:
+            Namespaces are divided into Zones.
+            Zones are contiguous portion of the namespace.
+
+
+    Video DNS Part 2: Map host names to IP addresses
+        Iterative vs Recursive queries:
+        Iterative:
+            Easy to build high load servers.
+            Root server can't do so many recursive queries. They should do just a minimum amount of work.
+        Recursive:
+            One party offload work to another.
+            Server offload client burden for manageability.
+            Server can cache resolution across a pool of clients.
+Recursive queries burdens the clients with more work
+Iterative queries allow nameservers to cache over a pool of client requests
+True: A local nameserver that supports recursive queries is queried only once per resolution
+A single recursive query requires less work from the DNS server than a single iterative query 
+        
+        Caching:
+            Save a part of the thing.
+            local name server can remember frequently used ones.
+            Time to live field:
+                If the name server is stable, it will be high.
+                eg: google server can have a TTL of 1day.
+        DHCP
+        Root nameservers:
+            There are 13 server root name servers.
+            Anycast:
+
+        DNS protocol:
+            16bit identifier number for the client to identify
+            We provide reliability by providing replicas.
+            A client can contact any of the replicas
+Caching reduces the number of request-responses in the DNS resolution process
+A query to the root nameserver is avoided if the local nameserver has a cached entry for the top-level domain
+False: Name servers are always within the same enterprise as the client
+Clients can configure nameservers through DHCP or manual configuration 
+
+    Video 4: HTTP:
+        URL:
+Protocol to be used for fetching the content
+The page on the server that needs to be fetched
+False: The identity of the client performing the fetch
+The identity of the server from which the page is to be fetched 
+            
+        Static and dynamic web pages:
+        
+        SSL and TLS makes HTTP Secure. i.e. HTTPS
+
+        Persistent Connections - HTTP 1.1
+
+        SPDY - HTTP 2.0
+            By firefox to improve the performance.
+HTTP Headers:
+
+HTTP protocol is typically implemented inside the operating system as opposed to user-level programs
+HTTP does not provide any support for conveying client state to servers
+HTTP is involved in the execution of server and client-side scripts/programs
+True: HTTP provides hints when the page has moved to a new location 
+
+   Video 5: HTTP Performance:
+        PLT - Page Load Time
+        Click of a link to something useful appears.
+TCP factors such as performance of slow-start, connection setup, etc.
+The size of the content on the page
+Network factors such as round-trip time and bandwidth
+True: All of the above 
+
+        Early performance:
+            Send one http request and receive respone using one TCP connection.
+            So in this case, multiple TCP connects are setup and the necessary information
+            is got by the client.
+            Problems:
+                Sequential request/responses
+                TCP Slow start issue for each connection
+                Even if we want info from different servers, we are doing it sequential
+                instead of sending multiple parallel TCP requests.
+            Solution:
+                Send less content (computer vs mobile (low quality images))
+                Caching and avoid repeated requests.
+                CDN - Content delivery network.
+
+        HTTP to make better use of bandwidth:
+            1. Run parallel TCP connections.
+                Multiple parallel connection are competing against each other.
+                8 parallel requests from ONE client, will look like 8 different
+                sequential connections.
+            2. Persistent Connections:
+                Use ONE connection to send multiple HTTP requests.
+                Problems:
+                    How long should the connection be persistent
+                    It can even be slower than parallel connections:
+                        Multiple smaller components.
+                        So multiple slow start
+                        But if parallel connections, all slow-starts will happen in parallel.
+                        so a faster slow start over there.
+Parallel connections improves network utilization
+Persistent connections reduce connection setup costs
+False:Parallel connections incur the same amount of network loss as sequential connections
+Pipelining allows multiple outstanding requests from the client 
+
+            3. Pipelining:
+                Send multiple requests from client at once and server gives responses
+                one by one.
+
+
+    Video 6: HTTP Caching and Proxies:
+        1. Reuse the page IF THE PAGE HAS NOT CHANGED
+        See when the content was last changes. Say if changed a year ago,
+            the content is not likely to change.
+        No network delay at all.
+
+        2. Revalidate the copy with remote server. Ask the server if the copy is valid.
+        ETAG - Hash or content of the web page.
+        Content available after 1 RTT
+
+        Both 1. and 2. are used together.
+        Conditional GET
+
+Expires header provides information as to when to discard items from the cache
+Freshly fetched copy of a web page that has not been modified recently can be used directly from the cache
+False: Caches are not effective if the client has to contact the server to check page freshness
+Timestamp in the “Last-Modified” header can be used for revalidation with the server 
+
+        Web Proxies:
+            Caching inside the server.
+            i.e. For a pool of clients.
+            All clients will send through a proxy.
+            The proxy will act as a cache.
+
+    Video 7: CDN:
+It reduces network load by minimizing Internet traffic
+It reduces the server load by reducing requests to the server
+It improves user experience by decreasing page load time
+False: CDNs are most effective for pages that are rarely fetched 
+
+    Video 8: Future of HTTP:
+        WATERFALL DIAGRAM
+
+Different resource requests issued by a browser for a page
+Durations for fetching the different components of a page
+False: The amount of server side computation required to serve a page
+Page redirects issued by the server 
+        
+        SPDY: Experimental protocol
+            Default in chrome and firefox instead of HTTP 1.1
+            Multiplexed parallet HTTP requests on one TCP connection
+
+        mod_pagespeed:
+            an extension that goes in the server
+            rewrite pages on the fly
+            Has various rewrite rules:
+                Minify javascript etc etc
+                Resize the images based on the client
+            have the server implement the best practices
+            Server can work out in a way so that it can load faster
+
+    Video 9: P2P Network:
+        DHT - Distributed Hash table
+Peers need to find content and each other in a decentralized setting
+Peers have limited capacity and connectivity
+False: P2P systems require dedicated infrastructure
+Peers need to be provided incentives to participate and assist each other 
+
+It improves performance by transferring many pieces of a file in parallel
+False: Information maintained by the tracker regarding participating peers is static and does not change
+BitTorrent provides participation incentives by have peers upload only to other peers who have been helpful
+DHT provides a decentralized alternative to the centralized tracker 
+
+
+    Week 9:
+        Video 1: QoS Overview
+            Spams several layer
+                From Application to Network.
+                Network layer provides different services to the network
+
+            Best Effort Service:
+                Does not guarentell bandwidth
+                Not  a good solution always
+
+        QoS Motivation:
+            May want performance guarentees
+            Control how bandwidth is allocated for different users
+            Skype and bit torrent at the same time:
+                Screenshots
+                skype does not want to have delay
+                Bit torrent does want to have low throughput
+            Satisfy multiple APPS at once
+            Need to know what the app requires
+
+        Jitter - Variation in delay
+Quality of service becomes important when there is a bottleneck in the network
+Router priorities for traffic flows can be used to improve quality of service
+False: Quality of service requirements are uniform across different applications
+Best effort service means that the network does not provide any guarantees to applications 
+
+        Over provisioning:
+            QoS matters only when there is a BOTTLENECK in the network.
+            Build network with HEAPS of network capacity
+            not cost effective and no guarantee
+            Always there is some bottle neck in the internet.
+            
+
+        Video 2: Real time transport
+            Information needs to be sent across a network with timing deadlines
+            Propagation Delay + Transmission Delay are standard delays
+            Queuing Delay
+
+            Jitter" Variability in delay
+
+            Playout Buffer:
+                to avoid jitter
+                smooth out so that the output goes at a constant rate at the other end
+
+            Components of a Real Time Session:
+                Playout buffer technique to provide real time transport
+                Format of the media
+                    SDP - Session Description Protocol
+                Call Setup - SIP:
+                    
+            RTP: Real time transport protocol
+                new information: Timestamp: When to play the video/audo file
+                Seq number: to order the packets
+
+            SIP: Session Initiation Protocol
+                this does the Signalling, i.e. for establishing voice and video calls over IP
+                Skype uses proprietary protocol.
+Real-time data needs to be sent with timestamps in order to preserve the timing information at the receiver
+Playout buffer can be used to reduce jitter/loss
+The real-time delay increases with the size of the playout buffer
+False: In a typical application of real-time transport, larger delays is preferred to data loss 
+
+   Video 3: Streaming media:
+        - Watching videos / playback of videos over internet
+        - coursera , youtube etc
+
+        Streamed Video vs Interactive Media:
+            - Streamed media is less demanding
+            - In case of streamed we just have a single direction 
+            But in case of interactive, both parties exchange data. So bidirectional
+            - Low delay does not make that big an impact.
+            - But we stilll have to focus on jitter and handling bandwidth
+            - we are NOT reading from a real source. reading from some existing location
+
+        Low Watermark and High watermark:
+        PLAYOUT BUFFER:
+            - The solution to handle the variation in the network delay
+            - Low Watermark should have some space rather than being right at the front.
+                Coz, after the low water mark has reached, we can request for more info
+                from the server. there is some latency (delay) involved in getting data
+                from the server. So if we have kept the low water mark at the beginning
+                then we have to wait until the next set of data comes in.
+            - Same goes with high watermark.
+
+        NOW BANDWIDTH:
+            how image quality affects bandwidth
+
+        Streaming TCP vs UDP:
+            Use TCP - because we don't have to worry about reliability
+            We can't sacrifice LOSS like VOIP / live streaming.
+            Easy to recover loss if TCP
+            TCP over HTTP is very easy to deploy
+Streaming media prioritizes optimized use of network bandwidth than low latency
+High and low watermarks indicate when a streaming client needs to stop/start requesting the stream data from the server
+In streaming media, different encodings are utilized to provide the appropriate stream quality given the available bandwidth
+False: TCP is typically used for streaming because it has smaller message delay than UDP 
+
+        SIGNALLING:
+            Streaming with RTSP:
+                Media playing in the webplayer
+                Protocol used to play the video is RTSP
+            Streaming with HTTP:
+                Media player will adapt to choices
+RTSP is one of the protocols used for streaming media
+RTSP adapts the stream data encoding based on the buffer occupancy
+RTSP uses playout buffer
+False: RTSP is used to stream data only using the UDP protocol 
+
+   Video 4: Fair Queueing
+        - Weighted Fair Queuing.
+        - Key building block for QoS
+        - FIFO queuing
+            When the queue is full, we discard the newly arrived packets
+            In case of a fifo queuing, multiple different users will be talking
+            about Flow of traffic.
+            Flow of traffic:
+                Related packets coming from a user
+                All flow go to the same output link
+                How much bandwidth a flow gets depends on the behavior of all other flows
+
+                Order in which fifo queue gets filled is the order in which the router 
+                receives it.
+
+                Flows with a small RTT get a higher bandwidth than flows with a large RTT
+                because the small RTT flows react quickly
+
+       - Round Robin queuing:
+            - Even if other flows are aggressive, it gets contained here as everyone
+            get a chance.
+            - Differnet packets can be DIFFERENT SIZES. Then it would still become a 
+            problem.
+Regardless of how much traffic is sent by other flows, each of the flows would always have a chance to transmit its packet
+RR queuing preserves the ordering of packets in a given flow
+RR queuing doesn’t necessarily split up the network bandwidth equally amongst the flows
+False: RR queuing allows flow that has the most traffic to transmit more frequently than any other flow 
+
+       - Fair Queuing:
+Fair Queueing prioritizes packets based on their virtual finish time
+Fair Queuing lets a flow with small packets to send more frequently than other flows with large packets
+With Weighted Fair Queuing, the rate of a flow is proportional to its weight
+False: Fair Queueing estimates the virtual finish time of a packet based on the history of the flow 
+
+    Video 5: Traffic Shaping:
+        Constraining the flow of traffic in terms of their properties
+            Average bandwidth and burstiness
+        Token buckets - key building block for QoS
+        Average rate alone is not a good descriptor
+        We need to take care of burstiness as well
+
+        Token Buckets:
+            Can be used for Shaping or Policing
+            Shaping:
+                Modifying the traffic near the source.
+                Traffic that is injected into the network
+            B bits is the amount of tokens it can hold
+            To be able to send a packet, we should be able to draw that much amount of
+            bits from the bucket
+            If NO WATER in the bucket, we cannot send any packets. 
+                It means, traffic is not constrained according to Token Bucket
+            Constrains greatest traffic over time.
+
+            Policing:
+                Done within the network
+                Verfies that the source of the traffic is come from a user fits in R,B
+                token bucket
+                Demote or discard packets if insufficient tokens
+It has two parameters: R, the rate at which new tokens fill up the bucket (available bandwidth) and B, the maximum acceptable burst value
+Packets are not sent when there aren’t sufficient tokens in the bucket
+The algorithm constrains the total traffic sent over time
+False: The algorithm does not constrain the short term burstiness of flows 
+                
+        QoS:
+            Useful for the network and the user.
+            Network: Can limit the traffic
+            user: can inject wide range of traffic 
+
+    Video 6: differentiated services
+        Provide a small number of 
+        This is applicable on a per hop basis.
+        Difficult to deploy
+        If all ISP doesn't provide QoS then not much effective.
+        1. Marking of packets
+        2. Policing of packets
+        3. Forwarding of packets
+Packets are marked as differentiated services on the IPv4/IPv6 header
+In case of too many packets marked as being highly prioritized, some of the packets might be demoted down to be of a regular priority
+With the Weighted Fair Queuing implementation, differentiated services are implemented as flows with varying weights
+False: The marking of packets is always performed by the ISP 
+
+    Video 7: Rates and Deployment:
+        Admission Control:
+            Whether we can allow a packet or reject it
+            Rejecting should be infrequent
+            Network might block your call if there is not enough capacity
+            Someway to control the load in the network
+
+        Rate Guarentee:
+            Across the whole network path
+            either 10% of a 100Mbps or 20% of a 50 Mbps link
+
+       Delay Guarentee:
+Admission control is necessary to control load and reject flows whose desired delay/rate cannot be satisfied
+A minimum rate could be guaranteed along a network path as long as each of the routers can guarantee the desired rate
+The worst case burst-delay of a network path is the largest burst delay incurred by a router along the path
+False: To guarantee a minimum delay/rate, a dedicated network infrastructure without multiplexing is necessary 
+            
+            
+
+Week 10:
+    Video 1:
+A website pretends to be facebook.com, in order to get you to enter your username and password, and them steal them. What kind of security threat is this website?
+Eavesdropper
+Intruder
+True: Impersonator
+Extortionist
+
+
+Which one of the following is NOT an example of security by obscurity?
+Ans: A security scheme whose algorithm is well known, but is still hard to break because of the algorithmic complexity of some underlying problem
+A security scheme that scrambles of the message in a specific way, hoping nobody figures out what way it is
+
+    Video 2: Message Confidentiality:
+
+Imagine a (very simple) hypothetical crytography scheme, where the plaintext p and the key k are represented as integers, and added together to get the ciphertext c, and then the receiver subtracts the key to get back the message
+c = p + k
+p = c - k
+Is this an example of
+Ans: Symmetric Key Encryption
+Public Key Encryption
+        
+    Video 3: Message Authentication:
+
+Consider a scheme that uses public key encryption (discussed in the last class). When Alice wants to send a message M to Bob, she creates the string "Alice:M", encrypts it using Bob's public key KB, and sends it to Bob.
+This provides confidentiality, but not authenticity and integrity, which of the following is NOT possible in this scheme?
+Ans: Trudy can read Alice's message to Bob
+Trudy can modify Alice's message to Bob
+Trudy can pretend to be Alice, and send messages to Bob
+
+
+Which of the following is NOT true about a cryptographic hash, or message digest
+Ans: It is possible to get back the original message from the hash
+It is hard to find a message that has the same hash as a given message
+The length of the hash does not depend upon the length of the message
+SHA1 is a cryptographic hash algorithm
+
+    Vide 4: Wireless Security:
+
+Which was the unsafe one, again?
+Ans: WEP
+WPA
+
+If A and B and both connected to the same access point, which of the following are true? (Multiple options may be correct)
+A and B have the same session key
+True: A and B have the same group key
+True: A and B have different session keys
+A and B have different group keys
+
+    Video 5:
+        Router has the public key of the Root
+            i.e. Root certification
+HTTPS is a secure version of HTTP, which is an application layer protocol.
+
+What layer does HTTPS run on?
+Link Layer
+Network Layer
+Transport Layer
+Ans: Application Layer
+
+
+Which of the following is NOT true about the public key infrastructure (PKI)?
+The web browser must know the public key of the trusted roots of the PKI
+Authorization of entities is hierarchical, and many parties can issue certificates
+Ans: There is a single trusted root, that issues all certificates
+The PKI includes a certificate revocation list
+
+    Video 6: DNS Security:
+
+Which of the following does Trudy NOT need to know (or guess) in order to perform a DNS spoofing attack?
+IP of authoritative name server
+IP address of the local (non authoritative) name server
+Ans: IP address of the client that made the DNS query first
+ID of authoritative name server
+
+    Video 7: Firewall:
+
+Which of the following statements is false about Firewalls?
+A stateless firewall can be used to block all FTP traffic
+False: A stateless firewall can be used to allow incoming packets only after an internal host has established a connection
+An application layer firewall can scan for virus signatures in packets
+An application layer firewall needs to look beyond packets and emulate higher layers
+        
+    Video 8: VPN
+
