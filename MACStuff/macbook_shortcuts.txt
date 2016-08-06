@@ -94,10 +94,10 @@ How to use Macbook Pro
     b. kill -9 pid
 
 16. GIT
+    https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
     http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1
     http://readwrite.com/2013/10/02/github-for-beginners-part-2
     http://githowto.com/making_changes
-    https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
     a. git config --global merge.tool vimdiff
     b. git config --global core.editor vim
          git config --list
@@ -146,6 +146,7 @@ How to use Macbook Pro
 
     n. Getting GIT repositories on a new system:
         Use "git clone" to get the new repositories
+        Eg: git clone https://github.com/SyncMr/LearnPython.git
 
     o. Using .gitignore file to avoid common files
         http://stackoverflow.com/questions/107701/how-can-i-remove-ds-store-files-from-a-git-repository
