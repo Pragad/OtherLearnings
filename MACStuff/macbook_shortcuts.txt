@@ -1,4 +1,37 @@
 How to use Macbook Pro
+0. MAC KEYS
+2. Go to Desktop
+3. Take Screenshot by selecting a portion on the screen
+4. Hide/Show Dock
+5. Finder:
+6. Terminal Commands:
+    a. Find current shell:
+    b. Reload/Refresh bashrc without logging out
+    c. Move word by word
+    d. Mounted Drive will be under /Volumes
+7. Show hidden files on terminal
+8. Keyboard shortcuts
+9. Hide Current Window
+10. Hide all other windows
+11. iterm
+    a. Split Panes
+    b. block Select
+    c. Open new tab in the same folder as existing one
+12. Find my Macbook's details:
+13. Firefox:
+14. Spectacle:
+15. Find and kill a process
+16. GIT
+17. BASH Shortcuts
+18. VIM Read/Shorctus
+19. pushd and popd
+20. Setting up MAC:
+21. .DS_Store file in MAC
+22. Opening images and scrolling using Arrow keys
+23. How Do I Disable The Empty Trash Sound Effect In OS X
+24. Copying the current directory's path to the clipboard
+25. Open Google Chrome from terminal with addons disabled
+-------------------------------------------------------------------------------------------------
 
 0. MAC KEYS
     ⌘  - Command
@@ -167,6 +200,27 @@ How to use Macbook Pro
     t. HTTPS vs SSH for git
        http://stackoverflow.com/questions/11041729/why-does-github-recommend-https-vs-ssh
 
+    u. Ignore .DS_Store directory on OSX when it's been accidently added to GIT
+       http://stackoverflow.com/questions/18393498/gitignore-all-the-ds-store-files-in-every-folder-and-subfolder
+           You have to manually remove the .DS_Store files that were added to your repository.
+           You can use git rm --cached .DS_Store.
+           Once removed, git should ignore it.
+           You should only need the following line in your root .gitignore file: .DS_Store.
+
+           git rm --cached .DS_Store removes only .DS_Store from the current directory.
+           You can use find . -name .DS_Store -print0 | xargs -0 git rm --ignore-unmatch to remove all .DS_Stores from the repository.
+
+           Since you probably never want to include .DS_Store files, make a global rule. First, make a global .gitignore file somewhere.
+           E.G. echo .DS_Store >> ~/.gitignore_global.
+           Now tell git to use it for all repositories: git config --global core.excludesfile ~/.gitignore_global
+
+    v. Files to be included in .gitignore file for an eclipse project
+       http://stackoverflow.com/questions/16736856/what-should-be-in-my-gitignore-for-an-android-studio-project
+       http://stackoverflow.com/questions/38817808/files-to-be-included-in-gitignore-list-for-an-eclipse-project
+
+    w. Global Git Ignore
+       http://stackoverflow.com/questions/7335420/global-git-ignore
+
     Using GIT to sync VIM
     http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
 
@@ -178,7 +232,7 @@ How to use Macbook Pro
     Ctrl + L    Clears the Screen, similar to the clear command
     Ctrl + U    Clears the line before the cursor position. If you are at the end of the line, clears the entire line.
     Ctrl + H    Same as backspace
-    Ctrl + R    Let’s you search through previously used commands
+    Ctrl + R    Let’s you search through previously used commands; Cycle through bash's history
     Ctrl + C    Kill whatever you are running
     Ctrl + D    Exit the current shell
     Ctrl + Z    Puts whatever you are running into a suspended background process. fg restores it.

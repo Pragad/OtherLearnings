@@ -1,5 +1,4 @@
 Bash Shortcuts:
-
     1. End of line          : ctrl + e
     2. Beginning of line    : ctrl + a
     3. Move by a char       : ctrl + f, ctrl + b
@@ -316,7 +315,6 @@ Enable Invisible character:
 	:set nolist
 	:set list!
 
-
 VIM:
 http://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim?rq=1
     W - 
@@ -427,6 +425,17 @@ Find a file or directory on the system using this command
     find . –name “*.txt” –mmin -15
     Find all files that contain a string “I am inside file”.
     find . -name "*" -exec grep -i -H "I am inside file" {} \;
+
+How can I get a recursive full-path listing, one line per file
+http://stackoverflow.com/questions/1767384/ls-command-how-can-i-get-a-recursive-full-path-listing-one-line-per-file
+
+    - find .
+    If you want files only (omit directories, devices, etc):
+    - find . -type f
+
+    - ls -ld $(find .)
+    If you want to sort your output by modification time:
+    - ls -ltd $(find .)
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 CUT:
