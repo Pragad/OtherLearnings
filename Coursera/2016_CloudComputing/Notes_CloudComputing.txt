@@ -455,3 +455,33 @@ Week 4:
         - Order the events
 
     4.2.5 Vector Clocks
+
+5. Classical Distributed Algorithms
+    5.1 Global Snapshots
+        Approach 1:
+        - Make sure all processes have CLOCKs synced.
+        - Every one hour take a snapshot
+        Problems:
+        - What if a clock skew
+        - Cannot capture channel states
+        Channel:
+            - Communication happening between processees
+
+    5.2 Global Snapshot Algorithm
+        - Distributed System moves from One Global State to another ensuring Causal Property
+
+    5.3 Liveness:
+            - Something good will eventually happen
+            - Distributed computation will terminate eventually
+            - TIME_BOUND liveness is difficult to achieve
+
+        Safety:
+            - Something BAD will never happen
+            - Eg: There is no deadlock in the system
+            - No objects orphaned
+
+        - Stable Liveness:
+            - Once terminated process should remain that way
+
+        - Stable Non-Safety:
+            - Once deadlock remain that way

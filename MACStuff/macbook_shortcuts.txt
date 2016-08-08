@@ -152,7 +152,7 @@ How to use Macbook Pro
     Adding a folder/directory to git
     a. git init
 	b. git status - should now be happy but will list untracked files.
-	c. git add Readme.txt
+	c. git add README.md
        git add --all : This adds all the files
 	d. git commit -m “Add Readme.txt”
 	e. git remote add origin https://github.com/SyncMr/MyShortcuts.git
