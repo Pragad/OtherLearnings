@@ -10,12 +10,7 @@ gen/
 # Build Directory
 build/
 
-.settings/
-
-# Ignore html files
-*.html
-
- # Log Files
+# Log Files
 *.log
 
 # Built application files

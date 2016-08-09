@@ -9,6 +9,7 @@ How to use Macbook Pro
     b. Reload/Refresh bashrc without logging out
     c. Move word by word
     d. Mounted Drive will be under /Volumes
+    e. Restart / Reboot MAC from terminal
 7. Show hidden files on terminal
 8. Keyboard shortcuts
 9. Hide Current Window
@@ -31,6 +32,8 @@ How to use Macbook Pro
 23. How Do I Disable The Empty Trash Sound Effect In OS X
 24. Copying the current directory's path to the clipboard
 25. Open Google Chrome from terminal with addons disabled
+26. Compress and Uncompress
+
 -------------------------------------------------------------------------------------------------
 
 0. MAC KEYS
@@ -76,6 +79,9 @@ How to use Macbook Pro
         Esc+B to move to the beginning of the current word ⌥  + b
 
     d. Mounted Drive will be under /Volumes
+
+    e. Restart / Reboot MAC from terminal
+       sudo shutdown -r now
 
 7. Show hidden files on terminal
     ls -ld .?*
@@ -183,6 +189,11 @@ How to use Macbook Pro
 
     o. Using .gitignore file to avoid common files
         http://stackoverflow.com/questions/107701/how-can-i-remove-ds-store-files-from-a-git-repository
+        http://stackoverflow.com/questions/116121/should-i-keep-my-project-files-under-version-control/119377#119377
+        http://stackoverflow.com/questions/337304/which-eclipse-files-belong-under-version-control/337317#337317
+        https://github.com/SyncMr/OtherLearnings/blob/master/MACStuff/macbook_shortcuts.txt
+        https://www.gitignore.io/
+        http://stackoverflow.com/questions/38817808/files-to-be-included-in-gitignore-list-for-an-eclipse-project
         
     p. Git pull vs clone
        http://stackoverflow.com/questions/3620633/what-is-the-difference-between-pull-and-clone-in-git
@@ -277,6 +288,21 @@ How to use Macbook Pro
         q/
         ctrl-c twice to close the window
 
+    Load Multiple files in VIM into its buffers
+        vim *
+
+    Cycling through VIM buffers
+    http://stackoverflow.com/questions/327411/how-do-you-prefer-to-switch-between-buffers-in-vim
+        :bp
+        :bn
+        :bd
+        :b
+
+    Open a buffer as a vertical split in VIM
+    http://stackoverflow.com/questions/4571494/open-a-buffer-as-a-vertical-split-in-vim
+        :vert sb N
+        :vert belowright sb N
+
 19. pushd and popd
     popd - Just changes the order of the stack. It can also pop the first element
     out of the stack
@@ -343,3 +369,35 @@ http://apple.stackexchange.com/questions/47216/copying-the-current-directorys-pa
 
 25. Open Google Chrome from terminal with addons disabled
     open -a Google\ Chrome --args --disable-extensions
+
+26. Compress and Uncompress
+https://coolestguidesontheplanet.com/how-to-compress-and-uncompress-files-and-folders-in-os-x-lion-10-7-using-terminal/
+
+    a. TGZ File
+       Uncompress .tgz file
+       - tar -xvzf /path/to/yourfile.tgz
+           where,
+			x for extract
+			v for verbose
+			z for gnuzip
+			f for file, should come at last just before file name.
+
+       Compress a .tgz file
+       - tar -zcvf archive_name.tar.gz folder_to_compress
+
+    b. TAR.BZ2 file
+       Uncompress:
+       - tar -jxvf archive_name.tar.bz2
+
+       Compress:
+       - tar -jcvf archive_name.tar.bz2 folder_to_compress
+
+    c. ZIP file
+       Uncompress:
+       - unzip archive_name.zip
+
+       Compress:
+       - zip -r archive_name.zip folder_to_compress
+
+       To Compress excluding .DS_Store and _MACOSX files
+       - zip -r -X archive_name.zip folder_to_compress
