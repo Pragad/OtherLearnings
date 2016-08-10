@@ -1,5 +1,6 @@
 How to use Macbook Pro
 0. MAC KEYS
+1. Software to be installed
 2. Go to Desktop
 3. Take Screenshot by selecting a portion on the screen
 4. Hide/Show Dock
@@ -33,6 +34,16 @@ How to use Macbook Pro
 24. Copying the current directory's path to the clipboard
 25. Open Google Chrome from terminal with addons disabled
 26. Compress and Uncompress
+27. Sync DOTFILES across multiple computers
+28. Bash Profile vs Bash RC
+29. How do I make Bash' tab complete automatically cycle through options OSX
+30. Firefox - Vimperator Status bar is empty
+31. Installing Boost on Mac
+
+----------------------------------------
+Windows Shortcuts:
+1. Software to be installed
+2. Fixing MinGW error
 
 -------------------------------------------------------------------------------------------------
 
@@ -42,6 +53,23 @@ How to use Macbook Pro
     ⌃  - Control
     ⌥  - Option
     ⇪  - Capslock
+
+1. Software to be installed
+    1. ClipMenu
+    2. GoogleDrive
+    3. Spectacle
+    4. Karabiner
+    5. iTerm
+    6. boost
+    7. brew
+       http://wiki.lazarus.freepascal.org/GDB_on_OS_X_Mavericks_or_newer_and_Xcode_5_or_newer
+
+    8. gdb
+       a. Mac Ports
+       http://stackoverflow.com/questions/33162757/how-to-install-gdb-debugger-in-mac-osx-el-capitan
+       http://ntraft.com/installing-gdb-on-os-x-mavericks/
+
+
 
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
@@ -149,6 +177,7 @@ How to use Macbook Pro
     d. git remote -v
     e. git push origin master
     f. git diff
+    g. git remote rm origin: This deletes the origin
 
     Adding Modifications to GIT:
         a. git add Readme.txt
@@ -280,8 +309,13 @@ How to use Macbook Pro
     Find Loaded plugins:
         :scriptnames : list all plugins
         : list all plugins
+
     Find VIM version
         vim --version
+
+    Locate vimrc file used by Vim
+        :version OR
+        :echo $MYVIMRC
 
     Making use of the command line history
         q:
@@ -401,3 +435,66 @@ https://coolestguidesontheplanet.com/how-to-compress-and-uncompress-files-and-fo
 
        To Compress excluding .DS_Store and _MACOSX files
        - zip -r -X archive_name.zip folder_to_compress
+
+27. Sync DOTFILES across multiple computers
+http://codoki.com/2015/02/03/sync-dotfiles-across-multiple-computers/
+
+    cd ~
+    mv .bash_profile .dotfiles/.bashrc
+    mv .gitconfig .dotfiles/.gitconfig
+    mv .vim .dotfiles/.vim
+    mv .vimrc .dotfiles/.vimrc
+
+    cd ~
+    ln -s .dotfiles/.bashrc .bashrc
+    ln -s .dotfiles/.gitconfig .gitconfig
+    ln -s .dotfiles/.vim .vim
+    ln -s .dotfiles/.vimrc .vimrc
+
+28. Bash Profile vs Bash RC
+http://stackoverflow.com/questions/902946/about-bash-profile-bashrc-and-where-should-alias-be-written-in
+http://superuser.com/questions/183870/difference-between-bashrc-and-bash-profile
+
+29. How do I make Bash' tab complete automatically cycle through options OSX
+http://stackoverflow.com/questions/10941055/how-do-i-make-bash-tab-complete-automatically-cycle-through-options-osx
+
+    Put the following in .bashrc or .bash_login
+    bind '"\t":menu-complete'P
+
+30. Firefox - Vimperator Status bar is empty
+http://unix.stackexchange.com/questions/155086/vimperator-status-bar-empty
+
+    Right-click on places like Menu bar, Address bar, Toolbar, etc.
+    A menu shows up in which you will find a line named "Liberator Statusline Toolbar".
+    Click on it to enable.
+    .bashrc file is reloaded every time you start a new copy of Bash.
+    The .profile file is loaded only when you either log in or use the appropriate flag to tell Bash to act as a login shell.
+
+31. Installing Boost on Mac
+http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
+
+    brew install boost
+
+-------------------------------------------------------------------------------------------------
+Windows Shortcuts:
+1. Software to be installed
+    - Gow
+    - AutoHotKey
+    - Firefox Nightshift Eyecare
+
+2. Fixing MinGW error
+   http://stackoverflow.com/questions/38436542/mingw-cxxtest-bizarre-errors
+
+       Replace -std=c++11 with -std=gnu++11
+
+3. Using MinGW to debug a C++ program
+http://stackoverflow.com/questions/4671900/how-do-i-use-the-mingw-gdb-debugger-to-debug-a-c-program-in-windows
+
+    The first step is to compile your program with -g to include debugging information within the executable:
+        g++ -g -o myprog.exe mycode.cpp
+
+    Then the program can be loaded into gdb:
+        gdb myprog.exe
+
+4. Installing Boost on Windows
+    https://andres.jaimes.net/718/how-to-install-the-c-boost-libraries-on-windows/
