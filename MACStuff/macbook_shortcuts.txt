@@ -498,3 +498,12 @@ http://stackoverflow.com/questions/4671900/how-do-i-use-the-mingw-gdb-debugger-t
 
 4. Installing Boost on Windows
     https://andres.jaimes.net/718/how-to-install-the-c-boost-libraries-on-windows/
+
+5. Open Multiple files on Gvim and Open them in TABs
+   http://superuser.com/questions/259625/gvim-how-to-open-multiple-files-in-its-own-tab-at-once
+
+       gvim -p *.c
+       gvim -p file1.c file3.c ...
+
+   Open the Buffers in TAB
+        :tab ball
