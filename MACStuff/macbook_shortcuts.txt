@@ -69,7 +69,8 @@ Windows Shortcuts:
        http://stackoverflow.com/questions/33162757/how-to-install-gdb-debugger-in-mac-osx-el-capitan
        http://ntraft.com/installing-gdb-on-os-x-mavericks/
 
-
+    9. unrar
+       brew install unrar
 
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
@@ -435,6 +436,9 @@ https://coolestguidesontheplanet.com/how-to-compress-and-uncompress-files-and-fo
 
        To Compress excluding .DS_Store and _MACOSX files
        - zip -r -X archive_name.zip folder_to_compress
+
+    d. RAR file
+       unrar x <filename>
 
 27. Sync DOTFILES across multiple computers
 http://codoki.com/2015/02/03/sync-dotfiles-across-multiple-computers/
