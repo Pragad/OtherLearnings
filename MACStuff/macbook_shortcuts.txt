@@ -262,6 +262,13 @@ Windows Shortcuts:
     w. Global Git Ignore
        http://stackoverflow.com/questions/7335420/global-git-ignore
 
+    x. Using GIT to Resolve Conflict and Commit
+       http://git-guide-by-shashwat.readthedocs.io/en/beta/pull/
+
+       1) Instead of "git pull" do "git add" and "git commit"
+       2) Then do a "git pull" to either "Auto Merge" or "Manually merge the conflict"
+       3) Good to go now
+
     Using GIT to sync VIM
     http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
 
