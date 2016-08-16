@@ -45,6 +45,9 @@ How to use Macbook Pro
 Windows Shortcuts:
 1. Software to be installed
 2. Fixing MinGW error
+3. Using MinGW to debug a C++ program
+4. Installing Boost on Windows
+5. Open Multiple files on Gvim and Open them in TABs
 
 -------------------------------------------------------------------------------------------------
 
@@ -273,8 +276,31 @@ Windows Shortcuts:
        2) Then do a "git pull" to either "Auto Merge" or "Manually merge the conflict"
        3) Good to go now
 
-    Using GIT to sync VIM
-    http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
+    x1. Using VIMDIFF to Resolve Merge Conflict
+        https://gist.github.com/karenyyng/f19ff75c60f18b4b8149
+
+        :diffg RE  # get from REMOTE
+        :diffg BA  # get from BASE
+        :diffg LO  # get from LOCAL
+
+    x2: Aborting and Resetting a Merge
+        http://stackoverflow.com/questions/11646107/you-have-not-concluded-your-merge-merge-head-exists
+
+        1) Undo the merge and pull again.
+           To undo a merge:
+           git merge --abort [Since git version 1.7.4]
+           git reset --merge [prior git versions]
+
+        2) Resolve the conflict.
+        3) Don't forget to add and commit the merge.
+        4) git pull now should work fine.
+
+    y. Using GIT to sync VIM
+       http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
+
+    z. Avoid generating unwanted .orig file
+       git config --global mergetool.keepBackup false
+
 
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
