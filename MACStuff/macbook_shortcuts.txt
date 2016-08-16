@@ -19,6 +19,7 @@ How to use Macbook Pro
     a. Split Panes
     b. block Select
     c. Open new tab in the same folder as existing one
+    d. Using Alt + f and Alt + b to move forward/backward by word
 12. Find my Macbook's details:
 13. Firefox:
 14. Spectacle:
@@ -146,6 +147,11 @@ Windows Shortcuts:
     c. Open new tab in the same folder as existing one
        http://apple.stackexchange.com/questions/148508/how-to-open-a-new-tab-in-iterm-in-the-same-folder-as-the-one-that-is-open
        - Select "Reuse previous session's directory" from the preferences of your profile
+
+    d. Using Alt + f and Alt + b to move forward/backward by word
+       http://stackoverflow.com/questions/18923765/bash-keyboard-shortcuts-in-iterm-like-altd-and-altf
+       Press Command+O to open the list of profiles, select Default, and click "Edit Profiles...".
+       In the resulting window, click on the "Keys" tab, and select "+Esc" for one or both option keys.
 
 12. Find my Macbook's details:
     In terminal: system_profiler | more
