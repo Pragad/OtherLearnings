@@ -266,8 +266,15 @@ Windows Shortcuts:
     w. Global Git Ignore
        http://stackoverflow.com/questions/7335420/global-git-ignore
 
-    x. Using GIT to sync VIM
-       http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
+    x. Using GIT to Resolve Conflict and Commit
+       http://git-guide-by-shashwat.readthedocs.io/en/beta/pull/
+
+       1) Instead of "git pull" do "git add" and "git commit"
+       2) Then do a "git pull" to either "Auto Merge" or "Manually merge the conflict"
+       3) Good to go now
+
+    Using GIT to sync VIM
+    http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
 
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
@@ -478,6 +485,7 @@ http://unix.stackexchange.com/questions/155086/vimperator-status-bar-empty
     .bashrc file is reloaded every time you start a new copy of Bash.
     The .profile file is loaded only when you either log in or use the appropriate flag to tell Bash to act as a login shell.
 
+
 31. Installing Boost on Mac
 http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
@@ -515,3 +523,12 @@ http://stackoverflow.com/questions/4671900/how-do-i-use-the-mingw-gdb-debugger-t
 
 4. Installing Boost on Windows
     https://andres.jaimes.net/718/how-to-install-the-c-boost-libraries-on-windows/
+
+5. Open Multiple files on Gvim and Open them in TABs
+   http://superuser.com/questions/259625/gvim-how-to-open-multiple-files-in-its-own-tab-at-once
+
+       gvim -p *.c
+       gvim -p file1.c file3.c ...
+
+   Open the Buffers in TAB
+        :tab ball
