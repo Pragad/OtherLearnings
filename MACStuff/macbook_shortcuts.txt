@@ -39,6 +39,7 @@ How to use Macbook Pro
 29. How do I make Bash' tab complete automatically cycle through options OSX
 30. Firefox - Vimperator Status bar is empty
 31. Installing Boost on Mac
+32. Auto save files on eclipse on Run
 
 ----------------------------------------
 Windows Shortcuts:
@@ -199,11 +200,14 @@ Windows Shortcuts:
     Updating a file:
     i. Edit your file
 	   git status should now show the file in RED
+
 	j. After editing your file add it again,
 	   git add macbook_shortcuts.txt
 	   git status should now show the file in GREEN
+
 	k. Commit the file to git
 	   git commit -m "Added pushd popd stuffs to shortcut"
+
 	l. Now once again push it to the online git
 	   git push origin master
 
@@ -262,8 +266,8 @@ Windows Shortcuts:
     w. Global Git Ignore
        http://stackoverflow.com/questions/7335420/global-git-ignore
 
-    Using GIT to sync VIM
-    http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
+    x. Using GIT to sync VIM
+       http://quyennguyen.com/code/Sync-Vim-With-Github-and-Vundle/
 
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
@@ -478,6 +482,15 @@ http://unix.stackexchange.com/questions/155086/vimperator-status-bar-empty
 http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
     brew install boost
+
+32. Auto save files on eclipse on Run
+
+    First check this
+        Window -> Preferences -> General -> Workspace
+        Save automatically before build + Build automatically
+
+    If above doesn't work try this:
+        Preferences -> Run/Debug -> Launching -> Save dirty editors before launching
 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:

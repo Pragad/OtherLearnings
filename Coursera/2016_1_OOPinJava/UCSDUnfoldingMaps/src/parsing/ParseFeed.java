@@ -71,8 +71,6 @@ public class ParseFeed {
 						point.putProperty("age", ageStr);
 					}
 				}
-		
-
 			}
 		
 			return features;
@@ -127,7 +125,6 @@ public class ParseFeed {
 		return Float.parseFloat(getStringVal(itemXML, tagName));
 	}
 	
-
 	/*
 	 * This method is to parse a file containing airport information.  
 	 * The file and its format can be found: 
@@ -219,14 +216,9 @@ public class ParseFeed {
 				routes.add(route);
 			}
 		}
-			
-		
-		return routes;
-		
-		
-		
+				
+		return routes;	
 	}
-	
 	
 
 	/*
@@ -271,12 +263,8 @@ public class ParseFeed {
 					break;
 				}
 			}
-			
 		}
 
 		return lifeExpMap;
 	}
-	
-	
-
 }
