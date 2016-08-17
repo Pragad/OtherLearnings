@@ -184,6 +184,10 @@ Windows Shortcuts:
          credential.helper=osxkeychain
          core.editor=vim
          merge.tool=vimdiff
+
+         git config --global core.excludesfile '~/.gitignore'
+         git config --global core.excludesfile "%USERPROFILE%\.gitignore"
+
     c. git remote add origin https://github.com/username/myproject.git
     d. git remote -v
     e. git push origin master
