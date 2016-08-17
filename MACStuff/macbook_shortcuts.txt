@@ -41,7 +41,12 @@ How to use Macbook Pro
 30. Firefox - Vimperator Status bar is empty
 31. Installing Boost on Mac
 32. Auto save files on eclipse on Run
-
+33. ECLIPSE
+    1. Install Eclipse on Mac:
+    2. Install Tomcat webserver on Mac
+    3. Add Tomcat to your project
+    4. Resolve Tomcat 404 error
+    5. Installing Java EE on Eclipse
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -535,6 +540,32 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
     If above doesn't work try this:
         Preferences -> Run/Debug -> Launching -> Save dirty editors before launching
+
+33. ECLIPSE
+    1. Install Eclipse on Mac:
+       http://www.cs.dartmouth.edu/~cs5/install/eclipse-osx/
+
+    2. Install Tomcat webserver on Mac
+       https://wolfpaulus.com/journal/mac/tomcat8/
+
+       Using 8.5 Tomcat as Tomcat Server 8.0
+       http://stackoverflow.com/questions/37024876/how-to-use-tomcat-8-5-x-and-tomee-7-x-with-eclipse
+       - To overcome "The Apache Tomcat installation at this directory is version 8.5.4.  A Tomcat 8.0 installation is expected"
+
+    3. Add Tomcat to your project
+       http://crunchify.com/step-by-step-guide-to-setup-and-install-apache-tomcat-server-in-eclipse-development-environment-ide/
+
+    4. Resolve Tomcat 404 error
+       http://stackoverflow.com/questions/14392207/http-error-404-when-running-tomcat-from-eclipse
+
+    5. Installing Java EE on Eclipse
+       http://stackoverflow.com/questions/7170694/installing-j2ee-into-existing-eclipse-ide
+
+       Goto http://download.eclipse.org/releases/neon/ and install the necessary software
+
+    6. Configuring MySQL on Eclipse
+       http://stackoverflow.com/questions/11853464/how-to-configure-mysql-on-eclipse-ee-java       
+
 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
