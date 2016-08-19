@@ -1,0 +1,64 @@
+Text: This is a test.  How many???  Senteeeeeeeeeences are here... there should be 5!  Right?
+Token: This
+Token: is
+Token: a
+Token: test
+Token: .
+Token: How
+Token: many
+Token: ???
+Token: Senteeeeeeeeeences
+Token: are
+Token: here
+Token: ...
+Token: there
+Token: should
+Token: be
+Token: !
+Token: Right
+Token: ?
+
+
+Text: many???  Senteeeeeeeeeences are
+Token: many
+Token: ???
+Token: Senteeeeeeeeeences
+Token: are
+
+Text: Here is a series of test sentences. Your program should find 3 sentences, 33 words, and 49 syllables. Not every word will have the correct amount of syllables (example, for example), but most of them will.
+Token: Here
+Token: is
+Token: a
+Token: series
+Token: of
+Token: test
+Token: sentences
+Token: .
+Token: Your
+Token: program
+Token: should
+Token: find
+Token: sentences
+Token: words
+Token: and
+Token: syllables
+Token: .
+Token: Not
+Token: every
+Token: word
+Token: will
+Token: have
+Token: the
+Token: correct
+Token: amount
+Token: of
+Token: syllables
+Token: example
+Token: for
+Token: example
+Token: but
+Token: most
+Token: of
+Token: them
+Token: will
+Token: .

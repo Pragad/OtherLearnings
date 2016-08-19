@@ -457,6 +457,9 @@ http://www.folkstalk.com/2012/02/cut-command-in-unix-linux-examples.html
 
 
 GREP
+0) Basic Grep
+   grep -ir "fleshscore" .
+
 1) 
 To find the number of occurances of a string in several files
     cat * | grep -c "resending the auth" sktlogd*

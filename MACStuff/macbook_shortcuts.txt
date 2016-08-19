@@ -47,6 +47,7 @@ How to use Macbook Pro
     3. Add Tomcat to your project
     4. Resolve Tomcat 404 error
     5. Installing Java EE on Eclipse
+34. Basic Grep
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -81,6 +82,9 @@ Windows Shortcuts:
 
     9. unrar
        brew install unrar
+
+    10. Install Java
+        brew cask install java
 
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
@@ -564,8 +568,24 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
        Goto http://download.eclipse.org/releases/neon/ and install the necessary software
 
     6. Configuring MySQL on Eclipse
-       http://stackoverflow.com/questions/11853464/how-to-configure-mysql-on-eclipse-ee-java       
+       http://stackoverflow.com/questions/11853464/how-to-configure-mysql-on-eclipse-ee-java 
 
+        http://stackoverflow.com/questions/4359131/brew-install-mysql-on-mac-os
+        http://blog.joefallon.net/2013/10/install-mysql-on-mac-osx-using-homebrew/
+       brew update
+       brew doctor
+       brew upgrade
+       brew install mysql
+
+    7. Uninstalling MySQL on Mac
+       http://stackoverflow.com/questions/1436425/how-do-you-uninstall-mysql-from-mac-os-x
+       sudo find / -iname "*mysql*"
+
+    8. Uninstalling Eclipse
+       http://stackoverflow.com/questions/470261/uninstall-eclipse-under-osx
+
+34. Basic Grep
+    grep -ir "fleshscore" .
 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
