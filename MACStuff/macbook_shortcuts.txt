@@ -48,6 +48,8 @@ How to use Macbook Pro
     4. Resolve Tomcat 404 error
     5. Installing Java EE on Eclipse
 34. Basic Grep
+35. Basic Find
+
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -394,6 +396,13 @@ Windows Shortcuts:
         :vert sb N
         :vert belowright sb N
 
+    Search for Two words in a single line
+        :set magic
+        /foo.*bar
+
+    Search for Two Similar words
+        /planet\(Awesome\|Terrible\)
+
 19. pushd and popd
     popd - Just changes the order of the stack. It can also pop the first element
     out of the stack
@@ -586,6 +595,9 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
 34. Basic Grep
     grep -ir "fleshscore" .
+
+35. Basic Find
+    find . -iname "*binary*"
 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:

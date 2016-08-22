@@ -7,7 +7,7 @@ import processing.core.PGraphics;
 /** Implements a visual marker for earthquakes on an earthquake map
  * 
  * @author UC San Diego Intermediate Software Development MOOC team
- * @author Your name here
+ * @author Pragad Thiru
  *
  */
 public abstract class EarthquakeMarker extends SimplePointMarker
@@ -16,16 +16,12 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	// Did the earthquake occur on land?  This will be set by the subclasses.
 	protected boolean isOnLand;
 
-	// SimplePointMarker has a field "radius" which is inherited
-	// by Earthquake marker:
+	// SimplePointMarker has a field "radius" which is inherited by Earthquake marker:
 	// protected float radius;
 	//
-	// You will want to set this in the constructor, either
-	// using the thresholds below, or a continuous function
-	// based on magnitude. 
+	// You will want to set this in the constructor, either using the thresholds 
+	// below, or a continuous function based on magnitude. 
   
-	
-	
 	/** Greater than or equal to this threshold is a moderate earthquake */
 	public static final float THRESHOLD_MODERATE = 5;
 	/** Greater than or equal to this threshold is a light earthquake */
@@ -38,10 +34,8 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 
 	// ADD constants for colors
 
-	
 	// abstract method implemented in derived classes
-	public abstract void drawEarthquake(PGraphics pg, float x, float y);
-		
+	public abstract void drawEarthquake(PGraphics pg, float x, float y);		
 	
 	// constructor
 	public EarthquakeMarker (PointFeature feature) 
@@ -55,7 +49,6 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 		this.radius = 1.75f*getMagnitude();
 	}
 	
-
 	// calls abstract method drawEarthquake and then checks age and draws X if needed
 	public void draw(PGraphics pg, float x, float y) {
 		// save previous styling
@@ -78,15 +71,25 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	// We suggest: Deep = red, intermediate = blue, shallow = yellow
 	// But this is up to you, of course.
 	// You might find the getters below helpful.
-	private void colorDetermine(PGraphics pg) {
-		//TODO: Implement this method
+	private void colorDetermine(PGraphics pg)
+	{		
+		if(this.getDepth() >= THRESHOLD_DEEP)
+		{
+			pg.fill(255, 0, 0);
+		}
+		else if(this.getMagnitude() >= THRESHOLD_INTERMEDIATE)
+		{
+			pg.fill(0, 0, 255);
+		}
+		else
+		{
+			pg.fill(200, 200, 0);
+		}
 	}
-	
 	
 	/*
 	 * getters for earthquake properties
 	 */
-	
 	public float getMagnitude() {
 		return Float.parseFloat(getProperty("magnitude").toString());
 	}
@@ -108,6 +111,4 @@ public abstract class EarthquakeMarker extends SimplePointMarker
 	{
 		return isOnLand;
 	}
-	
-	
 }

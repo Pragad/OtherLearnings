@@ -43,7 +43,8 @@ public class HelloWorld extends PApplet
 
 		// This sets the background color for the Applet.  
 		//this.background(200, 200, 200); // Grey
-		this.background(200, 255, 100); // Light Yellow
+		this.background(200, 255, 100); // Light Green
+		//this.background(255, 255, 0); // Yellow
 		//this.background(0, 255, 0); // Green		
 		
 		// Select a map provider
