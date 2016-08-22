@@ -322,6 +322,16 @@ Windows Shortcuts:
     z. Avoid generating unwanted .orig file
        git config --global mergetool.keepBackup false
 
+    aa. Git Stash Changes
+        http://stackoverflow.com/questions/3040833/stash-only-one-file-out-of-multiple-files-that-have-changed-with-git
+        git stash --keep-index 
+
+    ab. Accidently Pushing .classpath to GIT
+        If you accidently pushed these before to the central repository, you may use the following git commands to remove them from the central repository.
+        Or if you already used “git add” or “git commit” to add or commit them to your local repository.
+
+            git rm -r target/
+            git rm -r --cached target/
 
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
