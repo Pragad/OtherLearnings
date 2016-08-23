@@ -620,6 +620,7 @@ Windows Shortcuts:
    http://stackoverflow.com/questions/38436542/mingw-cxxtest-bizarre-errors
 
        Replace -std=c++11 with -std=gnu++11
+       g++ -std=gnu++11 Graphs.cpp
 
 3. Using MinGW to debug a C++ program
 http://stackoverflow.com/questions/4671900/how-do-i-use-the-mingw-gdb-debugger-to-debug-a-c-program-in-windows
