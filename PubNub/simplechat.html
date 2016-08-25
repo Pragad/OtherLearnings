@@ -1,32 +1,41 @@
-<!-- https://vimeo.com/79235200 -->
+<!-- https://vimeo.com/36385012 -->
 Enter your text
 <input id=input></input><br>
 <button id=button>Submit</button>
 <div id=output></div>
-<!-- <div id=output></div> -->
-<!-- <div><img id=image></div> -->
 
 <script src=http://cdn.pubnub.com/pubnub.min.js></script>
 <script>(function(){
 
+// Bind Variables
 var input  = PUBNUB.$('input');
-var image  = PUBNUB.$('image');
 var button = PUBNUB.$('button');
 var output = PUBNUB.$('output');
 var pubnub = PUBNUB.init({});
 
+// Open up a network socket connection to the pubNub cloud using subscribe
 pubnub.subscribe({
     channel : 'button-click',
+
+    // Callback function gets executed as soon as a message is received
     message : received_button_click
 });
 
+// This function gets executed as soon as a message is received
+// We receive message data in the callback
 function received_button_click(message) {
-    // image.src = 'https://www.pubnub.com/static/images/illustrations/data-streams.png'
+
+    // Maintain the state by appending innerHTML back
     output.innerHTML = message + '<br>' + output.innerHTML
 }
 
-pubnub.bind( 'click', button, function() {
+// touchstart is for mobile devices
+pubnub.bind( 'click,touchstart', button, function() {
     pubnub.publish({
+
+        // Send data over the wire that will be received by the callback that we wrote
+        // We should send on the same channel
+        // We should send a message which will be the value in the text box
         'channel' : 'button-click',
         'message' : input.value
     });
