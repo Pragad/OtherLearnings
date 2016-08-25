@@ -1,0 +1,28 @@
+<!-- https://vimeo.com/79235200 -->
+<button id=button>Submit</button>
+<div><img id=image></div>
+
+<script src=http://cdn.pubnub.com/pubnub.min.js></script>
+<script>(function(){
+
+var button  = PUBNUB.$('button');
+var image   = PUBNUB.$('image');
+var pubnub  = PUBNUB.init({});
+
+pubnub.subscribe({
+    channel : 'button-click',
+    message : received_button_click
+});
+
+function received_button_click(message) {
+    image.src = 'https://www.pubnub.com/static/images/illustrations/data-streams.png'
+}
+
+pubnub.bind( 'click', button, function() {
+    pubnub.publish({
+        'channel' : 'button-click',
+        'message' : 'go'
+    });
+} );
+
+})();</script>

@@ -1,0 +1,28 @@
+Enter your text
+<input id=input></input><br>
+<button id=button>Submit</button>
+<div id=output></div>
+<script src=http://cdn.pubnub.com/pubnub-3.1.min.js></script>
+<script>(function(){
+    var input = PUBNUB.$('input')
+    ,   button = PUBNUB.$('button')
+    ,   output = PUBNUB.$('output')
+
+    //<!--1. Open up a network socket to the pubNub cloud using subscribe-->
+    PUBNUB.subscribe({
+        'channel' : 'simple-chat', //<!--Add a channel and give it a name-->
+        'callback' : function(message) { //<!--This function gets executed as soon as a message is received. We receive message data in the callback-->
+            output.innerHTML = message + '<br>' + output.innerHTML
+        }
+    })
+
+    PUBNUB.bind( 'mousedown,touchstart', button, function() {
+        PUBNUB.publish({
+            // Send data over the wire that will be received by the callback that we wrote
+            // We should send on the same channel
+            // We should send a message which will be the value in the text box
+            'channel' : 'simple-chat'
+            'message' : input.value
+        })
+    } )
+})()</script>
