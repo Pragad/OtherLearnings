@@ -413,6 +413,10 @@ Windows Shortcuts:
     Search for Two Similar words
         /planet\(Awesome\|Terrible\)
 
+    To Turn off Vimdiff
+    http://stackoverflow.com/questions/2703644/how-do-you-exit-vimdiff-mode-in-vim-specifically-for-fugitive
+        :diffoff
+
 19. pushd and popd
     popd - Just changes the order of the stack. It can also pop the first element
     out of the stack
