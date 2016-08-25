@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+Enter your text
+<input type="text" id="input"></input><br>
+<input type="button" name="output" value="Submit" onclick="showDiv()" />
+<div id="output" style="display:block;"></div>
+
+<script>
+function showDiv() {
+    //document.getElementById('output').style.display = "block";
+    document.getElementById('output').innerHTML = document.getElementById("input").value + '<br>'+ document.getElementById('output').innerHTML
+}
+</script>
+
+</body>
+</html>
