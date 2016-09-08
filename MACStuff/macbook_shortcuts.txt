@@ -68,10 +68,16 @@ Windows Shortcuts:
     ⇪  - Capslock
 
 1. Software to be installed
+    0. Copy .vimrc and .bashrc, .bash_profile
     1. ClipMenu
     2. GoogleDrive
     3. Spectacle
     4. Karabiner
+       - Change Control_L to Control_L + Send ESC when just Control_L is pressed
+       - Right Option to Control_R
+       - Escape to CapsLock
+       - Apple System Preferences -> Keyboard -> Modifier Keys
+           - Change Caps Lock to Control
     5. iTerm
     6. boost
     7. brew
@@ -99,6 +105,20 @@ Windows Shortcuts:
 
     10. Install Java
         brew cask install java
+
+    11. Make sure wifi doesn't go off on screen lock
+        http://apple.stackexchange.com/questions/71884/wi-fi-disconnects-when-i-lock-the-mac
+
+        Find IP address from terminal on MAC
+            Algos $ipconfig getifaddr en0
+            10.55.34.39
+
+            Algos $ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
+            10.55.34.39
+
+        Find the Interface that is used and do the below thing
+            Algos $cd /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources
+            Resources $sudo ./airport en0 prefs DisconnectOnLogout=NO
 
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
