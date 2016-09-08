@@ -47,8 +47,8 @@ How to use Macbook Pro
     3. Add Tomcat to your project
     4. Resolve Tomcat 404 error
     5. Installing Java EE on Eclipse
-34. Basic Grep
-35. Basic Find
+34. Basic GREP
+35. Basic FIND
 36. Basic Head with Find
 ----------------------------------------
 Windows Shortcuts:
@@ -422,7 +422,7 @@ Windows Shortcuts:
         :vert sb N
         :vert belowright sb N
 
-    Search for Two words in a single line
+    VIM Search Two words in a single line
         :set magic
         /foo.*bar
 
@@ -623,21 +623,21 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     8. Uninstalling Eclipse
        http://stackoverflow.com/questions/470261/uninstall-eclipse-under-osx
 
-34. Basic Grep
+34. Basic GREP
     grep -ir "fleshscore" .
-    grep -r -i "*split*" --include \*.h --include \*.cpp
+    grep -r -i "split" --include \*.h --include \*.cpp . | more
 
     GREP whole words:
-        grep -wir "split" . --include \*.h --include \*.cpp | more
-        grep -ir "split" . --include \*.h --include \*.cpp | more
+        grep -wir "split" . --include \*.h --include \*.cpp . | more
+        grep -ir "split" . --include \*.h --include \*.cpp . | more
 
-35. Basic Find
+35. Basic FIND
     find . -iname "*binary*"
 
 36. Basic Head with Find
-    find . -name '*.cpp' -exec head 20 {} \;
+    Display the top 20 lines of all cpp files
+        find . -name '*.cpp' -exec head 20 {} \;
 
-    It displays the top 20 lines of all cpp files
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
