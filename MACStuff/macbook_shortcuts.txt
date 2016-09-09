@@ -647,9 +647,12 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     grep -ir "fleshscore" .
     grep -r -i "split" --include \*.h --include \*.cpp . | more
 
-    GREP whole words:
+    Grep whole words:
         grep -wir "split" . --include \*.h --include \*.cpp . | more
         grep -ir "split" . --include \*.h --include \*.cpp . | more
+
+    Grep Multiple Words in Same line
+        grep -r -i "comment" --include \*.h --include \*.cpp . | grep -i "print"
 
 35. Basic FIND
     find . -iname "*binary*"
