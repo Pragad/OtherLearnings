@@ -453,6 +453,11 @@ Windows Shortcuts:
     http://stackoverflow.com/questions/2703644/how-do-you-exit-vimdiff-mode-in-vim-specifically-for-fugitive
         :diffoff
 
+    Goto Next and Prev cursor positions
+        ctrl-o, ctrl-i
+        ctrl-i : does not work.
+
+        Also use `` to go back and forth
 19. pushd and popd
     popd - Just changes the order of the stack. It can also pop the first element
     out of the stack
