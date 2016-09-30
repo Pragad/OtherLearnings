@@ -674,6 +674,9 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     Display the top 20 lines of all cpp files
         find . -name '*.cpp' -exec head 20 {} \;
 
+37. Add custom search engine in Chrome
+    http://www.makeuseof.com/tag/create-custom-search-engines-google-chrome/
+
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
