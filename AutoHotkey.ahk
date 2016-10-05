@@ -40,18 +40,19 @@ Return
 ; `::Esc
 Esc::Capslock
 
+; Backspace not working while renaming a file
 ; Backspace behaves like Up as in WinXP
-#IfWinActive, ahk_class CabinetWClass
-Backspace::
-   ControlGet renamestatus,Visible,,Edit1,A
-   ControlGetFocus focussed, A
-   if(renamestatus!=1&&(focussed=”DirectUIHWND3″||focussed=SysTreeView321))
-   {
-    SendInput {Alt Down}{Up}{Alt Up}
-  }else{
-      Send {Backspace}
-  }
-#IfWinActive
+; Backspace::
+; #IfWinActive, ahk_class CabinetWClass
+;    ControlGet renamestatus,Visible,,Edit1,A
+;    ControlGetFocus focussed, A
+;   if(renamestatus!=1&&(focussed=”DirectUIHWND3″||focussed=SysTreeView321))
+;   {
+;    SendInput {Alt Down}{Up}{Alt Up}
+;  }else{
+;      Send {Backspace}
+;  }
+;#IfWinActive
 
 ; Convert Shift keys to type '(' and ')' when presseed separately.
 ; http://superuser.com/questions/579442/use-autohotkey-to-remap-the-left-shift-to-and-the-right-shift-to-but-i
