@@ -710,3 +710,16 @@ http://stackoverflow.com/questions/4671900/how-do-i-use-the-mingw-gdb-debugger-t
 
    Open the Buffers in TAB
         :tab ball
+
+6. Adding Alias to Command prompt
+   http://stackoverflow.com/questions/20530996/aliases-in-windows-command-prompt
+   1. Create a new .cmd/.bat file with the necessary shortcuts using "doskey"
+      COMMAND PROMPT SHORTCUT METHOD
+      - Create a shortcut to command prompt and enter this in the Target Location
+        %windir%\system32\cmd.exe /K "C:\PRAGADHE\DEV_GIT\OtherLearnings\env.cmd"
+
+      REGISTRY METHOD
+      - Run regedit and go to HKEY_CURRENT_USER -> Software -> Microsoft -> Command Processor
+      - Add String Value entry with the name AutoRun and the full path of your .bat/.cmd file. 
+      - Restart the system
+   
