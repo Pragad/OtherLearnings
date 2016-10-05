@@ -53,7 +53,60 @@ Backspace::
   }
 #IfWinActive
 
-; 
+; Convert Shift keys to type '(' and ')' when presseed separately.
+; http://superuser.com/questions/579442/use-autohotkey-to-remap-the-left-shift-to-and-the-right-shift-to-but-i
+LShift UP::Send, (
+RShift UP::Send, )
+LShift & F13::
+RShift & F13::
+
+; Correct shift keys
+;http://superuser.com/questions/1131820/how-to-trigger-noop-for-key-combinations-in-autohotkey
+; Disable left shift, left letter keys
+LShift & q::return
+LShift & w::return
+LShift & e::return
+LShift & r::return
+LShift & t::return
+LShift & a::return
+LShift & s::return
+LShift & d::return
+LShift & f::return
+LShift & g::return
+LShift & z::return
+LShift & x::return
+LShift & c::return
+LShift & v::return
+LShift & 1::return
+LShift & 2::return
+LShift & 3::return
+LShift & 4::return
+LShift & 5::return
+LShift & `::return
+
+; Disable right shift, right letter keys
+RShift & y::return
+RShift & u::return
+RShift & i::return
+RShift & o::return
+RShift & p::return
+RShift & h::return
+RShift & j::return
+RShift & k::return
+RShift & l::return
+RShift & `;::return
+RShift & n::return
+RShift & m::return
+RShift & ,::return
+RShift & .::return
+RShift & /::return
+RShift & 6::return
+RShift & 7::return
+RShift & 8::return
+RShift & 9::return
+RShift & 0::return
+RShift & -::return
+RShift & =::return
 
 ; Note: From now on whenever you run AutoHotkey directly, this script
 ; will be loaded.  So feel free to customize it to suit your needs.
