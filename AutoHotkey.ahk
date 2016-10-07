@@ -78,6 +78,7 @@ LShift & z::return
 LShift & x::return
 LShift & c::return
 LShift & v::return
+LShift & b::return
 LShift & 1::return
 LShift & 2::return
 LShift & 3::return
@@ -108,6 +109,55 @@ RShift & 9::return
 RShift & 0::return
 RShift & -::return
 RShift & =::return
+
+; Correct Control keys
+;http://superuser.com/questions/1131820/how-to-trigger-noop-for-key-combinations-in-autohotkey
+; Disable left Control, left letter keys
+LCtrl & q::return
+LCtrl & w::return
+LCtrl & e::return
+LCtrl & r::return
+LCtrl & t::return
+LCtrl & a::return
+LCtrl & s::return
+LCtrl & d::return
+LCtrl & f::return
+LCtrl & g::return
+LCtrl & z::return
+LCtrl & x::return
+LCtrl & c::return
+LCtrl & v::return
+LCtrl & b::return
+LCtrl & 1::return
+LCtrl & 2::return
+LCtrl & 3::return
+LCtrl & 4::return
+LCtrl & 5::return
+LCtrl & `::return
+
+; Disable right Ctrl, right letter keys
+RCtrl & y::return
+RCtrl & u::return
+RCtrl & i::return
+RCtrl & o::return
+RCtrl & p::return
+RCtrl & h::return
+RCtrl & j::return
+RCtrl & k::return
+RCtrl & l::return
+RCtrl & `;::return
+RCtrl & n::return
+RCtrl & m::return
+RCtrl & ,::return
+RCtrl & .::return
+RCtrl & /::return
+RCtrl & 6::return
+RCtrl & 7::return
+RCtrl & 8::return
+RCtrl & 9::return
+RCtrl & 0::return
+RCtrl & -::return
+RCtrl & =::return
 
 ; Note: From now on whenever you run AutoHotkey directly, this script
 ; will be loaded.  So feel free to customize it to suit your needs.
