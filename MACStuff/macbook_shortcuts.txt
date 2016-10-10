@@ -250,8 +250,17 @@ Windows Shortcuts:
 	d. git commit -m “Add Readme.txt”
 	e. git remote add origin https://github.com/SyncMr/MyShortcuts.git
 	e. git remote add origin https://github.com/SyncMr/Algos.git
-	f. git remote -v
+
+    https://code.tutsplus.com/tutorials/quick-tip-how-to-work-with-github-and-multiple-accounts--net-22574
+    e. git remote add origin git@github-Anit11:Anit11/Coding.git
+	f. git remote -v : This just displays info about the "ORIGIN"
 	g. git push origin master
+
+    Adding Already Added Folder to GIT - For Anit:
+    a. git status
+    b. git add --all
+    c. git commit -m "Give some comment describing the changes"
+    d. git push origin master
 
     Updating a file:
     i. Edit your file
