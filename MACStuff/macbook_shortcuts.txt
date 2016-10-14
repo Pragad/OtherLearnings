@@ -732,3 +732,5 @@ http://stackoverflow.com/questions/4671900/how-do-i-use-the-mingw-gdb-debugger-t
       - Add String Value entry with the name AutoRun and the full path of your .bat/.cmd file. 
       - Restart the system
    
+7. Windows Spotlight Lockscreen Images Location
+    C:\Users\pragadhe\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets

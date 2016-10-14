@@ -1,4 +1,5 @@
 BASIC SHELL SCRIPTING STUFF
+0. UNIX a multi-user OS
 1. Different types of shell and differences
 2. BASH Shortcuts
 3. Pushd Popd and Dirs
@@ -6,6 +7,13 @@ BASIC SHELL SCRIPTING STUFF
 5. Find top running processes
 6. Get System identification info
 7. Hard Link vs Soft Link
+8. Chmod
+9. CHOWN
+10. $#
+11. $* and $@
+12. Explain about 's' permission bit in a file?
+13. How will you find the 99th line of a file using only tail and head command?
+14. Create a directory such that anyone in the group can create a file and access any person’s file in it but none should be able to delete a file other than the one created by himself
 --------------------------------------------------------------------------------------------
 Quick Guide to GREP
 1. Basic GREP
@@ -25,6 +33,12 @@ Quick Guide to AWK and SED
 3. Sum of a text file that has only numbers:
 --------------------------------------------------------------------------------------------
 BASIC SHELL SCRIPTING STUFF
+0.
+UNIX a multi-user OS
+    It means that more than one user can be operating the computer at the same time.
+    While your computer will only have one keyboard and monitor, it can still be used by more than one user.
+    For example, if your computer is attached to a network, or the Internet, remote users can log in via telnet or ssh (secure shell) and operate the computer.
+
 1.
 Different types of shell and differences
 
@@ -161,6 +175,85 @@ Hard Link vs Soft Link
     The contents of the file could not be found because the soft link points to the name, that was changed, and not to the contents.
     Likewise, If blah1 is deleted, blah1-hard still holds the contents; if blah2 is deleted, blah2-soft is just a link to a non-existing file.
 
+8.
+Chmod
+http://www.unixtutorial.org/2014/07/difference-between-chmod-and-chown/
+http://linuxcommand.org/lts0070.php
+
+    IMP:
+    Unix allows multiple users to simultaneously work on a machine
+
+
+    - Changes the READ, WRITE, Execute permissions on a file for
+        i. User who owns the file
+        ii. Group that belongs to the same group as user
+        iii. Everyone else
+
+    - Can be modified using numbers or characters
+        1 - execute (x)
+        2 - write (w)
+        4 - read (r)
+
+        u - user
+        g - group
+        o - others
+
+    EXAMPLE 1:
+    $ chmod 644 a.txt
+    $ chmod u+rw,go+r a.txt
+        - RW for user; 
+        - R for group
+        - R for everyone
+
+    EXAMPLE 2:
+    $ chmod 755 a.txt
+    $ chmod u+rwx,go+rx a.txt
+
+    EXAMPLE 3:
+    - chmod +x a.txt
+        - ADDS (x) permission to everyone. If none is specified, it adds for everyone
+            
+9
+CHOWN
+    FORMAT
+    chown [-args] user_name:group file_directory
+
+    Eg:
+    $ chown -R pragad:netapp a.txt
+
+10.
+$#
+http://career.guru99.com/shell-scripting-interview-questions/
+    Shows the count of the arguments passed to the script.
+
+11.
+$* and $@
+    $@ treats each quoted arguments as separate arguments 
+    $* will consider the entire set of positional parameters as a single string.
+
+12.
+Explain about 's' permission bit in a file?
+
+    's' bit is called 'set user id' (SUID) bit.
+
+    's' bit on a file causes the process to have the privileges of the owner of the file during the instance of the program.
+
+    Eg: Executing 'passwd' command to change current password causes the user to writes its new password to shadow file even though it has 'root' as its owner.
+
+13.
+How will you find the 99th line of a file using only tail and head command?
+
+    tail +99 file1|head -1
+
+14.
+Create a directory such that anyone in the group can create a file and access any person’s file in it but none should be able to delete a file other than the one created by himself
+
+    USE 't' sticky bit
+
+    mkdir direc1
+    chmod g+wx direc1
+    chmod +t direc1
+
 --------------------------------------------------------------------------------------------
 Quick Guide to GREP
 1. Basic GREP
@@ -217,7 +310,8 @@ http://stackoverflow.com/questions/1632113/what-is-the-difference-between-sed-an
 
     Both are tools that transform text.
     BUT awk can do more things besides just manipulating text.
-    Its a programming language by itself with most of the things you learn in programming, like arrays, loops, if/else flow control etc You can "program" in sed as well, but you won't want to maintain the code written in it.
+    Its a programming language by itself with most of the things you learn in programming, like arrays, loops, if/else flow control etc.
+    You can "program" in sed as well, but you won't want to maintain the code written in it.
 
 1b.
 What kind of application are best use cases for sed and awk tools ?
@@ -240,5 +334,4 @@ Awk Shortucts
 Sum of a text file that has only numbers:
     cat sum | awk "{ sum+=$1} END {print sum}"
 
----------------------------------------------------------------------------------------------
-
+--------------------------------------------------------------------------------------------
