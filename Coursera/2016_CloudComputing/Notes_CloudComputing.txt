@@ -87,6 +87,11 @@
 
 Week 2:
 1 Gossip Protocol:
+    Multicast:
+        - Generally at Application layer
+        - Most of the multicasts that are out there today are at Application Level
+        - But there are few multicast implementations that are at IP level
+            Eg: IPmulticast
     1.1 Multicast Problem
         Requirements for multicast problem:
         - Fault tolerant and reliable
@@ -104,17 +109,19 @@ Week 2:
         SRM:
             - Uses NAKs
             - But amount of ACKs and NAKs could implode (very large number). 
-            - So add random delays and
+            - There could be very large number of ACKs and NACKs
+            - So the protocol adds random delays to send out NACKs and
             - exponential backoffs when multiple NACKs should be sent to avoid NAK storms.
 
         RMTP:
             - Uses ACKs
             - But send a digest that contains all the ACKs
-            - ACKs are sent only to designated receivers.
+            - Ack storms can be avoided by sending ACKs are sent only to designated receivers
                 - This is done to avoid ACK storms. 
             - Only the designated receivers receiver the ACK and they forward the message
               down the tree.
 
+        IMP:
         - Even with delays and exponential backoff, large number of ACKs and NAKs would get sent
         - So it is not scalable. As nodes increase even ACKs and NAKs increase.
         Still we don't have a good solution in the above approaches.
@@ -134,21 +141,56 @@ Week 2:
         - A nice way of multicast implementation
         - Fault tolerant
 
+    PROJ:
     1.3 Gossip Analysis:
         - If N/2 nodes in a subnet, then the rounter could have N/2 gossip messages to be sent.
         - Fix: Higher probability to stay within a subnet.
+    
+    1.4 Gossip Implementations:
+        - Tree based multicast protocols are not as EFFICIENT as Gossip
 
     2.1 Group Membership List
-        - A list of processes is maintained.
+        - We will consider CRASH-STOP / FAIL-STOP process failures
+            i.e If a process fails, it doesn't recover from it.
+        - Another type is CRASH-RECOVERY / FAIL-RECOVERY MODEL
+
+        IMP:
+        - We have a large group of Processes and each are running the same algorithm / Protocol
+        - Each process / a group of process maintains a MEMBERSHIP LIST
+        - MEMBERSHIP List: Contains list of NON-FAULTY processees.
+        - A list of processes are maintained.
         - Each process has a list of members that are active (non faulty)
-        - This LIST should be upto date as Processes JOIN, LEAVE, on FAILURE
+
+        - Membership List gets accessed by Applications like
+            Gossip, Overlays etc
+
+        - GOAL is to build Membership Protocol that keeps the Membership list UPTO DATE
+            - as they JOIN
+            - as they FAIL
+            - as they LEAVE
+
         - If a process fails, we should detect it and notify everyone else.
-        
+        - Membership list can be a COMPLETE LIST:
+        COMPLETE LIST:
+            - Consistent at ALL TIMES across all the processes in the list
+            Eg: Virtual Synchrony
+
         - Should have two components
             1. Failure Detection
             2. Dissemination
+                - Can also be used to disseminate information about process joins and process leave
 
-        FOCUS ON ALMOST COMPLETE LIST
+        We will FOCUS ON ALMOST COMPLETE LIST
+            - Gossip-style, SWIM
+            - Weakly Consistent
+
+        OUR GOAL:
+            Failure Detection:
+            - Consider two processes Pi and Pj. When Process Pj crashes, we have to make sure
+              at least one NON-FAULTY PROCESS detects that Pj has failed.
+            Dissemination:
+            - Once a non faulty process has detected that Pj has failed, the information 
+              should be disseminated to Pi
 
         Failure Detection:
             - Require 100% COMPLETENESS
@@ -161,23 +203,49 @@ Week 2:
             - In other words, it says that there are no mistaken failure detections or there are no false positives.
             - Because even if we kick out a NON FAULTY guy, it's okay. He will rejoin
 
-    2.2 Heartbeating
+    2.2 Failure Detectors: How to design a Failure Detection Model
+        - Completeness
+        - Accuracy
+        - Speed
+            - Time until some process detects the failure
+        - Scale
+            - Equal load on all memebers
+            - Low overall network load
+            - Avoid bottlenecks
+
+        - CANNOT build a network that is 100% Completeness and 100% Accuracy
+
+    Heartbeating:
         Centralized Heartbeat:
             - A central system to which all process sends heartbeats
-            - Problem: The central system could get overloaded / fail
+
+            PROJ
+            Heartbeat:
+                - Just a sequence number
+                - Every time a process Pi sends and heartbeat to Pj, it increments its local
+                  sequence number
+                - Heartbeats are sent every 't' seconds
+                - Pj keeps track of when the last heartbeat was sent
+
+            Problem:
+                - The central system could get overloaded / fail
 
         Ring Heartbeating:
+            - All processes are organized in a virtual ring
             - Send heart beat to both left and right neighbors
+
+            Problem:
             - Both could fail
+            - Repairing the RING
 
         All to All Heartbeating
             - To all other processes in the system
-            - Equal load per number
+            - Equal load per number (Even though the load is high)
             - Protocol is complete
 
             Problem:
             - What if one process receives messages very slowly
-            - Then it could marked that everything has failed.
+            - Then it could mark(notify everyone else) that the process has failed.
             - So very high false positive
 
     2.3 Gossip Style Membership
@@ -189,7 +257,8 @@ Week 2:
         5. Tfail
         5. Tcleanup
 
-    2.4
+    2.4 What is the best failure detector
+        Completeness: Should be Guarenteed always
         Accuracy: Probability of a Mistake in Time t: PM(t)
 
         All to ALL Heatbeating:
@@ -204,35 +273,61 @@ Week 2:
             - T = Log N * tg
             - L = N/tg = N*logN / T
 
+        All to All Hearbeating and Gossip-based are SUB-OPTIMAL
+            - BECAUSE: they combine both Failure Detection and Dissemination component.
+            - Key: Separate those two
+            - USE NON-HEARTBEAT for failure detection
+
     2.5 Another Probabilistic Approach
+        SWIM (Scalable Weekly consistent Infection style Membership protocol)
         - Instead of Heartbeats, use Pings.
         - Send indirect ping
 
         - Pick one process at Random and send a Ping
         - If ACK received then done.
         - Else Send an indirect ping and wait for an indirect ACK
-            - Indirect ping is sent bo 'k' other processes
+            - Indirect ping is sent to 'k' other processes
             - Even if One indirect ACK is received then done
         - If no indirect ACK then remove the process
 
+        - THIS WAY, GIVING Pj a TEMPORAL CHANCE AND A SPATIAL CHANCE
+            - Temporal Chance: By sending a Second ping
+            - Spatial Chance: Indirect path
+
         Hearbeating vs Swim:
 
+        - Select 'k' different processes by just going over the membership list lineraly
+        - Every time after sending 'k' PINGs to identify a faulty process, REORDER the
+          membership list. So that next time you will select 'k' different processes
+
     2.6 Dissemination and Suspension   
+        Dissemination:
+            - Can be used to suspect if a process has failed
+            - Can be used when a PROCESS IS JOINING / LEAVING the protocol
+
         - Once failure is detected that info should be sent to everyone else
+
+        PROJ
+        - Every process MAINTAINS a list of recently joined and recently left processes
+        - Piggy back a part of this info along with the ACK, so that others can update it.
 
         - Piggy back on failure detector messages
             - Useful when SWIM style is used.
 
+        PROJ:
         - Suspension:
             - Insted of directly moving to failed state, move to Suspect state
             - While in suspect state if there is a message from Pj then move back to active state
 
+            PROJ
             - Problem:
                 Piggyback between suspected and active state.
                 - So have Incarnation numbers.
                 - Only Pj can Increment the Incarnation number
                 - If someone is suspecting Pj, then Pj will increment its Incarnation number and
                   start sending it out along with ALIVE.
+                - IF SUSPICION: HIGHER incarnation numbers override the LOW incarnation numbers
+                - IF FAILED, that overrides everything else
 
 Week 3:
 P2P Systems:
