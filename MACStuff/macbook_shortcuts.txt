@@ -50,6 +50,9 @@ How to use Macbook Pro
 34. Basic GREP
 35. Basic FIND
 36. Basic Head with Find
+37. Add custom search engine in Chrome
+38. How to run a maven project
+39. How to import a JSON to mongodb
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -57,6 +60,10 @@ Windows Shortcuts:
 3. Using MinGW to debug a C++ program
 4. Installing Boost on Windows
 5. Open Multiple files on Gvim and Open them in TABs
+6. Adding Alias to Command prompt
+7. Windows Spotlight Lockscreen Images Location
+8. Set JAVA_HOME
+9. Create Symlink on Windows and List Symlinks on cmd prompt through dir
 
 -------------------------------------------------------------------------------------------------
 
@@ -660,6 +667,11 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 34. Basic GREP
     grep -ir "fleshscore" .
     grep -r -i "split" --include \*.h --include \*.cpp . | more
+    grep -ir "vserver.*create" abc.log* | more
+    grep -ir "replay" mgwd.log* | grep -v "cifs_server_security" | grep "cifs" | more
+
+    Grep exclude words:
+        grep -v "unwanted_word" file    
 
     Grep whole words:
         grep -wir "split" . --include \*.h --include \*.cpp . | more
@@ -685,6 +697,19 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
 37. Add custom search engine in Chrome
     http://www.makeuseof.com/tag/create-custom-search-engines-google-chrome/
+
+    Eg: 
+        Burt has the following: http://burtweb-prd.eng.netapp.com/burt/burt-bin/start?button=edit&burt-id=%s
+        As it is default search engine, I just have to type the burt number and hit enter
+
+38. How to run a maven project
+
+        mvn compile exec:java -Dexec.mainClass=course.homework.MongoDBSparkFreemarkerStyle
+        mvn compile exec:java -Dexec.mainClass=course.BlogController
+
+39. How to import a JSON to mongodb
+
+        mongoimport --drop -d students -c grades grades.json
 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
@@ -734,3 +759,12 @@ http://stackoverflow.com/questions/4671900/how-do-i-use-the-mingw-gdb-debugger-t
    
 7. Windows Spotlight Lockscreen Images Location
     C:\Users\pragadhe\AppData\Local\Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets
+
+8. Set JAVA_HOME
+http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-win7
+   SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0_101
+
+9. Create Symlink on Windows and List Symlinks on cmd prompt through dir
+
+    - mklink C:\Users\pragadhe\_vrapperrc C:\PRAGADHE\DEV_GIT\OtherLearnings\_vrapperrc 
+    - dir /AL

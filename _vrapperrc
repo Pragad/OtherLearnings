@@ -1,0 +1,25 @@
+" http://vrapper.sourceforge.net/documentation/?topic=configuration
+
+set ignorecase          " Ignore case when searching
+set smartcase           " When 'ignorecase' and 'smartcase' are both on, if a pattern contains an uppercase letter, it is case sensitive, otherwise, it is not
+set hlsearch            " Also switch on highlighting the last used search pattern.
+set incsearch           " Make search act like search in modern browsers
+set nu                  " Set Line numbers
+set autoindent          " Always set autoindenting on
+set cleanindent
+set autochdir           " Set working directory to the current file
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+" Insert newline without entering insert mode
+nmap <S-CR> O<Esc>
+nmap <CR> o<Esc>
+
+" Easier way to save and quit. don't have to hold Shift everytime
+nnoremap ; :
+
+" But ; is useful to quick navigate to a specific position after using f,F,t,T
+nnoremap ' ;
+
+
