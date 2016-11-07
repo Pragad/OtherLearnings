@@ -650,19 +650,25 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     6. Configuring MySQL on Eclipse
        http://stackoverflow.com/questions/11853464/how-to-configure-mysql-on-eclipse-ee-java 
 
-        http://stackoverflow.com/questions/4359131/brew-install-mysql-on-mac-os
-        http://blog.joefallon.net/2013/10/install-mysql-on-mac-osx-using-homebrew/
+       http://stackoverflow.com/questions/4359131/brew-install-mysql-on-mac-os
+       http://blog.joefallon.net/2013/10/install-mysql-on-mac-osx-using-homebrew/
+
        brew update
        brew doctor
        brew upgrade
        brew install mysql
 
     7. Uninstalling MySQL on Mac
-       http://stackoverflow.com/questions/1436425/how-do-you-uninstall-mysql-from-mac-os-x
+       http://stackoverflow.com/questions/1436425/how-do-you-uninstall-mysql-from-ma           c-os-x
        sudo find / -iname "*mysql*"
 
     8. Uninstalling Eclipse
        http://stackoverflow.com/questions/470261/uninstall-eclipse-under-osx
+
+    9. Avoiding "resource is out of sync with the filesystem"
+       http://stackoverflow.com/questions/4343735/avoiding-resource-is-out-of-sync-with-the-filesystem
+
+       You can enable this in Window - Preferences - General - Workspace - Refresh Automatically (called Refresh using native hooks or polling in newer builds)
 
 34. Basic GREP
     grep -ir "fleshscore" .
@@ -687,6 +693,9 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
         If you want the same number of lines before and after you can use -C num.
         This will show 3 lines before and 3 lines after.
             grep -C 3 foo README.txt
+
+    Grep either or
+        grep -e "foo" -e "bar" ./*/a.log* > grepLog.txt
 
 35. Basic FIND
     find . -iname "*binary*"
