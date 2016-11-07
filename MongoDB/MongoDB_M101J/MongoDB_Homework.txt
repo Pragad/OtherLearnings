@@ -1,0 +1,169 @@
+Week 1:
+    Homework 1:
+        C:\PRAGADHE\DEV_GIT\LearnJava\JavaPractice\MongoDB\MongoDB_M101J\hw1-1__m101j>mongorestore dump
+        MongoDB Enterprise > use m101
+        switched to db m101
+        MongoDB Enterprise > db.hw1.findOne()
+        {
+                "_id" : ObjectId("50773061bf44c220307d8514"),
+                "answer" : 42,
+                "question" : "The Ultimate Question of Life, The Universe and Everything"
+        }
+
+    Homework 2:
+        Valid JSON object
+
+    Homework 3:
+        523258
+
+Week 2:
+    Homework 2.1:
+        MVN Commands:
+        mvn compile exec:java -Dexec.mainClass=course.homework.MongoDBSparkFreemarkerStyle
+
+    Homework 2.2:
+        Importing JSON / BSON to mongodb:
+        mongoimport --drop -d students -c grades grades.json
+
+        This next query, which uses the aggregation framework that we have not taught yet, will tell you the student_id with the highest average score:
+            > db.grades.aggregate( { '$group' : { '_id' : '$student_id', 'average' : { $avg : '$score' } } }, { '$sort' : { 'average' : -1 } }, { '$limit' : 1 } )
+
+        SOLUTION:
+            Find all exam scores greater than or equal to 65, and sort those scores from lowest to highest.
+            What is the student_id of the lowest exam score above 65?
+            > db.grades.aggregate({$match:{'type':"exam", 'score':{$gte:65}}, },{'$group':{'_id':'$student_id', 'scores':{$sum:'$score'}}}, {'$sort':{'scores':1}}, {'$limit':1});
+
+            db.grades.aggregate(
+                {
+                    $match : {
+                        'type' : "exam",
+                        'score' : {$gte : 65}
+                    },
+                },
+                {
+                    '$group' : {
+                        '_id' : '$student_id',
+                        'scores':{$sum : '$score'}
+                    }
+                },
+                {
+                    '$sort' : {'scores' : 1}
+                },
+                {
+                    '$limit' : 1
+                }
+            );
+
+            { "_id" : 22, "scores" : 65.02518811936324 }
+
+    Homework 2.3:
+        Now let us find the student who holds the 101st best grade across all grades
+            > db.grades.find().sort( { 'score' : -1 } ).skip( 100 ).limit( 1 )
+
+        Now let us sort the students by student_id , and score, while also displaying the type to then see what the top five docs are
+            > db.grades.find( { }, { 'student_id' : 1, 'type' : 1, 'score' : 1, '_id' : 0 } ).sort( { 'student_id' : 1, 'score' : 1, } ).limit( 5 )
+
+        SOLUTION:
+        Problem solved using Eclipse
+        - Provide the identity of the student with the highest average in the class with following query that uses the aggregation framework
+            db.grades.aggregate( { '$group' : { '_id' : '$student_id', 'average' : { $avg : '$score' } } }, { '$sort' : { 'average' : -1 } }, { '$limit' : 1 } )
+
+    Homework 2.4:
+        mvn compile exec:java -Dexec.mainClass=course.BlogController
+
+    Homework 2.5:
+        mongoimport --drop -d movies -c movieDetails movieDetails.json
+
+        SOLUTION:
+        > db.movieDetails.find( { "year" : 2013 , "rated" : "PG-13", "awards.wins" : 0} ).pretty()
+        "A Decade of Decadence, Pt. 2: Legacy of Dreams"
+
+    Homework 2.6:
+        SOLUTION:
+        Find Documents that have Sweden as the 2nd country
+        > db.movieDetails.count( { "countries" : { $size : 2}, "countries.1" : "Sweden"} )
+
+        Find Documents that have JUST two countries and has Sweden as 2nd element in Countries
+        > db.movieDetails.find( { "countries" : { $size : 2}, "countries.1" : "Sweden"} )
+
+Week 3:
+    Homework 3.1:
+    http://stackoverflow.com/questions/14788317/removing-the-minimum-element-of-a-particular-attribute-type-in-mongodb
+    http://stackoverflow.com/questions/13335009/mongodb-find-the-minimum-element-in-array-and-delete-it
+
+        Provide the identity (in the form of their _id) of the student with the highest average in the class with following query that uses the aggregation framework.
+        The answer will appear in the _id field of the resulting document.
+
+db.students.aggregate( [
+  { '$unwind': '$scores' },
+  {
+    '$group':
+    {
+      '_id': '$_id',
+      'average': { $avg: '$scores.score' }
+    }
+  },
+  { '$sort': { 'average' : -1 } },
+  { '$limit': 1 }
+] )
+
+        SOULTION:
+        The following will display only homework fields
+        > db.marks.find({}, {"scores":{$slice:-2}})
+
+        The following will get the Minimum Homework from each student id
+            myResult = db.students.aggregate ( [
+            {
+                "$unwind" : "$scores"
+            },
+            {
+                "$match" : 
+                {
+                    "scores.type" : "homework"
+                }
+            },
+            {
+                "$group" : 
+                {
+                    "_id" : "$_id",
+                    "minHomework" :
+                    {
+                        "$min" : "$scores.score"
+                    }
+                }
+            }
+            ] );
+
+        UPDATE the database collection by removing the minimum homework
+            // Working Solution
+            for (var i = 0; i < myResult.length; i++) {
+                db.students.update (
+                {
+                    '_id' : myResult[i]['_id']
+                },
+                {
+                    '$pull' :
+                    {
+                        'scores' :
+                        {
+                            'score' : myResult[i]['minHomework']
+                        }
+                    }
+                } )
+            }
+
+            // Gives Syntax Error
+            for result in myResult:
+                db.students.update (
+                {
+                    '_id' : result['_id']
+                },
+                {
+                    '$pull' :
+                    {
+                        'scores' :
+                        {
+                            'score' : result['minHomework']
+                        }
+                    }
+                } )

@@ -1,0 +1,95 @@
+1. Difference Between insert(), insertOne() and insertMany()method
+2. Show all databases
+3. MongoDB vs RDBMS
+4. Converting BSON dump into JSON file
+5. Import JSON into mongodb
+6. When does MongoDB create a database
+---------------------------------------------------------------------------------------------
+1.
+Difference Between insert(), insertOne() and insertMany()method
+http://stackoverflow.com/questions/36792649/whats-the-difference-between-insert-insertone-and-insertmany-method
+
+    - db.collection.insert() inserts a document or documents into a collection and
+    - It returns a WriteResult object for single inserts
+    - It returns BulkWriteResult object for bulk inserts.
+
+        > var d = db.collection.insert({"b": 3})
+        > d
+        WriteResult({ "nInserted" : 1 })
+        > var d2 = db.collection.insert([{"b": 3}, {'c': 4}])
+        > d2
+        BulkWriteResult({
+                "writeErrors" : [ ],
+                "writeConcernErrors" : [ ],
+                "nInserted" : 2,
+                "nUpserted" : 0,
+                "nMatched" : 0,
+                "nModified" : 0,
+                "nRemoved" : 0,
+                "upserted" : [ ]
+        })
+
+    - db.collection.insertOne() inserts a document into a collection and
+    - It returns a document which look like this:
+
+        > var document = db.collection.insertOne({"a": 3})
+        > document
+        {
+                "acknowledged" : true,
+                "insertedId" : ObjectId("571a218011a82a1d94c02333")
+        }
+
+    - db.collection.insertMany() inserts multiple documents into a collection and
+    - It returns a document that looks like this:
+
+        > var res = db.collection.insertMany([{"b": 3}, {'c': 4}])
+        > res
+        {
+                "acknowledged" : true,
+                "insertedIds" : [
+                        ObjectId("571a22a911a82a1d94c02337"),
+                        ObjectId("571a22a911a82a1d94c02338")
+                ]
+        }
+
+    IN WHAT SITUATION SHOULD i USE EACH ONE?
+        - The insert() method is deprecated in major driver
+        - So you should use the .insertOne() method whenever you want to insert a single document into your collection and
+        - The .insertMany when you want to insert multiple documents into your collection.
+
+        Of course this is not mentioned in the documentation but the fact is that nobody really writes an application in the shell.
+        The same thing applies to updateOne, updateMany, deleteOne, deleteMany, findOneAndDelete, findOneAndUpdate and findOneAndReplace.
+
+2.
+Show all databases
+
+    MongoDB Enterprise > show dbs
+    local   0.000GB
+    m101    0.000GB
+    movies  0.000GB
+    names   0.000GB
+    video   0.000GB
+
+3.
+MongoDB vs RDBMS
+    RDBMS 	        MongoDB
+    Table 	        Collection
+    Column 	        Key
+    Value 	        Value
+    Records / Rows 	Document / Object
+
+4.
+Converting BSON dump into JSON file
+https://docs.mongodb.com/manual/reference/program/bsondump/
+
+    > bsondump movieDetails.bson > movieDetails.json
+
+5. 
+Import JSON into mongodb
+
+    > mongoimport --drop -d students -c grades grades.json
+
+6.
+When does MongoDB create a database
+    - Only when data is inserted / stored into the db
+

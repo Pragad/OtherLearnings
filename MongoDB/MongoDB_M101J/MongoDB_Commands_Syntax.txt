@@ -1,0 +1,495 @@
+1. Basic Commands
+2. INSERTMANY()
+3. count()
+4. dropDatabase()
+5. DOT operator in Find
+6. Projections
+7. Comparison Operators
+8. Show all dbs databases
+8b. Show all collection
+9. Element Operators
+10. Logical Operators
+11. RegEX Operator
+11b. Evaluation Operators
+12. Array Operators
+13. Bitwise Operators
+14. UPDATE
+15. Group and Collection.aggregate
+16. Projection for Array Fields
+16b. ElemMatch vs $Projection
+16c. $Projection:
+17. Getting multiple elements from Array
+---------------------------------------------------------------------------------------------
+COMMANDS:
+1. Basic Commands:
+    - db.getCollectionNames()
+    - use database_name
+    - db.movies.insertOne({"title" : "harry potter", "year": 2005, "imdb":"tt98765" })
+     - db.names.insertOne( { "name" : { "first name" : "Peter", "last name" : "Abott"}, "age" : 25, "gender" : "male" } )
+    - db.movies.find()
+    - db.movies.find().pretty()
+    - db.movies.find({"year" : 2010}).pretty()
+    - var c = db.movies.find()
+    - c.hasNext()
+    - c.next()
+
+    MVN Commands:
+    The below command creates a mvn project
+    > mvn archetype:generate
+
+    Run a maven project by giving the Main Class using "-Dexec.mainclass"
+    C:\PRAGADHE\DEV_GIT\LearnJava\JavaPractice\MongoDB\MongoDB_M101J\M101J>mvn clean compile exec:java -Dexec.mainClass=com.mongodb.App
+
+2. INSERTMANY():
+    MongoDB Enterprise > db.names.insertMany(
+    ... [
+    ...     {
+    ...         "name" : "Prag",
+    ...         "age" : 28,
+    ...         "gender" : "male"
+    ...     },
+    ...     {
+    ...         "name" : "abc",
+    ...         "age" : 20,
+    ...         "gender" : "male"
+    ...     },
+    ...     {
+    ...         "name" : "def",
+    ...         "age" : 18,
+    ...         "gender" : "female"
+    ...     }
+    ... ]
+    ... );
+    {
+            "acknowledged" : true,
+            "insertedIds" : [
+                    ObjectId("580e1873dad6ecfdbf3da06d"),
+                    ObjectId("580e1873dad6ecfdbf3da06e"),
+                    ObjectId("580e1873dad6ecfdbf3da06f")
+            ]
+    }
+
+3. count()
+        MongoDB Enterprise > db.names.find().pretty()
+        { "_id" : ObjectId("57fd64c8ee435d20d5b1af97"), "name" : "Prag Thiru" }
+        {
+                "_id" : ObjectId("580e1873dad6ecfdbf3da06d"),
+                "name" : "Prag",
+                "age" : 28,
+                "gender" : "male"
+        }
+        {
+                "_id" : ObjectId("580e1873dad6ecfdbf3da06e"),
+                "name" : "abc",
+                "age" : 20,
+                "gender" : "male"
+        }
+        {
+                "_id" : ObjectId("580e1873dad6ecfdbf3da06f"),
+                "name" : "def",
+                "age" : 18,
+                "gender" : "female"
+        }
+        
+        MongoDB Enterprise > db.names.find().count()
+        4
+        MongoDB Enterprise > db.names.find({"gender" : "female"}).count()
+        1
+        MongoDB Enterprise > db.names.find({"gender" : "male"}).count()
+        2
+        MongoDB Enterprise > db.names.find({"gender" : "male", "age" : 28}).count()
+        1
+
+4. Drop Database dropDatabase()
+        MongoDB Enterprise > use names
+        switched to db names
+
+        MongoDB Enterprise > db.dropDatabase()
+        { "dropped" : "names", "ok" : 1 }
+
+
+5. DOT operator in Find
+    MongoDB Enterprise > db.names.find().pretty()
+    {
+            "_id" : ObjectId("580e24b4dad6ecfdbf3da073"),
+            "name" : {
+                    "first name" : "Prag",
+                    "last name" : "Thiru"
+            },
+            "age" : 28,
+            "gender" : "male"
+    }
+    {
+            "_id" : ObjectId("580e24b4dad6ecfdbf3da074"),
+            "name" : {
+                    "first name" : "abc",
+                    "last name" : "qwe"
+            },
+            "age" : 20,
+            "gender" : "male"
+    }
+    {
+            "_id" : ObjectId("580e24b4dad6ecfdbf3da075"),
+            "name" : {
+                    "first name" : "def",
+                    "last name" : "poi"
+            },
+            "age" : 18,
+            "gender" : "female"
+    }
+
+    MongoDB Enterprise > db.names.find({"gender" : "male", "name.last name" : "Thiru"}).count()
+    1
+
+    MongoDB Enterprise > db.names.find({"gender" : "male", "name.last name" : "Thiru"}).pretty()
+    {
+            "_id" : ObjectId("580e24b4dad6ecfdbf3da073"),
+            "name" : {
+                    "first name" : "Prag",
+                    "last name" : "Thiru"
+            },
+            "age" : 28,
+            "gender" : "male"
+    }
+
+6. Projections
+    - To include and exclude fields
+
+    INCLUDE TITLE AND EXCLUDE _ID:
+    > db.movieDetails.find({ rated: "PG" }, {title : 1, _id : 0}).pretty()
+
+7. Comparison Operators
+    - $eq 	: Matches values that are equal to a specified value.
+    - $gt 	: Matches values that are greater than a specified value.
+    - $gte 	: Matches values that are greater than or equal to a specified value.
+    - $lt 	: Matches values that are less than a specified value.
+    - $lte 	: Matches values that are less than or equal to a specified value.
+    - $ne 	: Matches all values that are not equal to a specified value.
+    - $in 	: Matches any of the values specified in an array.
+    - $nin 	: Matches none of the values specified in an array.
+
+        > db.names.find( {age : {$gte : 20, $lt : 25} }).pretty()
+        {
+                "_id" : ObjectId("580e24b4dad6ecfdbf3da074"),
+                "name" : {
+                        "first name" : "abc",
+                        "last name" : "qwe"
+                },
+                "age" : 20,
+                "gender" : "male"
+        }
+
+    - Display movies that have 95+ rating with duration between 100 - 180. Also display only the title and runtime AND Don't display the id field
+
+        > db.names.find( {"tomato.meter" : {$gte : 95}, runtime : {$gte : 100, $lt : 180} }, {title : 1, _id : 0, runtime : 1}).pretty()
+
+          > db.movieDetails.find({ rated : {$in: ["G", "PG", "PG-E"]}})
+
+8. Show all dbs databases
+http://stackoverflow.com/questions/25947929/how-to-list-all-databases-in-the-mongo-shell
+    MongoDB Enterprise > show dbs
+    local   0.000GB
+    m101    0.000GB
+    movies  0.000GB
+    names   0.000GB
+    video   0.000GB
+
+8b. Show all collection
+    show collections
+
+9. Element Operators
+    $exists: Matches documents that have the specified field.
+        > db.movieDetails.find({"tomato.meter" : {$exits : true}})
+
+    $type  : Selects documents if a field is of the specified type.
+        > db.movieDetails.find({"_id" : {$type : "string"}}).count()
+
+10. Logical Operators
+    $or
+        > db.names.find( {$or : [{"tomato.meter" : { $gte : 75 } },
+                                 {"metacritic"   : { $gte : 95 } } ] } ).pretty()
+
+    $and
+        IMP: "and" operator is SUPERFLOUS
+        - WHEN MULTIPLE CRITERIA on the same field
+        - queries by default are AND operated
+
+        > db.names.find( {$and : [{"tomato.meter" : { $gte : 75 } },
+                                 {"metacritic"    : { $gte : 95 } } ] } ).pretty()
+        > db.names.find( { $and : [ { "age" : 20 }, { "gender" : "male" } ] } ).pretty()
+
+    EQUIVALENT to
+        > db.names.find( { "tomato.meter" : { $gte : 75 },
+                           "metacritic"   : { $gte : 95 } } ).pretty()
+        > db.names.find( { "age" : 20, "gender" : "male"} ).pretty()
+
+        SO WHY $and:
+        - Keys within a JSON document should be UNIQUE
+        - $and allows us to specify MULTIPLE constraints on the same field
+
+        > db.names.find( { $and : [ { "age" : { $gte : 20 } },
+                                    { "age" : { $lte : 25 } } ] } ).pretty()
+
+    GIVES DIFFERENT RESULT WHEN COMPARED TO 
+        db.names.find( { "age" : { $gte : 20 }, "age" : { $lte : 25 } } ).pretty()
+
+    $not
+
+    $nor
+
+11. RegEX Operator
+    $regex
+    ^  : Denotes Beginning of a word
+    /s : Indicates Space
+
+    Find all names that start with 'P'
+        db.names.find( { "name.first name" : { $regex : /^P.*/} } ).pretty()    
+
+    Find all folks who have "Won" an award. 
+        db.names.find( { "award" : { $regex : /^Won\s.*/} } ).pretty()
+
+11b. Evaluation Operators
+    - $mod 	    : Performs a modulo operation on the value of a field and selects documents with a specified result
+    - $regex 	: Selects documents where values match a specified regular expression.
+    - $text 	: Performs text search.
+    - $where 	: Matches documents that satisfy a JavaScript expression.
+
+12. Array Operators
+    These Operators work with Array Values
+
+    - $all 	        : Matches arrays that contain all elements specified in the query.
+    - $elemMatch 	: Selects documents if element in the array field matches all the specified $elemMatch conditions.
+    - $size 	    : Selects documents if the array field is a specified size.
+
+    $all:
+        > db.movieList.find( { "genres" : { $all : ["comedy", "drama", "action"] } } ).pretty()
+
+    $elemMatch:
+        This would match list that has UK and lists with revenue > 4.5
+
+        > db.movieList.find( { "boxOffice" : { "country" : "UK", "revenue" : { $gt : 4.5 } } } )
+        > db.movieList.find( { "boxOffice" : { $elemMatch { country : "UK", "revenue" : { $gt : 4.5} } } } )
+
+13. Bitwise Operators
+    - $bitsAllSet 	: Matches numeric or binary values in which a set of bit positions all have a value of 1.
+    - $bitsAnySet 	: Matches numeric or binary values in which any bit from a set of bit positions has a value of 1.
+    - $bitsAllClear : Matches numeric or binary values in which a set of bit positions all have a value of 0.
+    - $bitsAnyClear	: Matches numeric or binary values in which any bit from a set of bit positions has a value of 0.
+
+14. UPDATE
+    $updateMany:
+    $replaceOne
+    $updateOne:
+        - Will update the first document that matches the SELECTOR
+        - If existing field, then it will get modified else it will get added
+
+    UPDATE OPERATORS:
+        - $set
+        - $unset
+        - $inc
+        
+        > db.names.updateOne( {"name.first name" : "Prag"} , {$set : { "age" : 30, "award" : "Learning Mongo DB"} } );
+        > db.names.updateOne( {"name.first name" : "Prag"} , {$inc : { "age" : 3} } );
+
+
+        $push
+        $each - add to an existing array
+        $position : 0: insert the new element at top
+
+        > upsert : true
+
+        $https://docs.mongodb.com/manual/reference/operator/aggregation/group/slice - push but keep just certain number of elements
+
+15. Group and Collection.aggregate
+https://docs.mongodb.com/manual/reference/operator/aggregation/group/
+https://www.mkyong.com/mongodb/mongodb-aggregate-and-group-example/
+
+    Now let us sort the students by student_id , and score, while also displaying the type to then see what the top five docs are
+        > db.grades.find( { }, { 'student_id' : 1, 'type' : 1, 'score' : 1, '_id' : 0 } ).sort( { 'student_id' : 1, 'score' : 1, } ).limit( 5 )
+
+    Find all exam scores greater than or equal to 65, and sort those scores from lowest to highest.
+    What is the student_id of the lowest exam score above 65?
+        > db.grades.aggregate({$match:{'type':"exam", 'score':{$gte:65}}, },{'$group':{'_id':'$student_id', 'scores':{$sum:'$score'}}}, {'$sort':{'scores':1}}, {'$limit':1});
+
+
+    Provide the identity of the student with the highest average in the class
+        > db.grades.aggregate( { '$group' : { '_id' : '$student_id', 'average' : { $avg : '$score' } } }, { '$sort' : { 'average' : -1 } }, { '$limit' : 1 } )
+
+16. Projection for Array Fields
+https://docs.mongodb.com/v3.0/tutorial/project-fields-from-query-results/
+    $elemMatch, $slice, and $ are the only way to project portions of an array.
+    To display few items in an Array
+
+    $slice:
+        Would give the first 2 or last 2 items
+        > db.marks.find({}, {"scores":{$slice:-2}})
+
+        The query will only return 10 items, after skipping the first 20 items of that array.
+        > db.posts.find( {}, { comments: { $slice: [ 20, 10 ] } } )
+
+        Returns 10 items beginning with the item that is 20th from the last item of the array.
+        > db.posts.find( {}, { comments: { $slice: [ -20, 10 ] } } ) 
+
+    $elemMatch
+    projection returns only the first matching element from the array.
+    MongoDB Enterprise > db.marks.find().pretty()
+    {
+            "_id" : 0,
+            "name" : "aimee Zank",
+            "scores" : [
+                    {
+                            "type" : "exam",
+                            "score" : 1.463179736705023
+                    },
+                    {
+                            "type" : "quiz",
+                            "score" : 11.78273309957772
+                    },
+                    {
+                            "type" : "homework",
+                            "score" : 6.676176060654615
+                    },
+                    {
+                            "type" : "homework",
+                            "score" : 35.8740349954354
+                    }
+            ]
+    }
+    {
+            "_id" : 1,
+            "name" : "Aurelia Menendez",
+            "scores" : [
+                    {
+                            "type" : "exam",
+                            "score" : 60.06045071030959
+                    },
+                    {
+                            "type" : "quiz",
+                            "score" : 52.79790691903873
+                    },
+                    {
+                            "type" : "homework",
+                            "score" : 71.76133439165544
+                    },
+                    {
+                            "type" : "homework",
+                            "score" : 34.85718117893772
+                    }
+            ]
+    }
+    {
+            "_id" : 2,
+            "name" : "Corliss Zuk",
+            "scores" : [
+                    {
+                            "type" : "exam",
+                            "score" : 67.03077096065002
+                    },
+                    {
+                            "type" : "quiz",
+                            "score" : 6.301851677835235
+                    },
+                    {
+                            "type" : "homework",
+                            "score" : 20.18160621941858
+                    },
+                    {
+                            "type" : "homework",
+                            "score" : 66.28344683278382
+                    }
+            ]
+    }
+    {
+            "_id" : 3,
+            "name" : "Bao Ziglar",
+            "scores" : [
+                    {
+                            "type" : "exam",
+                            "score" : 71.64343899778332
+                    },
+                    {
+                            "type" : "quiz",
+                            "score" : 24.80221293650313
+                    },
+                    {
+                            "type" : "homework",
+                            "score" : 1.694720653897219
+                    },
+                    {
+                            "type" : "homework",
+                            "score" : 42.26147058804812
+                    }
+            ]
+    }
+
+    Display only array elements that have "exam" as "type"
+        > db.marks.find({}, {"scores":{$elemMatch:{"type":"exam"}}})
+
+        > db.schools.find( { zipcode: "63109" },
+                           { students: { $elemMatch: { school: 102, age: { $gt: 10} } } } )
+16b. ElemMatch vs $Projection
+http://stackoverflow.com/questions/21519185/projection-vs-elemmatch
+
+    The $ operator projects the array elements based on some condition from the query statement
+
+    The $elemMatch projection operator takes an explicit condition argument.
+    This allows you to project based on a condition not in the query, or if you need to project based on multiple fields in the array’s embedded documents
+
+16c. $Projection:
+https://docs.mongodb.com/v3.0/reference/operator/projection/positional/#proj._S_
+
+    Limitations:
+    - Only one positional $ operator may appear in the projection document.
+    - Only one array field may appear in the query document.
+    - The query document should only contain a single condition on the array field being projected.
+      Multiple conditions may override each other internally and lead to undefined behavior.
+
+    { "_id" : 1, "semester" : 1, "grades" : [ 70, 87, 90 ] }
+    { "_id" : 2, "semester" : 1, "grades" : [ 90, 88, 92 ] }
+    { "_id" : 3, "semester" : 1, "grades" : [ 85, 100, 90 ] }
+    { "_id" : 4, "semester" : 2, "grades" : [ 79, 85, 80 ] }
+    { "_id" : 5, "semester" : 2, "grades" : [ 88, 88, 92 ] }
+    { "_id" : 6, "semester" : 2, "grades" : [ 95, 90, 96 ] }
+
+    In the following query,
+    the projection { "grades.$": 1 } returns only the first element greater than or equal to 85 for the grades field.
+
+        db.students.find( { semester: 1, grades: { $gte: 85 } },
+                          { "grades.$": 1 } )
+
+    The operation returns the following documents:
+    { "_id" : 1, "grades" : [ 87 ] }
+    { "_id" : 2, "grades" : [ 90 ] }
+    { "_id" : 3, "grades" : [ 85 ] }
+
+17. Getting multiple elements from Array
+http://stackoverflow.com/questions/29026662/mongodb-elemmatch-multiple-elements-in-array
+
+    - You cannot return multiple elements of an array matching your criteria in any form of a basic .find() query.
+    - To match more than one element you need to use the .aggregate() method instead.
+
+18. Removing array element from MongoDB
+http://stackoverflow.com/questions/16959099/how-to-remove-array-element-in-mongodb
+http://stackoverflow.com/questions/4588303/in-mongodb-how-do-you-remove-an-array-element-by-its-index
+
+    contact: {
+        phone: [
+            {
+                number: "+1786543589455",
+                place: "New Jersey",
+                createdAt: ""
+            }
+            {
+                number: "+1986543589455",
+                place: "Houston",
+                createdAt: ""
+            }
+
+        ]
+    }
+
+    collection.update(
+      { _id: id },
+      { $pull: { 'contact.phone': { number: '+1786543589455' } } }
+    );
+

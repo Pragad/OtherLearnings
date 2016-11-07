@@ -1,0 +1,270 @@
+RDBMS 	        MongoDB
+Table 	        Collection
+Column 	        Key
+Value 	        Value
+Records / Rows 	Document / Object
+
+HOW TO RUN MONGODB:
+    C:\Users\pragadhe>mongod - Will start the server
+    C:\Users\pragadhe>mongo  - Will start the shell
+
+Setting Up MongoDB:
+    http://stackoverflow.com/questions/2404742/how-to-install-mongodb-on-windows
+    - After installing MongoDB, create a /data/db directory
+    - Run mongod from a cmd prompt
+    - Run mongo from another prompt
+
+    MongoDB Enterprise > db.names.insert({name: "Prag Thiru"})
+    WriteResult({ "nInserted" : 1 })
+    MongoDB Enterprise > db.names.find()
+    { "_id" : ObjectId("57fd64c8ee435d20d5b1af97"), "name" : "Prag Thiru" }
+
+Week 1:
+    What is MongoDB?
+        - It is a document database
+        - There is no JOINS from multiple tables (unlike RDBMS where join is required across tables) various entries in the JSON object.
+        - So Much easier to distribue or shrad data across multiple servers
+        - Thus SCALE OUT is supported through SHARDING feature
+
+        - Enables application developers to design data models for their application
+
+    Building an App using Java and MongoDB
+        - MongoD process is the Server that will be running
+        - MongoDB shell is a fully functional javascript interpretor
+            - Interacts with MongoD through TCP
+        - Java Code, Freemarker, SparkJava
+
+    CRUD: Create, Read, Update, Delete
+        - Two databases
+            i. local
+            ii. test
+        - "db" holds the current database that you are using
+        - $use database_name
+            - MongoDB will create a database in a lazy fashion (db will be created on 1st insert)
+        - If NO _id is specified to a document, mongodb will insert one by itself
+        - Return value of FIND is a cursor object
+            
+    Maven Dependencies:
+        Adding JAVA_HOME to path
+        http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-win7
+        C:\Users\pragadhe>SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0_101
+
+    Spark Web Framework:
+        - http://sparkjava.com/documentation.html
+        - Add it to Pom.xml of your project
+        ERRRORS while creating Spark Application
+            1. http://stackoverflow.com/questions/7421612/slf4j-failed-to-load-class-org-slf4j-impl-staticloggerbinder
+            2. http://stackoverflow.com/questions/12532339/no-appenders-could-be-found-for-loggerlog4j
+            3. http://stackoverflow.com/questions/12737293/how-do-i-resolve-the-java-net-bindexception-address-already-in-use-jvm-bind
+            4. http://localhost:4567/
+
+    Spark and Freemarker:
+        - Using get(path,Route) instead of just get(Route)
+        http://stackoverflow.com/questions/23898628/getting-error-route-in-route-cannot-be-applied-to-string
+
+    Spark GET Requests:
+        ANATOMY OF SPARK APPLICATION:
+        - On the outside we have a web server which is Jetty server
+        - Spark has an embedded Jetty Server
+        - When a route is create, Jetty server gets started
+        - When a request comes in to Jetty, Jetty forwards it to Spark Handler
+        - Within Spark Handler we have one or more routes
+
+        1. Browser sends a "GET /" request to Jetty.
+        2. Jetty passes the request to Spark Handler. 
+        3. Spark matches against GET / request to the appropriate handler and sends the response to client
+
+        IMP: We can also use Wildcards to handle various types of request
+
+    Spark POST requests
+        - To handle form requests
+
+Week 2:
+    1. Creating Documents:
+        - All documents must contain a _id
+        - It is the Number to identify a document within a collection
+        - All IDs within a Single Collection are Unique
+
+        - We can provide IDs as well
+
+        INSERTMANY():
+            - Inserts in order
+            - If it finds an entry that is already a DUPLICATE (I.E. if _id is same as previous one)
+              then it bails out without adding that entry to db.
+            - It would fail with E1000:Duplicate Key Error
+
+            - If you want INSERTMANY to go on and insert other entries without bailing out
+                (
+                    { }
+                ],
+                {
+                    "ordered" : false
+                }
+                );
+
+    2. The _id field:            
+        -        DATE    |Mac ADDR| PID |COUNTER
+                         |        |     |
+        - ObjId: - - - - | - - -  | - - | - - - 
+          Eg:    580e1873  dad6ec   fdbf  3da06d
+        - It is a 12 Byte HEX String
+
+    3. Reading Documents:
+        - We can use . (DOT) notation to go under hierarchy. 
+        - DOT notation requires QUOTES
+
+        CURSORS
+        - find() returns a cursor
+        - We should iterate over the cursor to get the values
+
+        - If we don't assign "find" to a $var, mongoDB by default iterates for 20 times
+        - First batch will usually be 101 docs
+
+        > var c = db.movieDetails.find();
+        > var doc = funtcion() { return c.hasNext() ? c.next() : null; }
+        > c.objsLeftInBatch();
+
+        PROJECTIONS:
+        - reduce network overhead and processing requirement
+        - Supplied a second argument to "find"
+
+        INCLUDE:
+        - Document to contain jus a title
+        - _id field will always be returned
+        - IF you don't want to see _id field, it should be explicitly excluded
+
+        INCLUDE TITLE AND EXCLUDE _ID:
+        > db.movieDetails.find({ rated: "PG" }, {title : 1, _id : 0}).pretty()
+
+    4. Comparison Operators:
+        - $eq, $gt, $gte, $lt, $lte
+        - $ne - not equal to
+        - $in
+          > db.movieDetails.find({ rated : {$in: ["G", "PG", "PG-E"]}})
+
+    SEE "MongoDB_Commands_Syntax.txt"
+
+Week 3:
+
+    - In RDBMS you would like to keep your data in 3NF
+    - Keep data such that it is AGNOSTIC to the application
+
+    1. MongoDB Schema Design:
+        - Keep data in a way such that it suits the data access pattern
+
+        - APPLICATION - DRIVEN SCHEMA
+            - i.e. Know the following
+            - What pieces of data are used together
+            - What pieces of data are read only
+            - What pieces of data are written often
+
+
+        - MongoDB supports Rich documents i.e. it allows document inside a document, array
+        - We might have to embed a data within a document (PRE - JOIN) as mongodb does not
+          support joins
+        - No constraints in Mongodb
+            i.e. Foreign key constraint:
+            Attribute of one row in a table would form a foriegn key in another table
+
+        - MongoDB - how to organize data to support Atomic operations
+
+    2. Goals of Normalization:
+        - Free the database of modification anomalies
+            EG: have a table for Blog Post as
+                Post ID, Title, Author, Body, Author's Email
+            If an author's email id changes then you shouldn't go to multiple rows to update it
+
+        - Minimize the redesign when extending the database
+        - Avoid any bias to a particular access pattern
+
+        "AVOID ANY BIAS TO A PARTICUAL ACCESS PATTERN"
+            - is something we avoid in MongoDB. 
+            - If we do it, then we would end up BAD at everything
+
+    3. Living without Constraints:
+        - No foreign Key constraints
+
+    4. Living without Transaction:
+        3 different approaches
+            1. Restructure the code so that everything is in a single document
+            2. Some sort of locking in software, using Critical Sections
+            3. Live with inconsitency and tolerate it
+
+    5. Relationships
+        1. 1 to 1:
+            - Put everyting into a single document UNLESS
+            - You don't want to access something everytime
+              Eg: Students and Resume. Resume get's updates but not student details
+            - If size if getting larger than certain size
+
+        2. 1 to Many:
+            Eg: City and People living in it
+            - Can't put People inside city as you would have to put 8 million people inside a city
+            - Can't put City inside People as updating city would require updates every People entry who lives in that city
+
+            SOLUTION - TRUE LINKING
+            i.e. Keep Two Collections. Similar to Foreign Key
+            - People will have City ID
+            - And City will have the same
+
+        2b. 1 to FEW
+            Eg: Blog Posts and Comment
+            - You won't have 1000s of comments.
+            - Most Importantly, a comment applies to only a single post. So better to have it inside the post
+            - So better to keep the comment inside the Blog collection itself
+
+        3. Many to Many:
+            Eg 1: Author and Books
+                - This is actually a Few to Few
+                - Each book has a small number of authors
+                - Each author has a small number of books
+                Authors { books [_bookId1, _bookId2, ...] }
+                Books { authors [_author1, _author2, ...] }
+            Eg 2: Teachers and Students
+
+    6. Multikey Indexes:
+        - Reason why LINKING and INDEXING works so well
+
+    7. Benefits of Embedding:
+        - Read Performance
+        - Because Spinning disks take a long time (Over 1milli sec) to get to the first byte
+        - Once we hit that first byte we can read the full thing
+
+        - But if two collections, then we have to go to two places
+        - It all comes to Access Patterns
+
+    8. Trees:
+
+    9. ODM: Object Document Membrane
+        In general,
+        Java Code ----talks----> Driver ---talks--------> Database
+
+        With ODM
+        Java Code ----talks----> ODM ---talks--->Driver ---talks--------> Database
+
+        - This protects from changes to the APIs
+        - ODM sits inbetween application code and Driver
+        - You tell ODM how to handle the Classes
+        - Generic framework designed to work on any code base
+
+    10. Morphia - Simple Object Model
+
+Week 4:
+    1. Storage Engines:
+        - MongoDB server talks to the Disk through a Storage Engine
+        - Storage engines WRITES data, metadata to the disks
+        - Storage Engine would use MEMORY to optimize the way it writes data to disks
+
+        - MongoDB offers PLUGGABLE STORAGE ENGINE
+
+        Two Main Storage Engines:
+            1. MMap
+                - Default storage engine
+            2. WiredTiger:
+                - The company that build BerkleyDB
+
+        - Storage Engine doesn't affect the communication between the MongoDB servers
+        - It doesn't affect the APIs
+
+    2. MMap Version 1:
+        - "man mmap" on any unix machine
