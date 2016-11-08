@@ -167,3 +167,70 @@ db.students.aggregate( [
                         }
                     }
                 } )
+
+
+Week 4:
+    Homework 1:
+        db.products.insertMany(
+        [
+            {
+                "sku" : "abc",
+                "price" : 100,
+                "description" : "this is a nice book",
+                "category" : "drama",
+                "brand" : "reebok",
+                "reviews" : 
+                {
+                    "author" : "def"
+                }
+            },
+            {
+                "sku" : "qwe",
+                "price" : 120,
+                "description" : "this is a good book",
+                "category" : "drama",
+                "brand" : "reebok",
+                "reviews" : 
+                {
+                    "author" : "def"
+                }
+            },
+            {
+                "sku" : "zxc",
+                "price" : 40,
+                "description" : "this is a great book",
+                "category" : "drama",
+                "brand" : "GE",
+                "reviews" : 
+                {
+                    "author" : "poi"
+                }
+            }
+        ]);
+
+        db.products.createIndex({"sku":1}, {unique:true})
+        db.products.createIndex({"price" : -1})
+        db.products.createIndex({"description" : 1})
+        db.products.createIndex({"category" : 1, "brand" : 1})
+        db.products.createIndex({"reviews.author" : 1})
+
+    
+        db.products.find({'brand' : "GE"})
+        db.products.find({'brand' : "GE"}).sort( {price : 1} )
+        db.products.find( { $and : [{ price : { $gt : 30} }, {price : { $lt : 50} } ] } ).sort( { brand : 1} )
+        db.products.find({brand : 'GE'}).sort( { category : 1, brand : -1} )
+    
+
+        db.products.explain().find({'brand' : "GE"})
+        db.products.explain().find({'brand' : "GE"}).sort( {price : 1} )
+        db.products.explain().find( { $and : [{ price : { $gt : 30} }, {price : { $lt : 50} } ] } ).sort( { brand : 1} )
+        db.products.explain().find({brand : 'GE'}).sort( { category : 1, brand : -1} )
+
+    SOLUTION:
+        db.products.explain().find({'brand' : "GE"}).sort( {price : 1} )
+        db.products.explain().find( { $and : [{ price : { $gt : 30} }, {price : { $lt : 50} } ] } ).sort( { brand : 1} )
+
+    Homework 4.2:
+        Suppose you have a collection called tweets whose documents contain information about the created_at time of the tweet and the user's followers_count at the time they issued the tweet. What can you infer from the following explain output?
+
+        > db.tweets.explain("executionStats").find( { "user.followers_count" : { $gt : 1000 } } ).limit(10).skip(5000).sort( { created_at : 1 } )

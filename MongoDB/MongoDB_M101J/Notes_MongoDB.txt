@@ -267,4 +267,154 @@ Week 4:
         - It doesn't affect the APIs
 
     2. MMap Version 1:
+        - It offers COLLECTION LEVEL CONCURRENCY / LOCKING
+          i.e It take MUTIPLE READER SINGLE WRITER lock
+        - Each Collection inside MongoDB is a OWN file
+        - So if two operations on the same collection then one has to wait for another
+
+        - We allow IN-PLACE updates of documents
+        - If not possible, it will be moved to some other space.
+        - A document gets NEXT POWER of 2 size on memory
+          i.e 3 byte doc gets 4 bytes
+              7 byte doc gets 8 bytes
+
         - "man mmap" on any unix machine
+        - The OS manages the memory used by each mapped file, deciding which parts to swap to disk
+
+        - Say MongoDB allocated 100GB file on Disk
+        - If MongoDB calls MMap system call, then it should allocate the 100GB file into
+          Virtual Address in Memory of size 100GB
+
+    3. WiredTiger:
+        - Not turned on by default
+        - DOCUMENT LEVEL CONCURRENCY (NOT DOCUMENT LEVEL LOCKING)
+        - It is a LOCK-FREE model
+          The storage engine assumes that NO two writes go to same document
+          If they are to the same document then one of writes is UNWOUND and it is retried
+          The above is done transparent to the application
+
+        - It offers Compression on Both DATA and INDEXES
+
+    MMAP vs WIREDTIGER:
+        - Unlike MMap where OS manages Memory, WiredTiger manages the memory of what should be
+          stored and which to be sent back to disk
+
+        - So WiredTiger can compress the data
+        - It DOESNOT want to compress the data in Main Memory
+        - But COMPRESSES the data written on disk
+          Eg: Keys are repeated that can be compressed
+        - Also NO IN-PLACE updates.
+          Updating a document, allocates NEW space on disk. Old space gets reclaimed
+        - This APPEND-ONLY helps in running without LOCKS and giving DOCUMENT LEVEL CONCURRENCY
+        - So it is faster overall
+
+    4. Indexes:
+        - SLOWS DOWN WRITE
+          - Index needs to be updated for every write
+        - FASTER READS
+
+        - Strategy:
+          - No INDEX till all data is inserted
+          - Once data is inserted, add the Index
+
+        - If you don't have Indexes to match a document you would have to scan the entire collection
+        - If you sort based on some key field then you can use BinarySearch approach
+
+        - What is you want to have multiple keys
+        - You might have to go through everything inside on key
+        - Should use from LEFT-MOST side
+            (name, hair_color)
+            (Andrew, Blond) ; (Andrew, Red) ; (Bob, Black) ; (Zoe, White) ; (Zoe, Brown)
+
+            - name WORKS
+            - name, hair_color WORKS
+            - hair_color DOES NOT WORK
+            
+            (a, b, c)
+            a       : YES
+            a, b    : YES
+            a, b, c : YES
+            c       : NO
+            c, b    : NO
+            a, c    : Paritial YES
+
+    5. Multikey Indexes, Creating Indexes on Arrays
+        {
+            "name"  : "Hello"
+            "tags"  : ["Drive", "Bike", "VTA"]
+            "color" " "red"
+            location: ["CA", "NY]
+        }
+
+        - Can't create two items of a COMPOUND INDEX where both are arrays
+          i.e. (tags,location) is INVALID
+        - Indexes become MultiKey Index (or Compound Index) only when the first document that gets
+          added to the collection becomes an Array
+
+        We can create Indexes on
+        i) tags
+        ii) color: So it will create index as
+                   Drive-Red, Bike-Red, VTA-Red
+
+    6. Unique Index:
+        - Keys should be unique within the Collection
+        - No TWO documents can have the same key if it is indexed
+        - Guarentees all KEYS are unique
+
+        - Always "_id" index is a UNIQUE index
+
+    7. Sparse Index:
+        {a:1, b:2, c:5}
+        {a:5, b:6, c:9}
+        {a:8, b:3}
+        {a:3, b:4}
+
+        - UNIQUE INDEX on "a" and "b" are not a problem
+        - To create Index on "c", specify "sparse"
+          It won't Index the documents that doesnot have the Index
+        - Uses Very less space
+
+        > db.employees.getIndexes()
+        > db.employees.createIndex({cell:1},{unique:true}) - WON'T work
+        > db.employees.createIndex({cell:1},{unique:true, sparse:true}) - Works
+
+        - VERY IMP:
+          - A spare index can't be used for sorting.
+          - it will fall back to COLLSCAN if Sparse Index is used for Sorting
+          - This way (falling back to Collection Scan) ensures that NO document is missed
+
+    8. Index Creation : Foreground vs Background
+        Foreground:
+            - Default Index creation method
+            - FAST
+            - BLOCKS all writers and readers in the same db
+              Even though we have Collection / Document level locking, all writers / readers
+              are blocked
+
+        Background:
+            - SLOW
+            - Only one BACKGROUND index creation can run at a time
+            - Doesn't block readers and writers
+
+        Create on Different Server
+            - Group of Servers working in TANDEM
+            - Isloate one server and do index creation in the FOREGROUND on that one
+
+    12. Choosing an Index:
+       - Assume you have 5 indexes
+         i) b,c
+         ii) c,b
+         iii) d,e
+         iv) e,f
+         v) a,b,c
+       - When Query comes in, MongoDB tries to find the SHAPE of the query
+         i.e. what fields are searched and what Indexes it touches
+       - It indentifies the Candidate Indexes
+         Say it found
+         1. b,c
+         2. c,b
+         3. a,b,c
+       - Then in THREE PARALLEL THREADS issue the query such that each thread uses one set
+       - Which ever returns the fastest wins
+
+       - WINNING QUERY PLAN IS STORED IN A CACHE for future query in the same shape

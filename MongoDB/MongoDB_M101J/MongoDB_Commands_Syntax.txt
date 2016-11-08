@@ -19,6 +19,13 @@
 16b. ElemMatch vs $Projection
 16c. $Projection:
 17. Getting multiple elements from Array
+18. Removing array element from MongoDB
+19. Specifying the Storage Engine
+20. Explain Command
+21. Create Index:
+22. Adding Compound Index:
+23. Discovering and Deleting Indexes:
+24. Multikey Indexes, Creating Indexes on Arrays
 ---------------------------------------------------------------------------------------------
 COMMANDS:
 1. Basic Commands:
@@ -67,7 +74,7 @@ COMMANDS:
                     ObjectId("580e1873dad6ecfdbf3da06e"),
                     ObjectId("580e1873dad6ecfdbf3da06f")
             ]
-    }
+   }
 
 3. count()
         MongoDB Enterprise > db.names.find().pretty()
@@ -493,3 +500,110 @@ http://stackoverflow.com/questions/4588303/in-mongodb-how-do-you-remove-an-array
       { $pull: { 'contact.phone': { number: '+1786543589455' } } }
     );
 
+19. Specifying the Storage Engine
+
+    > mkdir WT
+    > mongod -dbpath WT -storageEngine wiredTiger
+    > db.food.insert({'name' : 'hello'})
+    > db.foo.stats() gives the storage engine where the data is stored
+
+20. Explain Command
+    - It operates on a Collection
+    > db.students.explain().find({"student_id" : 5})
+    > db.students.explain(true).find({"student_id" : 5})
+
+    TRUE: tell the number of documents it scanned in "docsExamined"
+
+    WINNING_PLAN
+        COLLSCAN:
+            - means a collection is done
+            - i.e. All Documents are looked at
+        IXSCAN:
+            - Index Scan
+
+    - "indexName"   : Name of the index that was used
+    - "isMultiKey"  : If the index is a multikey
+
+    If instead findOne() is used, then we would break once first document is found
+
+21. Create Index:
+    - It takes a while 30 secs or so
+
+        > db.students.createIndex({"student_id" : 1})
+        - 1 denotes Ascending order
+        The ORDER affects when you want to sort the collection
+
+
+    - Once Index is there find() will be fast
+
+22. Adding Compound Index:
+    > db.students.createIndex({"student_id" : 1, "class_id" : -1})
+
+23. Discovering and Deleting Indexes:
+    > db.students.getIndexes()
+    - We cannot delete the "_id" index
+
+    > db.students.dropIndex({student_id : 1})
+
+24. Multikey Indexes, Creating Indexes on Arrays
+
+    {
+        "name"  : "Hello"
+        "tags"  : ["Drive", "Bike", "VTA"]
+        "color" " "red"
+        location: ["CA", "NY]
+    }
+
+    - Can't create two items of a COMPOUND INDEX where both are arrays
+      i.e. (tags,location) is INVALID
+    - Indexes become MultiKey Index (or Compound Index) only when the first document that gets
+      added to the collection becomes an Array
+
+    We can create Indexes on
+    i) tags
+    ii) color: So it will create index as
+               Drive-Red, Bike-Red, VTA-Red
+
+    > db.foo.insert({a:1, b:2})
+    > db.foo.explain().find({a:1})
+    > db.foo.explain(true).find({a:1})
+      - Check if the index is MultiKey
+
+    > db.foo.insert({a:3, b:[3,5,7]})
+    > db.foo.explain(true).find({a:1})
+      - Now Index is Multikey
+
+25. Dot Notation and Multikey and $elemMatch
+    Find a student whose exam score is over 99
+    > db.students.explain().find({'scores' : { $elemMatch : {type:'exam', score:{'$gte' : 99}}}})
+
+    WRONG QUERY:
+    > db.students.find()({'$and':[{'scores.type': 'exam'}, {'scores.score' : {$gte: 99}}]})
+
+    - Check the WINNING PLAN for BOTH cases
+    - First runs query on Scores.score > 99
+    - Take that output and then run the next query i.e. 
+      Scores whose Type is Exam AND greater than 99
+    
+26. Remove a Document from Collection
+    - Remove only one Document from the collection
+    > db.stuff.remove({"thing" : "apple"}, {$justOne: true})
+            - Then bring the server back to the set
+
+27. Index Creation Foreground and Background
+    > db.students.createIndex(...)
+
+    Launch Another MongoShell and perform some operation
+    > db.students.findOne();
+
+    - The find() will be BLOCKED till index creation is complete
+
+    Background Index Creation:
+    > db.students.createIndex({'scores':1}, {background : true})
+
+28. Unique Index Creation
+        > db.employees.createIndex({cell:1},{unique:true}) - WON'T work
+        > db.employees.createIndex({cell:1},{unique:true, sparse:true}) - Works
+
+29. Drop or Delete a Collection
+    db.collection.drop()
