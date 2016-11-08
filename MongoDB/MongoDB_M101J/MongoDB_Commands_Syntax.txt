@@ -26,6 +26,14 @@
 22. Adding Compound Index:
 23. Discovering and Deleting Indexes:
 24. Multikey Indexes, Creating Indexes on Arrays
+25. Dot Notation and Multikey and $elemMatch
+26. Remove a Document from Collection
+27. Index Creation Foreground and Background
+28. Unique Index Creation
+29. Drop or Delete a Collection
+30. Size of Index
+31. Find documents with a specific field NULL or NOT SET
+32. Profiling:
 ---------------------------------------------------------------------------------------------
 COMMANDS:
 1. Basic Commands:
@@ -526,6 +534,37 @@ http://stackoverflow.com/questions/4588303/in-mongodb-how-do-you-remove-an-array
 
     If instead findOne() is used, then we would break once first document is found
 
+    > var explainableObj = db.example.explain()
+    > explainableObj.help()
+    > explainableObj.find({a:17, b:55}).sort({b:-1})
+
+    Rejection Plan:
+        - Tells about other Indexes that it has planned to use
+
+20b. Explain Execution Modes
+    QueryPlanner SUBSET of ExecutionStats SUBSET of allPlansExecution
+    1. QueryPlanner
+    2. ExecutionStats
+        - Tells execution stats for the Winning Plan
+        - Important Things
+            - nReturned             : Number of docs the query actually returned
+            - executionTimeMillis   : Time for the query
+            - totalKeysExamied      :
+            - totalDocsExamied      :
+            - inputStage            : Number of docs returned for each stage
+                - keyPattern        : key pattern used for Index
+                - indexBounds       : Index used
+
+        > var exp = db.example.explain("executionStats")
+        > exp.find( { a: 5} )
+    
+    3. allPlansExecution
+        - Does what the QUERY OPTIMIZER does periodically
+        - i.e. Run all possible INDEXES that could be used and caches the best index
+        - Determines what index should be used for a particular SHAPE of query
+
+        - It is an ARRAY of different plans that MongoDB tried to use
+
 21. Create Index:
     - It takes a while 30 secs or so
 
@@ -607,3 +646,13 @@ http://stackoverflow.com/questions/4588303/in-mongodb-how-do-you-remove-an-array
 
 29. Drop or Delete a Collection
     db.collection.drop()
+
+30. Size of Index
+        > db.students.stats() 
+        > db.students.totalIndexSize()
+
+31. Find documents with a specific field NULL or NOT SET
+    db.emails.count({sent_at: null})
+
+32. Profiling:
+    

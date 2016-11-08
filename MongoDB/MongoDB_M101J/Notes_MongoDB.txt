@@ -400,7 +400,30 @@ Week 4:
             - Group of Servers working in TANDEM
             - Isloate one server and do index creation in the FOREGROUND on that one
 
-    12. Choosing an Index:
+    9. Using Explain:
+        - It returns an EXPLAINABLE OBJECT
+
+        - CAN'T run INSERT
+        - Can run
+            - find()
+            - update()
+            - remove()
+            - aggregate()
+            - modify()
+            - help()
+
+    10. Covered Queries
+        - It is query where the Query itself can be satisfied entirely by an INDEX
+        - Hence 0 documents need to be inspected to satisy the query
+        - This is the best case that we would like to get
+
+        - numDocsExamined should be 0
+        VERY IMP:
+            - Only when you PROJECT EXACTLY WHAT IS THERE IN THE INDEX OR A SUBSET OF WHAT
+              IS THERE IN THE INDEX and if the INDEX doesn't have _id and "_id" is
+              Suppressed then the query is a Covered Query
+
+    11. Choosing an Index:
        - Assume you have 5 indexes
          i) b,c
          ii) c,b
@@ -418,3 +441,16 @@ Week 4:
        - Which ever returns the fastest wins
 
        - WINNING QUERY PLAN IS STORED IN A CACHE for future query in the same shape
+
+    12. Index Sizes:
+        Working SET:
+            - Key Components of Data that clients access frequently
+            - We want to make sure WORKING SET sits in Memory
+            - Index SHOULD FIT INTO THE MEMORY
+            - We don't want to go to DISK to get the index
+
+        WiredTiger has PREFIX INDEX COMPRESSION.
+        So size occupied by index is less
+
+        > db.students.stats() 
+        > db.students.totalIndexSize()
