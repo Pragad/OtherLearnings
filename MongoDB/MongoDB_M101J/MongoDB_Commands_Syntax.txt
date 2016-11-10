@@ -654,5 +654,86 @@ http://stackoverflow.com/questions/4588303/in-mongodb-how-do-you-remove-an-array
 31. Find documents with a specific field NULL or NOT SET
     db.emails.count({sent_at: null})
 
-32. Profiling:
+32. Geospatial Index:
+
+    > ensureIndex({"location" : '2d'})
+    > find({location: {$near : [x,y} } ).limit(20)
+    > db.places.find({"location" : {$near : [74,140] } }).limit(10)
+
+    $near:
+        - sorts from closest to farthest 
+
+33. Geospacial Spherical Index
+    - MongoDB takes LONGITUTE, LATITUDE
     
+    GeoJson: used to represent locations in GeoJson format
+    > db.places.find({"location" : {$near : { $geometry : { type: "Point", coordinates: [-122.66, 36.47] }, $maxDistance:2000 } } } ).pretty()
+
+    - 2000 is distance in meters
+        db.stores.find(
+        {
+            loc:
+            {
+                $near:
+                {
+                    $geometry:
+                    {
+                        type: "Point",
+                        coordinates: [-130,39]
+                    },
+                    $maxDistance:1000000
+                }
+            }
+        }).pretty()
+
+
+34. Mongo Redirect a query from a file
+    > mongo < geojson.js
+
+35. Fulltext search index:
+    - For searching very large amount of text 
+    - FULL TEXT SEARCH INDEX to search for a single word in a huge text
+    {"_id" : ObjectId("1"), "words" : "dog muss ruby."}
+    {"_id" : ObjectId("1"), "words" : "dog shrub ruby."}
+
+    VERY IMP: NOTE THE '.' DOT AT THE END
+    > db.sentences.find({'words' : 'dog shrub ruby.'})
+    finds one doc
+
+    The following DOES NOT work
+    >  db.sentences.find({'words' : 'dog shrub ruby'})
+    >  db.sentences.find({'words' : 'dog ruby'})
+    >  db.sentences.find({'words' : 'dog'})
+
+    ADDING TEXT INDEX:
+    > db.sentences.ensureIndex({'words' : 'text'})
+    > db.sentences.find({ $text: { $search : 'dog' } })
+
+    To get either of two words
+    > db.sentences.find({ $text: { $search : 'dog moss' } })    dog OR moss
+
+   TEXT SCORE - to find the best match
+   > db.sentences.find( {$text: {$search : 'dog tree obsidian'}}, {score : {$meta : 'textScore' }}).sort({score:{$meta:'textScore'}})
+
+
+36. $HINT
+    HINT to use an index
+    > db.students.find({student_id : {$gt : 500}, class_id : 54}).sort({student_id:1}).hint({class_id : 1})
+
+37. Profiling:
+    Log all slow queries that take more than 2 milli seconds
+    > mongod -dbpath /usr/local/var/mongodb --profile 1 --slowms 2
+    > db.system.profile.find().pretty()
+
+    Sort by timestamp and search for a collection
+    > db.system.profile.find({ns:/school.students/}).sort({ts:1}).pretty()
+
+    Find those that took more than 1 millisecond and sort
+    > db.system.profile.find({millis: {$gt:1}}).sort({$ts:1}).pretty()
+
+    > db.getProfilingLevel()
+    > db.getProfilingStatus()
+
+    > db.setProfilingLevel(1,4) // Level to 1 and Over 4 milli seconds
+    > db.setProfilingLevel(0)   // Turn it off
+

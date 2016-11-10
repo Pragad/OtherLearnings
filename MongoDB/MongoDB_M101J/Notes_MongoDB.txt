@@ -250,6 +250,12 @@ Week 3:
     10. Morphia - Simple Object Model
 
 Week 4:
+    REVIEW:
+        1. INDEXES are Critical
+        2. How to use EXPLAIN to find what the query is doing
+        3. HINT to suggest an Index
+        4. PROFILING to find what are slow queries
+
     1. Storage Engines:
         - MongoDB server talks to the Disk through a Storage Engine
         - Storage engines WRITES data, metadata to the disks
@@ -454,3 +460,78 @@ Week 4:
 
         > db.students.stats() 
         > db.students.totalIndexSize()
+
+    13. Geospatial Indexes:
+        - Have to points (x,y)
+        - Say you have 'location' : [x,y]
+        > ensureIndex({"location" : '2d'})
+            Tell the database that Index is 2D
+
+        $near:
+            > find({location: {$near : [x,y} } ).limit(20)
+
+    14. Geospatial Spherical:
+        > db.places.ensureIndex({"location" : '2dsphere' })
+
+    15. Designing / Using Indexes
+        GOAL :
+        - EFFICIENT Read / Write Operations
+        - SELECTIVITY: Minimize Records Scanned
+        - How are SORTS handled
+
+        - Use QUALITY QUERY INDEX FIRST BEFORE PUTTING RANGE QUERY INDEX
+          > db.students.find({student_id : {$gt : 500}, class_id : 54}).sort({final_grade:-1}).hint({class_id : 1})
+
+        Eg: For the above command create index for 
+        1. {classId : 1, student_id : 1} INSTEAD OF 
+        2. {student_id : 1, classId : 1}
+
+        With Index (1) you will first choose classId : 54. Then go through all of them to find
+        student_id greater than 500
+
+        To make the above one better,
+        3. {classId: 1, final_grade:-1, student_id : 1}
+
+    16. Logging and Profiling
+        - Mongodb automatically LOGS slow queries that take more than 100milliseconds
+
+    17. Profiling:
+        - If profile is enabled, Write entries to system.profile
+
+        Three Levels:
+        0 : off
+        1 : log slow queries
+        2 : all my queries
+
+        Log all slow queries that take more than 2 milli seconds
+        > mongod -dbpath /usr/local/var/mongodb --profile 1 --slowms 2
+
+    18. Review:
+        Tool to find where mongo is spending its time at a high level
+
+        mongotop:
+            > mongotop 3 // where 3 is the number of seconds over which you are interested about
+            - very similar to UNIX top command
+            - It tells read time, write time and total time
+            - It tells the collection where most time is spent
+
+        mongostat:
+            > mongostat
+            - Similar to iostat from UNIX
+            - Sample database in a 1 second interval and gives details
+            - Tells about the number of inserts, queries, updates etc in that one second interval
+            - Also tells about the Storage Engine that is used
+
+            VARIOUS COLUMNS
+            - getmore : how many get more commands are running
+            - command : number of commands like create index are running
+            - mapped  : amount of memory mapped in main memory
+            - res     : total resident size i.e. amount of memory that is available
+            - faults  : page faults that we are causing every second
+                        means more i/o
+
+            IF WIRED TIGER then
+            - %dirty% and %used% instead of mapped
+            %dirty : Percent of wired tiger cache that is dirty i.e. written and only to be written back to disk
+            %used - cache that is getting used
+
