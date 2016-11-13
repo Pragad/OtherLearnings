@@ -299,3 +299,296 @@ Week 4:
                 "client" : "127.0.0.1",
                 "user" : ""
         }
+
+
+Week 5:
+    Homework 5.1:
+        
+        db.posts.aggregate([
+            {
+                $unwind: "$comments"
+            },
+            {
+                $group:
+                {
+                    "_id" : "$comments.author",
+                    "count" : {$sum:1}
+                }
+            },
+            {
+                $sort:
+                {
+                    "count" : -1
+                }
+            }
+        ])
+
+        SOLUTION:
+        { "_id" : "Elizabet Kleine", "count" : 503 }
+
+    Homework 5.2:
+        HINT 1:
+            db.zips.aggregate([
+                {
+                    $group:
+                    {
+                        "_id" : "$state",
+                        "population" :
+                        {
+                            $sum : "$pop"
+                        }
+                    }
+                },
+                {
+                    $sort : 
+                    {
+                        "state" : 1
+                    }
+                }
+            ])
+
+            { "_id" : "CA", "population" : 953386 }
+            { "_id" : "CT", "population" : 661324 }
+            { "_id" : "NJ", "population" : 847495 }
+            { "_id" : "NY", "population" : 485267 }
+
+        HINT 2:
+            db.zips.aggregate([
+                {
+                    $match:
+                    {
+                        $or: [ {state : "CT"}, {state : "NJ"}]
+                    }
+                },
+                {
+                    $match:
+                    {
+                        "pop" : 
+                        {
+                            $gt : 25000
+                        }
+                    }
+                },
+                {
+                    $group:
+                    {
+                        "_id" : "$state",
+                        "population" :
+                        {
+                            $sum : "$pop"
+                        }
+                    }
+                },
+                {
+                    $sort : 
+                    {
+                        "state" : 1
+                    }
+                }
+            ])
+
+            { "_id" : "CT", "population" : 360957 }
+            { "_id" : "NJ", "population" : 439169 }
+
+
+        HINT 3:
+            db.zips.aggregate([
+                {
+                    $match:
+                    {
+                        $or: [ {state : "CT"}, {state : "NJ"}]
+                    }
+                },
+                {
+                    $match:
+                    {
+                        "pop" : 
+                        {
+                            $gt : 25000
+                        }
+                    }
+                },
+                {
+                    $group:
+                    {
+                        "_id" : "$state",
+                        "population" :
+                        {
+                            $avg : "$pop"
+                        }
+                    }
+                },
+                {
+                    $group:
+                    {
+                        "_id" : 1,
+                        "average_pop" :
+                        {
+                            $avg : "$population"
+                        }
+                    }
+                }
+            ])
+
+            { "_id" : 1, "average_pop" : 36346.558333333334 }
+
+        HINT 4:
+db.zips.aggregate([
+    {
+        $match:
+        {
+            $or: [ {state : "CT"}, {state : "NJ"}]
+        }
+    },
+    {
+        $group:
+        {
+            "_id" : "$city",
+            "state" : 1,
+            "sumPop" :
+            {
+                $sum : "$pop"
+            }
+        }
+    },
+    {
+        $match:
+        {
+            "pop" : 
+            {
+                $gt : 25000
+            }
+        }
+    },
+    {
+        $group:
+        {
+            "_id" : "$state",
+            "population" :
+            {
+                $avg : "$pop"
+            }
+        }
+    }
+])
+
+
+        FINAL SOLUTION:
+            db.zips.aggregate([
+                {
+                    $match:
+                    {
+                        $or: [ {state : "CT"}, {state : "NJ"}]
+                    }
+                },
+                {
+                    $group:
+                    {
+                        "_id" :
+                        {
+                            "city" : "$city",
+                            "state" : "$state"
+                        },
+                        "sumPop" :
+                        {
+                            $sum : "$pop"
+                        }
+                    }
+                },
+                {
+                    $match:
+                    {
+                        "sumPop" : 
+                        {
+                            $gt : 25000
+                        }
+                    }
+                },
+                {
+                    $group:
+                    {
+                        "_id" : "$_id.state",
+                        "population" :
+                        {
+                            $avg : "$sumPop"
+                        }
+                    }
+                },
+                {
+                    $group:
+                    {
+                        "_id" : null,
+                        "avgPop" :
+                        {
+                            $avg : "$population"
+                        }
+                    }
+                }
+            ])
+
+            { "_id" : null, "avgPop" : 38176.63636363637 }
+
+        FINAL SOLUTION 2:
+            db.zips.aggregate([
+                /* Get only docs that match CA and NY */
+                {
+                    $match:
+                    {
+                        $or: [ {state : "CA"}, {state : "NY"}]
+                    }
+                },
+                /* Group by all cities within a state. Also calculate the Population of a City */
+                {
+                    $group:
+                    {
+                        "_id" :
+                        {
+                            "city" : "$city",
+                            "state" : "$state"
+                        },
+                        "sumPop" :
+                        {
+                            $sum : "$pop"
+                        }
+                    }
+                },
+                /* Filter only cities that have a population greater than 25000 */
+                {
+                    $match:
+                    {
+                        "sumPop" : 
+                        {
+                            $gt : 25000
+                        }
+                    }
+                },
+                /* Find the average popluation of boths state CA and NY separately */
+                {
+                    $group:
+                    {
+                        "_id" : "$_id.state",
+                        "population" :
+                        {
+                            $avg : "$sumPop"
+                        }
+                    }
+                },
+                /* Do a combined average of both */
+                {
+                    $group:
+                    {
+                        "_id" : null,
+                        "avgPop" :
+                        {
+                            $avg : "$population"
+                        }
+                    }
+                }
+            ])
+
+            { "_id" : null, "avgPop" : 44327.92916666667 }
+
+    Homework 3:
+
+    Homework 4:
+

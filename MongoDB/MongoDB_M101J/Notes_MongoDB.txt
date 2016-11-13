@@ -535,3 +535,222 @@ Week 4:
             %dirty : Percent of wired tiger cache that is dirty i.e. written and only to be written back to disk
             %used - cache that is getting used
 
+    19. SHARDING
+        - Split a collection split it across multiple servers and accesses it easily
+        - Deploy multiple mongod servers
+        - MONGOS is a ROUTER that sends requests to the right shard
+        - Have "mongos" in the front which will talk to multiple mongod servers
+        - A REPLICA SET is logically ONE SHARD
+        - A REPLICA SET is used to make sure you have another server when one goes down
+        - Sharding is mostly transparent to the application
+
+        - You can use a "shard key"
+        - mongos will use the shard key to send query to the right shard
+        - Insert must include THE ENTIRE SHARD KEY
+        - So developer should know what the shard key is
+        - For Update, Remove, Find IF SHARD key is not provided, MONGOS will broadcast the 
+          query to all the Shards
+
+Week 5: Aggregation Framework
+    5.1 Simple Aggregation Example
+
+        Consider the following PRODUCTS table:
+            name    category    manufacturer    price
+            ipad    tab         apple           500
+            nexus   mobile      google          300
+
+        To group all products by manufacturer, you write the following query
+        > Select manufacturer,count(*) from Products.groupby manufacturer
+
+        Mongodb Equivalent:
+            db.products.aggregate([
+                {$group:
+                    {
+                        _id:"$manufacturer",
+                        num_products:{$sum:1}
+                    }
+                }
+            ])
+
+        - Aggregation framework will run through all the documents
+        - For each document,
+            - If new document
+                - add the manufacturer to the Result
+                - Add 1 to the Num products
+            - Else
+                - Add 1 to the Num products
+
+    5.2 Aggregation Pipeline:
+        $project -> $match -> $sort -> result
+        1. $project:
+            - Reshape the document
+            - Select out few fields (which can be even deep in the document) and bring to top
+            - 1 to 1
+              i.e. Every document that enters will come out
+
+        2. $match:
+            - Filtering step
+            - Select only documents that you want to analyze
+            - N to 1 i.e. Reduce the number of documents
+              i.e. Not every document that enters will come out
+
+        3. $group:
+            - Allow us to do the aggregation
+            - Has things like 'sum', 'avg' etc to do the aggregation
+            - N to 1 i.e. Reduce the number of documents
+        
+        4. $sort
+            - Sort the documents
+            - 1 to 1
+        
+        5. $skip
+            - After sorting you would like to skip N documents
+            - N to 1 transformation
+              i.e. Some documents could enter which may not come out
+
+        6. $limit
+            - Sort 100, skip 20 and them limit to 5
+            - N to 1 transformation
+              i.e. Some documents could enter which may not come out
+
+        7. $unwind:
+            - Normalize the document
+              Eg: tags : ["red", "blue", "green"]
+              will result in
+              tags:red
+              tags:green
+              tags:blue
+
+        8. $out
+            - Normally all the documents gets returned to a CURSOR that you can use to print
+            - If you want to redirect the document to another collection then use $out
+            - Name a collection to which you want to redirect the output
+            - 1 to 1
+
+        9. $redact
+            - Security related feature that limits what document certain users are allowed to see
+
+        10. geonear:
+            - Perform location based queries to limit the queries based on location
+
+
+    Aggregation Expressions:
+        $sum
+        $avg
+        $min
+        $max
+        $push     : Create arrays
+        $addtoset : Create arrays, add uniquely
+        $first    : Documents should be sorted for this to work. Find first value
+        $last     : Same as above but for last
+
+    DoubleGrouping
+        - One of the best things about Grouping in MongoDB when compared to SQL is
+        - You can run a particualr aggregation framework more than once
+        - USEFUL when. Consdier a db which has SCORES for each student in each class
+          Find average class grade in each class
+          First Find average student grade
+          Then do that for the class
+            
+          > db.aggreagate([
+            {
+                $group:
+                {
+                    _id : 
+                    {
+                        class_id : "$class_id",
+                        student_id : "$student_id"
+                    },
+                    "average" : { $avg : "$score" }
+                }
+            },
+            {
+                $group:
+                {
+                    _id: "$_id.class_id",               // From prev stage
+                    "average" : { $avg : "$average"}
+                }
+            } ] )
+
+    Project Phase
+        - Reshape the documents
+        - Remove keys
+        - Add new keys
+        - Reshape kets
+        - toUpper, toLower
+
+        db.prods.aggregate([
+        {
+            $project:
+            {
+                _id : 0,
+                'maker' : 
+                {
+                    $toLower : "$manufacturer"
+
+                },
+                'details':
+                {
+                    'category' : "$category",
+                    'price' : {"$multiple" : ["$price", 10]}
+                },
+                'item' : "$name"
+            }
+        }
+        ])
+
+    $sort
+        - DiskBased and Memory Based sorting
+        - Default in Memory
+        - Size of memory based sorting is 100MB for any given pipeline stage
+
+        - Use disk based sorting if more data
+        - can sort Before or After the grouping stage
+        - sometime you might have to do BOTH
+
+    SQL Mapping:
+        SQL           MongoDB Equivalent
+        Where       - match
+        GroupBy     - group
+        Having      - match
+        Select      - project
+        OrderBy     - sort
+        Limit       - limit
+        Sum         - sum
+        Count       - sum
+        join        - NA; But unwind can do something similar
+
+    Limitations in Aggregation
+        - 100 MB limit
+          SOLUTION
+            > allowDiskUse
+        - If you want to return everything in ONE DOCUMENt then there is a
+          16MB limit 
+          Python returns everything in a SINGLE DOCUMENT
+            > use Cursors
+        - In a SHARDED SYSTEM, assume you want to look at all the results
+          - then results will be brought to SHARD 1
+
+          Shard 0       Shard 1     Shard 2     Shard 3
+             |             |            |           |
+             |             |            |           |
+             ----------------------------------------
+                            |
+                            |
+                          MongoS
+                            |
+                            |
+                            | Aggregation Query
+                          Application
+
+        - GroupBy or Sort will PUT ALL THE DATA ON THE PRIMARY SHARD
+        - So we don't have SAME LEVEL OF SCALABILITY LIKE HADOOP MAP/REDUCE job
+
+        - SOLUTION:
+            - Use Hadoop
+            - Get data out of MongoDB and give it to Hadoop using Hadoop connector
+
+            - MongoDB also has map/reduce builtin. But don't use. Not recommended
+
+    Aggregation using Java Pipeline
+        - 

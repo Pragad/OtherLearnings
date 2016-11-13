@@ -4,6 +4,8 @@ BASIC SHELL SCRIPTING STUFF
 2. BASH Shortcuts
 3. Pushd Popd and Dirs
 4. df vs du
+4b. To get size of all sub directories:
+4c. Get top biggest directories
 5. Find top running processes
 6. Get System identification info
 7. Hard Link vs Soft Link
@@ -101,6 +103,22 @@ df vs du
 http://serverfault.com/questions/57098/du-vs-df-difference
     df -h | grep pragadhe
     du -h file_name
+
+4b
+To get size of all sub directories:
+    du -sh /*
+
+    -s to give only the total for each command line argument,
+    -h for human-readable suffixes (optional).
+    /* simply expands to all directories (and files) in /
+
+4c
+Get top biggest directories
+
+    I often need to find the biggest directories,
+    So to get a sorted list containing the 20 biggest dirs I do this:
+        du -sh * | sort -hr
+
 
 5.
 Find top running processes

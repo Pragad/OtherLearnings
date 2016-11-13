@@ -24,7 +24,7 @@
 20. Explain Command
 21. Create Index:
 22. Adding Compound Index:
-23. Discovering and Deleting Indexes:
+23. Discovering and Deleting Indexes
 24. Multikey Indexes, Creating Indexes on Arrays
 25. Dot Notation and Multikey and $elemMatch
 26. Remove a Document from Collection
@@ -33,7 +33,13 @@
 29. Drop or Delete a Collection
 30. Size of Index
 31. Find documents with a specific field NULL or NOT SET
-32. Profiling:
+32. Geospatial Index
+33. Geospacial Spherical Index
+34. Mongo Redirect a query from a file
+35. Fulltext search index
+36. $HINT
+37. Profiling
+38. Aggregation in Detail
 ---------------------------------------------------------------------------------------------
 COMMANDS:
 1. Basic Commands:
@@ -737,3 +743,118 @@ http://stackoverflow.com/questions/4588303/in-mongodb-how-do-you-remove-an-array
     > db.setProfilingLevel(1,4) // Level to 1 and Over 4 milli seconds
     > db.setProfilingLevel(0)   // Turn it off
 
+38. _id field can be a document
+    > db.foo.insert({_id : {name : "andrew", class : "m101"}, hometown:"NY"})
+    > db.foo.find()
+      {"_id" : {"name" : "andrew", "class" : "m101" }, "hometown" : "NY"}
+
+39. Aggregation
+    Aggregation Expressions:
+    1. $sum
+        db.prods.aggregate([
+            {$group:
+                {
+                    _id: {
+                        "maker" : "$manufacturer"
+                    },
+                    sumPrices : {$sum : "$price"}
+                }
+            } ])
+
+    2. $avg
+        Same as above, use average instead
+            
+    3. $addtoset : Create arrays, add uniquely
+        - Say you want to see what all products does a manufacturer make
+        - Builds a new set of documents grouped by category and if the category is not in
+          the category array, it adds to it
+        db.prods.aggregate([
+            {$group:
+                {
+                    _id: {
+                        "maker" : "$manufacturer"
+                    },
+                    categories : {$addToSet : "$category"}
+                }
+            } ])
+
+    4. $push     : Create arrays
+        - does not guarentee that each ADDS only once
+
+    5. $min
+        - picks the max value
+
+    6. $max
+        - picks the min value
+
+
+        $first    : Documents should be sorted for this to work. Find first value
+        $last     : Same as above but for last
+    
+    7. $project:
+        1 to 1
+        db.zips.aggregate( [ { $project : { _id:0, "city" : {"$toLower" : "$city"}, "pop" : "$pop", "state" : "$state", "zip" : "$_id" } } ] )
+
+        db.zips.aggregate( [ { $project : { _id:0, "city" : {"$toLower" : "$city"}, "pop" : 1, "state" : 1, "zip" : "$_id" } } ] )
+
+    8. $match:
+        N to 1
+        Two reason why you would want to match
+        - filter documents and perform aggregation only on a subset
+        - filter the results itself
+
+        - Say you want to find the population of all cities in CA
+        db.zips.aggregate([
+        {
+            $match:
+            {
+                state : "CA"
+            }
+        },
+        {
+            $group:
+            {
+                _id : "$city",
+                population : 
+                {
+                    $sum : "$pop"
+                },
+                zip_codes :                 // also add all zipcodes in the city
+                {
+                    $addToSet : "$_id"
+                }
+            }
+        },
+        {
+            $project:
+            {
+                _id : 0,
+                city: "$_id",
+                population : 1,
+                zip_codes:1
+            }
+        },
+        {
+            $sort:
+            {
+                population : -1
+            }
+        },
+        {
+            $skip:10
+        },
+        {
+            $limit:5
+        }
+        ])
+
+    9. $sort
+
+    10. $skip
+        - needs data to be sorted first
+
+    11. $limit
+        - needs data to be sorted first
+
+    12. $unwind
+        - unjoin the data and later REJOIN so that you can do grouping calculations

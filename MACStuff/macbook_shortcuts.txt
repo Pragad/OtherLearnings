@@ -474,6 +474,10 @@ Windows Shortcuts:
         ctrl-i : does not work.
 
         Also use `` to go back and forth
+
+    Convert TAB to spaces
+        :retab
+
 19. pushd and popd
     popd - Just changes the order of the stack. It can also pop the first element
     out of the stack
