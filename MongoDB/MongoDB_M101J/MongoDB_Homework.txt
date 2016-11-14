@@ -588,7 +588,204 @@ db.zips.aggregate([
 
             { "_id" : null, "avgPop" : 44327.92916666667 }
 
-    Homework 3:
+    Homework 5.3:
+        HINT 1:
+            MongoDB Enterprise > db.grades.aggregate([
+            ...     /* Unwind by scores */
+            ...     {
+            ...         "$unwind" : "$scores"
+            ...     },
+            ...     {
+            ...         $match:
+            ...         {
+            ...             "scores.type" :
+            ...             { $ne : "quiz"}
+            ...         }
+            ...     },
+            ...     /* Group by class id and student id. Find the avg score of each student in a class*/
+            ...     {
+            ...         $group:
+            ...         {
+            ...             "_id" :
+            ...             {
+            ...                 "class_id" : "$class_id",
+            ...                 "student_id" : "$student_id"
+            ...             },
+            ...             "avgStudentScore" :
+            ...             {
+            ...                 $avg : "$scores.score"
+            ...             }
+            ...         }
+            ...     },
+            ...     {
+            ...         $sort :
+            ...         {
+            ...             "_id.class_id" : 1,
+            ...             "_id.student_id" : 1
+            ...         }
+            ...     }])
 
-    Homework 4:
+        HINT 2:
+            Find the Class which has the best student score
 
+            /* Find the class id whose student has got the best score i.e. maximum score */
+            db.grades.aggregate([
+                /* Unwind by scores */
+                {
+                    "$unwind" : "$scores"
+                },
+                {
+                    $match:
+                    {
+                        "scores.type" :
+                        { $ne : "quiz"}
+                    }
+                },
+                /* Group by class id and student id. Find the avg score of each student in a class*/
+                {
+                    $group:
+                    {
+                        "_id" :
+                        {
+                            "class_id" : "$class_id",
+                            "student_id" : "$student_id"
+                        },
+                        "avgStudentScore" :
+                        {
+                            $avg : "$scores.score"
+                        }
+                    }
+                },
+                /* Sort by avg student score. This way you can use $first to get student id as well */
+                /* http://stackoverflow.com/questions/40579182/how-to-display-additional-fields-in-mongodbs-group-aggregation-query */
+                {
+                    $sort :
+                    {
+                        "_id.class_id" : 1,
+                        "avgStudentScore" : -1
+                    }
+                },
+                /* Group by class id and select the max student score in each class*/
+                {
+                    $group:
+                    {
+                        "_id" : 
+                        {
+                            "class_id" : "$_id.class_id",
+                        },
+                        "student_id" : 
+                        {
+                            $first : "$_id.student_id"
+                        },
+                        "maxStudentScore" :
+                        {
+                            $max : "$avgStudentScore"
+                        },
+                    }
+                },
+                /* Sort the classes by max student score */
+                {
+                    $sort:
+                    {
+                        "maxStudentScore" : -1
+                    }
+                },
+                /* We are interested only in the top result. So limit to 1 */
+                {
+                    $limit : 1
+                }
+            ])
+
+        FINAL SOLUTION:
+            db.grades.aggregate([
+                /* Unwind by scores */
+                {
+                    "$unwind" : "$scores"
+                },
+                {
+                    $match:
+                    {
+                        "scores.type" :
+                        { $ne : "quiz"}
+                    }
+                },
+                /* Group by class id and student id. Find the avg score of each student in a class*/
+                {
+                    $group:
+                    {
+                        "_id" :
+                        {
+                            "class_id" : "$class_id",
+                            "student_id" : "$student_id"
+                        },
+                        "avgStudentScore" :
+                        {
+                            $avg : "$scores.score"
+                        }
+                    }
+                },
+                /* Group by class id and get the class average score*/
+                {
+                    $group:
+                    {
+                        "_id" : 
+                        {
+                            "class_id" : "$_id.class_id",
+                        },
+                        "classAvgScore" :
+                        {
+                            $avg : "$avgStudentScore"
+                        },
+                    }
+                },
+                /* Sort the classes by max student score */
+                {
+                    $sort:
+                    {
+                        "classAvgScore" : -1
+                    }
+                },
+                /* We are interested only in the top result. So limit to 1 */
+                {
+                    $limit : 1
+                }
+            ])
+
+            { "_id" : { "class_id" : 1 }, "classAvgScore" : 64.50642324269175 }
+
+    Homework 5.4:
+        db.zips.aggregate([
+            /* Get the first character of each city by using PROJECT*/
+            {
+                $project:
+                {
+                    cityFirstChar:
+                    {
+                        $substr : ["$city",0,1]
+                    },
+                    city : 1,
+                    pop : 1
+                }
+            },
+            /* Filter only documents whose first character is a digit */
+            {
+                $match:
+                {
+                    "cityFirstChar" :
+                    { $in : ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] }
+                }
+            },
+            /* Count the population of all people by passing NULL for id */
+            {
+                $group:
+                {
+                    "_id" : null,
+                    "totalPopulation" :
+                    {
+                        $sum : "$pop"
+                    }
+                }
+            }
+        ])
+
+        { "_id" : null, "totalPopulation" : 298015 }
