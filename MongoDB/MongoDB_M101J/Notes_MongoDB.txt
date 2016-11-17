@@ -753,4 +753,62 @@ Week 5: Aggregation Framework
             - MongoDB also has map/reduce builtin. But don't use. Not recommended
 
     Aggregation using Java Pipeline
-        - 
+
+Week 6:
+    1. Write Concern:
+        - Data gets written only to memory (w)
+        - Journal gets updates and it frequently writes the data to disk (j)
+        - Default: w : 1; j : 0
+
+    2. Network Errors:
+        - Insert can cope up.
+        - Inserting second time is not an issues as long as we have the same _id
+
+        - Update will be an issues especially when queries like "$inc" is involved
+
+    3. Replication:
+        Availability and Fault Tolerance
+
+        Replica Set:
+        - Minimum number of nodes required is 3.
+        - A set of replica nodes (3 nodes)
+        - One primary and other secondary
+        - Application connects to primary and writes to primary 
+        - Application can write only to primary
+
+        - Once primary is down then an Election happens to decide who is the next Primary
+        - Should have a marjority than the original number of nodes to elect the new primary
+
+    4. Different Types of Replicas
+        REGULAR:
+            - Normal node that can become primary when a node fails
+
+        ARBITER NODE (VOTING)
+            - When there are even nodes then you need arbiter node to vote so that you 
+              get a majority
+            - Has no data in it
+
+        DELAYED / REGULAR
+            - Disaster recover node. One or two hours lag from other nodes with Data
+            - But it can participate in elections
+            - Can't become primary
+
+        HIDDEN Node:
+            - Can't become primary
+            - Can participate in elections
+
+    5. Write Consistency
+        - Only a SINGLE Primary at any time
+        - Write should always go into Primary
+        - Reads can go into primary or secondary
+
+        Strong Consistency:
+            - Both read and writes to Primary
+
+        - Replication is Asynchronous
+
+        Eventual Consistency:
+            - Reading from secondary would give this
+
+        - Most web servies are Stateless
+

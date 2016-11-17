@@ -118,6 +118,7 @@ Get top biggest directories
     I often need to find the biggest directories,
     So to get a sorted list containing the 20 biggest dirs I do this:
         du -sh * | sort -hr
+        du -sh ~/burts/* | sort -hr | head -n 10
 
 
 5.
