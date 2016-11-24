@@ -789,3 +789,415 @@ db.zips.aggregate([
         ])
 
         { "_id" : null, "totalPopulation" : 298015 }
+
+FINAL EXAM
+    Question 1:
+        mongorestore --port <port number> -d enron -c messages <path to BSON file>
+
+        https://docs.mongodb.com/manual/tutorial/query-documents/#match-an-array-element
+        db.messages.count(
+        {
+            $and : [
+            {
+                "headers.From" : "andrew.fastow@enron.com"
+            },
+            {
+                "headers.To" : "jeff.skilling@enron.com"
+            } ]
+        })
+
+        ANS: 3
+
+    Question 2:
+    http://stackoverflow.com/questions/18804404/mongodb-unwind-array-using-aggregation-and-remove-duplicates
+    http://stackoverflow.com/questions/27229662/mongodb-aggregation-to-count-element-pairs-and-individual-elements
+    Sample Data To Try My Logic:
+        db.hw2.insertMany(
+        [
+            {
+                "from" : "a",
+                "to" : ["c", "q", "r", "u"]
+            },
+            {
+                "from" : "b",
+                "to" : ["q", "w", "q", "q"]
+            },
+            {
+                "from" : "a",
+                "to" : ["c", "q", "r", "u"]
+            },
+            {
+                "from" : "b",
+                "to" : ["w", "t", "r", "u"]
+            },
+            {
+                "from" : "b",
+                "to" : ["w", "i", "o", "p"]
+            }
+        ])
+
+        db.hw2.aggregate([
+            {
+                $unwind : '$to'
+            },
+            {
+                $group :
+                {
+                    '_id' : '$_id',
+                    'ToId' : 
+                    {
+                        $addToSet : '$to'
+                    },
+                    'FromId' :
+                    {
+                        $first : '$from'
+                    }
+                }
+            },
+            {
+                $unwind : '$ToId'
+            },
+            {
+                $group:
+                {
+                    '_id' : 
+                    {
+                        "from" : "$FromId",
+                        "to" : "$ToId"
+                    },
+                    'count' :
+                    {
+                        $sum : 1
+                    }
+                }
+            },
+            {
+                $sort : 
+                {
+                    "count" : -1
+                }
+            },
+            {
+                $limit : 1
+            }
+        ])
+
+
+        db.messages.aggregate([
+            {
+                $unwind : '$headers.To'
+            },
+            {
+                $group :
+                {
+                    '_id' : '$headers.Message-ID',
+                    'ToId' : 
+                    {
+                        $addToSet : '$headers.To'
+                    },
+                    'FromId' :
+                    {
+                        $first : '$headers.From'
+                    }
+                }
+            },
+            {
+                $unwind : '$ToId'
+            },
+            {
+                $group:
+                {
+                    '_id' : 
+                    {
+                        "from" : "$FromId",
+                        "to" : "$ToId"
+                    },
+                    'count' :
+                    {
+                        $sum : 1
+                    }
+                }
+            },
+            {
+                $sort : 
+                {
+                    "count" : -1
+                }
+            },
+            {
+                $limit : 1
+            }
+        ])
+
+        { "_id" : { "from" : "susan.mara@enron.com", "to" : "jeff.dasovich@enron.com" }, "count" : 750 }
+
+    Question 3:
+    https://docs.mongodb.com/manual/reference/operator/update/push/
+        db.messages.find(
+        {
+            "headers.Message-ID" : "<8147308.1075851042335.JavaMail.evans@thyme>"
+        }).pretty()
+
+        db.messages.update(
+        {
+            "headers.Message-ID" : "<8147308.1075851042335.JavaMail.evans@thyme>"
+        },
+        {
+            $push : 
+            { 
+                "headers.To" : "mrpotatohead@mongodb.com"
+            }
+        })
+        WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+    Question 4:
+
+    Question 5:
+        db.stuff.insertMany(
+        [
+            {
+                "a" : 10000,
+                "b" : 1000,
+                "c" : 500
+            },
+            {
+                "a" : 11000,
+                "b" : 1200,
+                "c" : 520
+            },
+            {
+                "a" : 1000,
+                "b" : 10000,
+                "c" : 500
+            },
+            {
+                "a" : 1000,
+                "b" : 15000,
+                "c" : 600
+            },
+            {
+                "a" : 80000,
+                "b" : 90000,
+                "c" : 700
+            },
+            {
+                "a" : 50000,
+                "b" : 2000,
+                "c" : 800
+            },
+            {
+                "a" : 200,
+                "b" : 90000,
+                "c" : 900
+            },
+            {
+                "a" : 80000,
+                "b" : 2000,
+                "c" : 5000
+            },
+            {
+                "a" : 100,
+                "b" : 15600,
+                "c" : 100
+            },
+            {
+                "a" : 10000,
+                "b" : 134000,
+                "c" : 900
+            },
+            {
+                "a" : 4000,
+                "b" : 40000,
+                "c" : 800
+            },
+        ])
+
+
+        MongoDB Enterprise > db.stuff.find({'a':{'$lt':10000}, 'b':{'$gt': 5000}}, {'a':1, 'c':1}).sort({'c':-1})
+        { "_id" : ObjectId("58353ad232f318614c6b5869"), "a" : 200, "c" : 900 }
+        { "_id" : ObjectId("58353ad232f318614c6b586d"), "a" : 4000, "c" : 800 }
+        { "_id" : ObjectId("58353ad232f318614c6b5866"), "a" : 1000, "c" : 600 }
+        { "_id" : ObjectId("58353ad232f318614c6b5865"), "a" : 1000, "c" : 500 }
+        { "_id" : ObjectId("58353ad232f318614c6b586b"), "a" : 100, "c" : 100 }
+        MongoDB Enterprise > db.stuff.getIndexes()
+        [
+                {
+                        "v" : 1,
+                        "key" : {
+                                "_id" : 1
+                        },
+                        "name" : "_id_",
+                        "ns" : "sampFinal.stuff"
+                }
+        ]
+
+        db.stuff.createIndex ( { a:1, b:1 } )
+        db.stuff.createIndex ( { a:1, c:1 } )
+        db.stuff.createIndex ( { c:1 } )
+        db.stuff.createIndex ( { a:1, b:1, c:-1 } )
+
+        db.stuff.explain("allPlansExecution").find({'a':{'$lt':10000}, 'b':{'$gt': 5000}}, {'a':1, 'c':1}).sort({'c':-1})
+
+    Question 6:
+    http://dba.stackexchange.com/questions/84170/mongodb-insertion-speed
+    https://groups.google.com/forum/#!topic/mongodb-user/0NtKoUn5Di4
+
+    Question 7:
+        1. Create Indexes
+        2. Count images that has "sunrises" tag and make sure it is 49,887
+        3. Remove images that are not part of any album
+        4. Find the count of images that has "sunrises" tag
+
+        db.images.createIndex( {tags:1 })
+        db.albums.createIndex( {images:1 })
+
+        vals = db.albums.find({}, {images: 1}).map(function(albums){return albums.images;})
+        db.images.find({_id : {$nin : vals}})
+
+        vals = db.albums.find({}, {images: 1}).map(function(albums){return albums.images;})
+        cursor = db.images.find({_id : {$nin : vals}});
+        while(cursor.hasNext()){
+            printjson(cursor.next());
+        }
+
+        vals = db.albums.aggregate( [  { '$unwind': '$images' } ] ).map(function(albums){return albums.images;})
+        cursor = db.images.find({_id : {$nin : vals}});
+        while(cursor.hasNext()){
+            printjson(cursor.next());
+        }
+
+        > mongo finalQ7Images --quiet script.js > result.txt
+
+    Question 8:
+
+    Question 9:
+
+    Question 10:
+        var exp = db.messages.explain('executionStats')
+
+
+        exp.find( { 'headers.Date' : { '$gt' : new Date(2001,3,1) } }, { 'headers.From' : 1, '_id' : 0 } ).sort( { 'headers.From' : 1 } )
+
+        {
+          "queryPlanner" : {
+            "plannerVersion" : 1,
+            "namespace" : "enron.messages",
+            "indexFilterSet" : false,
+            "parsedQuery" : {
+              "headers.Date" : {
+                "$gt" : ISODate("2001-04-01T05:00:00Z")
+              }
+            },
+            "winningPlan" : {
+              "stage" : "PROJECTION",
+              "transformBy" : {
+                "headers.From" : 1,
+                "_id" : 0
+              },
+              "inputStage" : {
+                "stage" : "FETCH",
+                "filter" : {
+                  "headers.Date" : {
+                    "$gt" : ISODate("2001-04-01T05:00:00Z")
+                  }
+                },
+                "inputStage" : {
+                  "stage" : "IXSCAN",
+                  "keyPattern" : {
+                    "headers.From" : 1
+                  },
+                  "indexName" : "headers.From_1",
+                  "isMultiKey" : false,
+                  "direction" : "forward",
+                  "indexBounds" : {
+                    "headers.From" : [
+                      "[MinKey, MaxKey]"
+                    ]
+                  }
+                }
+              }
+            },
+            "rejectedPlans" : [ ]
+          },
+          "executionStats" : {
+            "executionSuccess" : true,
+            "nReturned" : 83057,
+            "executionTimeMillis" : 726,
+            "totalKeysExamined" : 120477,
+            "totalDocsExamined" : 120477,
+            "executionStages" : {
+              "stage" : "PROJECTION",
+              "nReturned" : 83057,
+              "executionTimeMillisEstimate" : 690,
+              "works" : 120478,
+              "advanced" : 83057,
+              "needTime" : 37420,
+              "needFetch" : 0,
+              "saveState" : 941,
+              "restoreState" : 941,
+              "isEOF" : 1,
+              "invalidates" : 0,
+              "transformBy" : {
+                "headers.From" : 1,
+                "_id" : 0
+              },
+              "inputStage" : {
+                "stage" : "FETCH",
+                "filter" : {
+                  "headers.Date" : {
+                    "$gt" : ISODate("2001-04-01T05:00:00Z")
+                  }
+                },
+                "nReturned" : 83057,
+                "executionTimeMillisEstimate" : 350,
+                "works" : 120478,
+                "advanced" : 83057,
+                "needTime" : 37420,
+                "needFetch" : 0,
+                "saveState" : 941,
+                "restoreState" : 941,
+                "isEOF" : 1,
+                "invalidates" : 0,
+                "docsExamined" : 120477,
+                "alreadyHasObj" : 0,
+                "inputStage" : {
+                  "stage" : "IXSCAN",
+                  "nReturned" : 120477,
+                  "executionTimeMillisEstimate" : 60,
+                  "works" : 120477,
+                  "advanced" : 120477,
+                  "needTime" : 0,
+                  "needFetch" : 0,
+                  "saveState" : 941,
+                  "restoreState" : 941,
+                  "isEOF" : 1,
+                  "invalidates" : 0,
+                  "keyPattern" : {
+                    "headers.From" : 1
+                  },
+                  "indexName" : "headers.From_1",
+                  "isMultiKey" : false,
+                  "direction" : "forward",
+                  "indexBounds" : {
+                    "headers.From" : [
+                      "[MinKey, MaxKey]"
+                    ]
+                  },
+                  "keysExamined" : 120477,
+                  "dupsTested" : 0,
+                  "dupsDropped" : 0,
+                  "seenInvalidated" : 0,
+                  "matchTested" : 0
+                }
+              }
+            }
+          },
+          "serverInfo" : {
+            "host" : "dpercy-mac-air.local",
+            "port" : 27017,
+            "version" : "3.0.1",
+            "gitVersion" : "534b5a3f9d10f00cd27737fbcd951032248b5952"
+          },
+          "ok" : 1
+        }
+
