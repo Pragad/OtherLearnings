@@ -1,0 +1,37 @@
+Things to LEARN / READ:
+- Check PreReq Images
+
+Week 1: Spark
+    1.1 Motivation
+        - For Iterative algorithms
+            - Same algorithm, run once, run twice until output is reached.
+              changes and rerun it again.
+
+            - Where you want to run the same algorithm multiple time
+            - And slightly tune the output
+            - So we should make use of caching instead of going to the DISK each time
+
+        - Problem with Hadoop Map Reduce
+            - If we want to do using Hadoop then, for each iteration we would want to access
+              the hard drive
+            - Hadoop does not provide efficiency for DATA CACHING
+            - It reads the data from HDFS and writes back to HDFS
+
+        - Page Rank
+            - It is an iterative algorithm
+            - A propagation phase and an aggregation phase
+
+    1.2 Apache Spark
+        - Interactive Algorithms
+        - Scala written on top of Java
+
+        Why are the current frameworks not working?
+            - Idea of ACYCLIC data flow
+            - Data starts its life on HDFS and keeps flowing forward.
+            - No loops
+
+            - For example you want to load data and then do a search
+            - Then do another search
+
+        - Spark provides RESILIENT DISTRIBUTED DATASETS
+            - Data will remain in memory until we are done with it
