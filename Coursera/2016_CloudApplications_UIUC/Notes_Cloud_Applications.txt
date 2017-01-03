@@ -24,14 +24,65 @@ Week 1: Spark
     1.2 Apache Spark
         - Interactive Algorithms
         - Scala written on top of Java
+        - Spark uses Scala (Functional Programming Language)
+        - You should be able to load everything onto memory
 
         Why are the current frameworks not working?
             - Idea of ACYCLIC data flow
             - Data starts its life on HDFS and keeps flowing forward.
             - No loops
 
+            - Your input data does not change for each iteration
             - For example you want to load data and then do a search
             - Then do another search
 
         - Spark provides RESILIENT DISTRIBUTED DATASETS
+            - RDD - is a data and computation abstraction
             - Data will remain in memory until we are done with it
+                - RDD1 = data loaded from disk
+                - RDD2 = RDD1 + filter with some parameters
+                - RDD3 = RDD2 + sorted
+                - RDD4 = RDD3 + ...
+            - All RDDs are distributed across the cluster
+            - IMP: We would still love to use
+                - Fault Tolerance
+                - Scalability
+                - Locality
+
+        - Programming Model
+            - RDDs are immutable
+            - Created through parallel transformations
+                - In real world, RDD1 will be split across multiple clusters / machines
+                - To get RDD2, you don't have to consolidate all RDD1 into one machine
+                - You can parallely run some transformation on all RDD1 and get RDD2
+            - Can be cached
+
+    1.3 Example Log Mining
+        - Find log messages containing and error and interactively search for various pattern
+        1. Load data from hardrive into memory
+        2. Spark uses builder pattern
+           lines = spark.textFile("hdfs://...")         <--- Base RDD
+           errors = lines.filter(_.startsWith("ERROR")) <--- Transformed RDD
+                "_" means, for each
+                i.e. take and run on every line
+           messages = errors.map(_.split('\t')(2))
+                Split messages into 2 using "tab" as a character
+           cachedMsgs = messages.cache()
+                IMP: now messages are cached in memory
+                We can take this later and perform something else
+           cachedMsgs.filter(_.contains("foo")).count   <--- Builder pattern
+                "count" is an action
+
+        2. All the above are transformation
+        3. It does a LAZY evaluation
+        4. i.e. The transformation won't be run until an action is seen
+        5. Once an action is seen, the transformation will get spread across clusters
+        
+        EXAMPLE:
+        - Wikipedia full search can be done < 1sec while hadoop takes 20sec
+        - Each time you want to search, you should reload the dataset again and again
+
+    1.4 Logistic Regression - Scientific Computing
+        - Goal: To do logistic
+        - Data set with some positive and some negative
+        - Segregate +s together and -s together
