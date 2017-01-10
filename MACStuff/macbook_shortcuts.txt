@@ -736,6 +736,18 @@ Windows Shortcuts:
     - Gow
     - AutoHotKey
     - Firefox Nightshift Eyecare
+    - Everything
+    - Ditto clipboard
+    - Git
+    - Python 
+    - Firefox
+    - Winrar
+    - VLC Player
+    - Google Drive
+    - Eclipse
+    - MinGW
+    - gVim
+    - wordweb
 
 2. Fixing MinGW error
    http://stackoverflow.com/questions/38436542/mingw-cxxtest-bizarre-errors
