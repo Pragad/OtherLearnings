@@ -53,6 +53,7 @@ How to use Macbook Pro
 37. Add custom search engine in Chrome
 38. How to run a maven project
 39. How to import a JSON to mongodb
+40. Lock your macbook
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -112,6 +113,9 @@ Windows Shortcuts:
 
     10. Install Java
         brew cask install java
+
+        Set JAVA_HOME path
+        echo export "JAVA_HOME=\$(/usr/libexec/java_home)" >> ~/.bash_profile
 
     11. Make sure wifi doesn't go off on screen lock
         http://apple.stackexchange.com/questions/71884/wi-fi-disconnects-when-i-lock-the-mac
@@ -729,6 +733,10 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 39. How to import a JSON to mongodb
 
         mongoimport --drop -d students -c grades grades.json
+
+40. Lock your macbook
+    Control + Shift + Power
+    System Preferences > Security & Privacy > General. Check the box next to "Require Password"
 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
