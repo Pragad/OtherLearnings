@@ -24,6 +24,7 @@ How to use Macbook Pro
 13. Firefox:
 14. Spectacle:
 15. Find and kill a process
+15b. Get all threads in a process
 16. GIT
 17. BASH Shortcuts
 18. VIM Read/Shorctus
@@ -47,6 +48,11 @@ How to use Macbook Pro
     3. Add Tomcat to your project
     4. Resolve Tomcat 404 error
     5. Installing Java EE on Eclipse
+    6. Configuring MySQL on Eclipse
+    7. Uninstalling MySQL on Mac
+    8. Uninstalling Eclipse
+    9. Avoiding "resource is out of sync with the filesystem"
+    10. Keyboard Shortcuts
 34. Basic GREP
 35. Basic FIND
 36. Basic Head with Find
@@ -54,6 +60,10 @@ How to use Macbook Pro
 38. How to run a maven project
 39. How to import a JSON to mongodb
 40. Lock your macbook
+41. Use ctags with VIM
+42. Close file without Saving changes
+43. Allow ssh on mac
+44. Find size of a directory including all its sub directories
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -131,6 +141,10 @@ Windows Shortcuts:
             Algos $cd /System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources
             Resources $sudo ./airport en0 prefs DisconnectOnLogout=NO
 
+    12. VIM ctags
+        brew install ctags
+        http://ricostacruz.com/til/navigate-code-with-ctags
+
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
 
@@ -149,7 +163,7 @@ Windows Shortcuts:
     Cmd + ] - Go Forward
 
     Cut & Paste:
-        Command+C copies the files or documents, note they wonâ€™t be â€˜cutâ€™ yet
+        Command+C copies the files or documents, note they won¿t be ¿cut¿ yet
         Command+Option+V pastes the documents into the new location, cutting it from the prior locating and moving it to the new location
 
 6. Terminal Commands:
@@ -163,8 +177,8 @@ Windows Shortcuts:
        . ~/.bash_profile
 
     c. Move word by word
-        Esc+F to move to the beginning of the next word - Mapped it to âŒ¥ + f
-        Esc+B to move to the beginning of the current word âŒ¥  + b
+        Esc+F to move to the beginning of the next word - Mapped it to ¿ + f
+        Esc+B to move to the beginning of the current word ¿  + b
 
     d. Mounted Drive will be under /Volumes
 
@@ -225,6 +239,9 @@ Windows Shortcuts:
     a. ps -ef | grep firefox
     b. kill -9 pid
 
+15b. Get all threads in a process
+    ps -L ax | grep firefox
+    
 16. GIT
     https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
     http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1
@@ -385,6 +402,16 @@ Windows Shortcuts:
             git rm -r target/
             git rm -r --cached target/
 
+    ac. Revert a single file Undo working copy modifications of one file in Git
+        git checkout -- file
+
+    ad. Changing the Commit message
+        https://help.github.com/articles/changing-a-commit-message/
+
+    ae. Git config user name for a specific directory
+        git config user.name "Pragad"
+        git config user.email talk2pragadheesh@gmail.com
+
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
 
@@ -403,6 +430,12 @@ Windows Shortcuts:
     Esc + T  Swap the last two words before the cursor
     Alt + F  Move cursor forward one word on the current line
     Alt + B  Move cursor backward one word on the current line
+
+    &&      
+    && lets you do something based on whether the previous command completed successfully
+    - that's why you tend to see it chained as do_something && do_something_else_that_depended_on_something
+    Eg: observer restart && tail -f ~/log/observer.log
+        If observer restarts successfully, then look at the logs
 
 18. VIM Read/Shorctus
     http://vim.wikia.com/wiki/Using_command-line_history
@@ -684,6 +717,28 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
        You can enable this in Window - Preferences - General - Workspace - Refresh Automatically (called Refresh using native hooks or polling in newer builds)
 
+    10. Keyboard Shortcuts
+        Cmd + Shift + l - Open list of shortcuts
+
+        1. Find Next and Find Prev
+            cmd + k AND cmd + shift + k
+        2. Find function definitions. See the functions as a Quick View
+            cmd + o
+        3. Quickly go to function definition - Very Useful
+            F3 OR cmd + click
+        4. Going to last edited place
+            ctrl + q
+        5. Find all calls of a method
+            ctrl + alt + h
+        5b.
+            cmd + shift + h
+        6. Open Search Dialog
+            ctrl + h: Use this to search in files
+        7. Search for resources
+            cmd + shift + r
+        8. Search for a class
+           cmd + shift + t
+
 34. Basic GREP
     grep -ir "fleshscore" .
     grep -r -i "split" --include \*.h --include \*.cpp . | more
@@ -737,6 +792,35 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 40. Lock your macbook
     Control + Shift + Power
     System Preferences > Security & Privacy > General. Check the box next to "Require Password"
+
+41. Use ctags with VIM
+    https://andrew.stwrt.ca/posts/vim-ctags/
+    http://ricostacruz.com/til/navigate-code-with-ctags
+
+    brew install ctags
+    ctags -R .
+
+    Add "tags" to .gitignore
+        - echo "tags" >> ~/.gitignore
+
+    Shortcuts:
+    ^]     Jump to definition
+    ^t     Jump back from definition
+    g]     See all definitions
+
+42. Close file without Saving changes
+http://apple.stackexchange.com/questions/154046/how-to-quit-without-saving-using-just-the-keyboard
+
+    Try either command ¿+Delete for Apple or standard applications,
+    And command ¿+D if that does not work
+
+43. Allow ssh on mac
+http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
+
+    Go to ¿System Preferences¿. Under ¿Internet & Networking¿ there is a ¿Sharing¿ icon. Run that. In the list that appears, check the ¿Remote Login¿ option.
+
+44. Find size of a directory including all its sub directories
+    du -sh .
 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:

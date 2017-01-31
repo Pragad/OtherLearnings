@@ -104,6 +104,11 @@ http://serverfault.com/questions/57098/du-vs-df-difference
     df -h | grep pragadhe
     du -h file_name
 
+    du is the better tool to use if you are interested in knowing how much space is actually being used on your filesystem "right now."
+    df is great for "ballpark estimates" and is preferred if you need to know how big df thinks your filesystem is (so it will agree with other incorrect system statistics).
+    
+    If du and df don't agree on what size your filesystem is, du is more correct than df is.
+
 4b
 To get size of all sub directories:
     du -sh /*
