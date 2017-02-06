@@ -20,6 +20,7 @@ How to use Macbook Pro
     b. block Select
     c. Open new tab in the same folder as existing one
     d. Using Alt + f and Alt + b to move forward/backward by word
+    e. Count number of files inside a directory
 12. Find my Macbook's details:
 13. Firefox:
 14. Spectacle:
@@ -64,6 +65,7 @@ How to use Macbook Pro
 42. Close file without Saving changes
 43. Allow ssh on mac
 44. Find size of a directory including all its sub directories
+45. Mark mails as read
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -217,9 +219,17 @@ Windows Shortcuts:
        - Select "Reuse previous session's directory" from the preferences of your profile
 
     d. Using Alt + f and Alt + b to move forward/backward by word
+       https://coderwall.com/p/h6yfda/use-and-to-jump-forwards-backwards-words-in-iterm-2-on-os-x
+
        http://stackoverflow.com/questions/18923765/bash-keyboard-shortcuts-in-iterm-like-altd-and-altf
        Press Command+O to open the list of profiles, select Default, and click "Edit Profiles...".
        In the resulting window, click on the "Keys" tab, and select "+Esc" for one or both option keys.
+
+    e. Count number of files inside a directory
+        ls -F |grep -v / | wc -l
+        ls -F list all files and append indicator (one of */=>@|) to entries
+        grep -v / keep all de strings that do not contain a slash
+        wc -l count lines
 
 12. Find my Macbook's details:
     In terminal: system_profiler | more
@@ -243,6 +253,10 @@ Windows Shortcuts:
     ps -L ax | grep firefox
     
 16. GIT
+    Install GIT on Centos:
+        http://wiki.komprise.com/Full_build
+        https://madcoda.com/2013/09/cant-locate-extutilsmakemaker-pm-while-compile-git/
+
     https://git-scm.com/book/en/v2/Git-Basics-Getting-a-Git-Repository
     http://readwrite.com/2013/09/30/understanding-github-a-journey-for-beginners-part-1
     http://readwrite.com/2013/10/02/github-for-beginners-part-2
@@ -411,6 +425,20 @@ Windows Shortcuts:
     ae. Git config user name for a specific directory
         git config user.name "Pragad"
         git config user.email talk2pragadheesh@gmail.com
+
+    af. http://stackoverflow.com/questions/7548926/git-and-the-branch-x-is-not-fully-merged-error
+
+    ag. How to delete a git branch locally and remotely
+        $ git checkout master
+        $ git push origin --delete <branch_name>
+        $ git branch -d <branch_name>
+        $ git branch -D <branch_name> // to forcefully delete
+
+    ah. Git Stash to stash your local changes
+        git stash
+
+    ai. Git create new branch
+        git checkout -b KOMPRISE-6277 : Create a branch
 
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
@@ -822,6 +850,8 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 44. Find size of a directory including all its sub directories
     du -sh .
 
+45. Mark mails as read
+    Cmd + shift + u
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
