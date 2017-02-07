@@ -133,7 +133,7 @@ Windows Shortcuts:
         http://apple.stackexchange.com/questions/71884/wi-fi-disconnects-when-i-lock-the-mac
 
         Find IP address from terminal on MAC
-            Algos $ipconfig getifaddr en0
+            $ipconfig getifaddr en0
             10.55.34.39
 
             Algos $ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print $2}'
@@ -201,7 +201,12 @@ Windows Shortcuts:
     Cmd + Option + h
 
 11. iterm
-    https://iterm2.com/features.html
+    Why Use Iterm2
+        https://www.iterm2.com/features.html
+        - Split Pane
+        - Auto complete using Cmd + ;
+        - Quick shortcut for iterm Opt + Space
+
     a. Split Panes
         http://cantus.us/use-iterm2-for-split-panes/
         Cmd + d - vertically
@@ -231,6 +236,10 @@ Windows Shortcuts:
         grep -v / keep all de strings that do not contain a slash
         wc -l count lines
 
+    f. Allow Tmux to access iterm's clipboard
+        http://apple.stackexchange.com/questions/208387/copy-to-clipboard-from-tmux-in-el-capitan
+        "Applications in terminal may access clipboard"
+
 12. Find my Macbook's details:
     In terminal: system_profiler | more
     Apple Icon: about this mac
@@ -244,6 +253,8 @@ Windows Shortcuts:
 14. Spectacle:
     a. Cmd + Option + Arrow Keys: Move window accordinlgy
     b. Cmd + Option + f: Maximize the windows
+    c. Cmd + Option + Command + -> : Move to next monitor
+    d. Cmd + Option + Command + -< : Move to prev monitor
 
 15. Find and kill a process
     a. ps -ef | grep firefox
@@ -822,6 +833,7 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     System Preferences > Security & Privacy > General. Check the box next to "Require Password"
 
 41. Use ctags with VIM
+    http://stackoverflow.com/questions/563616/vim-and-ctags-tips-and-tricks
     https://andrew.stwrt.ca/posts/vim-ctags/
     http://ricostacruz.com/til/navigate-code-with-ctags
 
@@ -921,3 +933,7 @@ http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-
 
     - mklink C:\Users\pragadhe\_vrapperrc C:\PRAGADHE\DEV_GIT\OtherLearnings\_vrapperrc 
     - dir /AL
+
+-------------------
+1. Find CentOS Version
+    $cat /etc/*elease
