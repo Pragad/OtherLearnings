@@ -88,6 +88,9 @@ Windows Shortcuts:
     ⇪  - Capslock
 
 1. Software to be installed
+    -1. Tap to click
+        http://osxdaily.com/2014/01/28/enable-tap-to-click-mac-trackpad/
+
     0. Copy .vimrc and .bashrc, .bash_profile
     1. ClipMenu
     2. GoogleDrive
@@ -778,7 +781,12 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
         8. Search for a class
            cmd + shift + t
 
+    11. http://stackoverflow.com/questions/2332330/eclipse-hotkey-how-to-switch-between-tabs
+    12. Color Theme : Dark
+        Plugin - Obsidian
 34. Basic GREP
+    -n displays the line number
+
     grep -ir "fleshscore" .
     grep -r -i "split" --include \*.h --include \*.cpp . | more
     grep -ir "vserver.*create" abc.log* | more
@@ -937,3 +945,9 @@ http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-
 -------------------
 1. Find CentOS Version
     $cat /etc/*elease
+
+2. List all software installed through yum
+    yum list installed
+
+3. whereis 
+   - locates sources and binary files
