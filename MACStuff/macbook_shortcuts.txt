@@ -67,6 +67,7 @@ How to use Macbook Pro
 44. Find size of a directory including all its sub directories
 45. Mark mails as read
 46. Expect for Ssh without prompting password
+47. Tmux Shortcuts
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -448,6 +449,13 @@ Windows Shortcuts:
         $ git push origin --delete <branch_name>
         $ git branch -d <branch_name>
         $ git branch -D <branch_name> // to forcefully delete
+
+        - git checkout -b KOMPRISE-6277 : Create a branch
+        - git branch            : Shows the branch
+        - git add actuation/    : Adds the entire folder
+        - git commit -m "[KOMPRISE-6277] Making Valid Users and Admin Users consistent in smb.conf"
+        - git push origin BranchName
+
 
     ah. Git Stash to stash your local changes
         git stash
@@ -881,6 +889,10 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 
 46. Expect for Ssh without prompting password
     http://stackoverflow.com/questions/13298487/bash-script-to-ssh-into-a-machine-without-prompting-password-and-without-using-k
+
+47. Tmux Shortcuts
+    tmux a -t myname
+    d  detach
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
