@@ -68,6 +68,8 @@ How to use Macbook Pro
 45. Mark mails as read
 46. Expect for Ssh without prompting password
 47. Tmux Shortcuts
+48. Find Wifi password on Mac
+49. Connect to a Windows Share on Mac
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -463,6 +465,10 @@ Windows Shortcuts:
     ai. Git create new branch
         git checkout -b KOMPRISE-6277 : Create a branch
 
+    aj. Git Merge
+        To merge changes from master to your branch
+        From your branch
+        $git merge master
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
 
@@ -495,6 +501,11 @@ Windows Shortcuts:
     Sort in VIM:
         :sort
         :%sort u // deletes duplicate lines
+
+    Reload a file that has been modified
+    http://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim
+        - You can use the :edit command, without specifying a file name, to reload the current file.
+        - If you have made modifications to the file, you can use :edit! to force the reload of the current file (you will lose your modifications).
 
     How do you reload your .vimrc file without restarting vim
         :so %
@@ -893,6 +904,13 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 47. Tmux Shortcuts
     tmux a -t myname
     d  detach
+
+48. Find Wifi password on Mac
+    http://apple.stackexchange.com/questions/56130/how-to-retrieve-the-wi-fi-password-of-a-connected-network-on-a-mac
+
+49. Connect to a Windows Share on Mac
+    Finder -> Go -> Connect to Server
+
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -972,3 +990,7 @@ http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-
 
 3. whereis 
    - locates sources and binary files
+
+4. Tmux
+    - yum install epel-release
+    - sudo yum install tmux
