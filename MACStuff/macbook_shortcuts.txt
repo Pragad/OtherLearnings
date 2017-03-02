@@ -581,7 +581,10 @@ Windows Shortcuts:
         :g/pikki/d
         :.,+21g/foo/d   - "delete any lines containing the string "foo" from the current one through the next 21 lines"
         :.,$v/bar/d     - "from here to the end of the file, delete any lines which DON'T contain the string "bar."
-
+    
+    Scroll two split panes together:
+        :set scrollbind
+        :set noscrollbind
 
 19. pushd and popd
     popd - Just changes the order of the stack. It can also pop the first element
@@ -784,7 +787,7 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
         1. Find Next and Find Prev
             cmd + k AND cmd + shift + k
-        2. Find function definitions. See the functions as a Quick View
+        2. IMP: Find function definitions. See the functions as a Quick View
             cmd + o
         3. Quickly go to function definition - Very Useful
             F3 OR cmd + click

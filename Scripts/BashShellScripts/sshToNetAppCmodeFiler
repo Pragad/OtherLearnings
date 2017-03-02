@@ -1,0 +1,11 @@
+#!/usr/bin/expect
+
+set login "admin"
+set addr "10.1.10.253"
+set pw "komprise123"
+
+spawn ssh $login@$addr
+expect "$login@$addr\'s password:"
+send "$pw\r"
+expect "#"
+interact
