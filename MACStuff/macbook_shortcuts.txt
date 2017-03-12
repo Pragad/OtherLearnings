@@ -70,6 +70,8 @@ How to use Macbook Pro
 47. Tmux Shortcuts
 48. Find Wifi password on Mac
 49. Connect to a Windows Share on Mac
+50. Select multiple files
+51. Make Bootable disk from OSX Mavericks image
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -404,6 +406,15 @@ Windows Shortcuts:
         :diffg RE  # get from REMOTE
         :diffg BA  # get from BASE
         :diffg LO  # get from LOCAL
+
+        ]c               - advance to the next block with differences
+        [c               - reverse search for the previous block with differences
+        do (diff obtain) - bring changes from the other file to the current file
+        dp (diff put)    - send changes from the current file to the other file
+        zo               - unfold/unhide text
+        zc               - refold/rehide text
+        zr               - unfold both files completely
+        zm               - fold both files completely
 
     x2: Aborting and Resetting a Merge
         http://stackoverflow.com/questions/11646107/you-have-not-concluded-your-merge-merge-head-exists
@@ -741,15 +752,15 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     1. Install Eclipse on Mac:
        http://www.cs.dartmouth.edu/~cs5/install/eclipse-osx/
 
-    2. Install Tomcat webserver on Mac
-       https://wolfpaulus.com/journal/mac/tomcat8/
+    2. Add Tomcat to your project
+       http://crunchify.com/step-by-step-guide-to-setup-and-install-apache-tomcat-server-in-eclipse-development-environment-ide/
 
-       Using 8.5 Tomcat as Tomcat Server 8.0
+    2b. Servers tab missing in Eclipse
+        http://stackoverflow.com/questions/13039449/no-server-in-eclipse-trying-to-install-tomcat
+
+    3. Using 8.5 Tomcat as Tomcat Server 8.0
        http://stackoverflow.com/questions/37024876/how-to-use-tomcat-8-5-x-and-tomee-7-x-with-eclipse
        - To overcome "The Apache Tomcat installation at this directory is version 8.5.4.  A Tomcat 8.0 installation is expected"
-
-    3. Add Tomcat to your project
-       http://crunchify.com/step-by-step-guide-to-setup-and-install-apache-tomcat-server-in-eclipse-development-environment-ide/
 
     4. Resolve Tomcat 404 error
        http://stackoverflow.com/questions/14392207/http-error-404-when-running-tomcat-from-eclipse
@@ -819,6 +830,7 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     grep -r -i "split" --include \*.h --include \*.cpp . | more
     grep -ir "vserver.*create" abc.log* | more
     grep -ir "replay" mgwd.log* | grep -v "cifs_server_security" | grep "cifs" | more
+    grep -r "Problem mounting volume" ./*/kompuser/log/observer.log
 
     Grep exclude words:
         grep -v "unwanted_word" file    
@@ -914,6 +926,13 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 49. Connect to a Windows Share on Mac
     Finder -> Go -> Connect to Server
 
+50. Select multiple files
+    Click, Shift + Click last item
+
+51. Make Bootable disk from OSX Mavericks image
+    http://www.techrepublic.com/blog/apple-in-the-enterprise/how-to-create-a-bootable-usb-to-install-os-x-mavericks/
+    https://macpaw.com/how-to/clean-install-os-x-mavericks-on-my-mac
+    http://osxdaily.com/2013/06/12/make-boot-os-x-mavericks-usb-install-drive/
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
