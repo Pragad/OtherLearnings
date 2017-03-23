@@ -480,6 +480,27 @@ Windows Shortcuts:
         To merge changes from master to your branch
         From your branch
         $git merge master
+
+    ak. Reset head
+        Your branch is ahead of 'origin/master' by 6 commits
+        git reset --hard origin/master
+
+    al. Restore accidently deleted branch using "git branch -D branchName"
+        If you are still on the same terminal then
+            - git branch branchName <sha1>
+              the branch -D command tells you the sha1
+        Else find the sha1
+            - You can find the SHA1 using git reflog
+            - Then you can merge to that commit
+              95ffa9a HEAD@{19}: checkout: moving from test to v2.2
+              85aa85f HEAD@{20}: commit: test
+              95ffa9a HEAD@{21}: checkout: moving from v2.2 to test
+
+              git merge 85aa85f
+
+    am. See git diff after commit
+        git show COMMIT_HASH (got from git log)
+
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
 
@@ -820,6 +841,10 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     11. http://stackoverflow.com/questions/2332330/eclipse-hotkey-how-to-switch-between-tabs
     12. Color Theme : Dark
         Plugin - Obsidian
+
+    13. Find path of a file:
+        alt + enter
+
 34. Basic GREP
     -n displays the line number
     -w search full word
