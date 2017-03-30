@@ -72,6 +72,7 @@ How to use Macbook Pro
 49. Connect to a Windows Share on Mac
 50. Select multiple files
 51. Make Bootable disk from OSX Mavericks image
+52. How to use scp
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -958,6 +959,9 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
     http://www.techrepublic.com/blog/apple-in-the-enterprise/how-to-create-a-bootable-usb-to-install-os-x-mavericks/
     https://macpaw.com/how-to/clean-install-os-x-mavericks-on-my-mac
     http://osxdaily.com/2013/06/12/make-boot-os-x-mavericks-usb-install-drive/
+
+52. How to use scp
+    scp kompuser@10.1.155.49:~/log/observer_Migration_NFS_data.log ~/Komprise/Team/Important_Observer_Logs/
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed

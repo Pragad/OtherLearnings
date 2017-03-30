@@ -2,7 +2,8 @@
 
 set login "admin"
 #set addr "10.1.10.253"
-set addr "10.1.10.219"
+#set addr "10.1.10.219"
+set addr "10.1.10.236"
 set pw "komprise123"
 
 spawn ssh $login@$addr
