@@ -3,20 +3,20 @@ set nocompatible    "http://stackoverflow.com/questions/5845557/in-a-vimrc-is-se
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/vimfiles/bundle/Vundle.vim
-call vundle#begin('~/vimfiles/')
+"set rtp+=~/vimfiles/bundle/Vundle.vim
+"call vundle#begin('~/vimfiles/')
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+"Plugin 'VundleVim/Vundle.vim'
 
 " Plugin to easily search for, substitute, and abbreviate multiple variants of a word
-Plugin 'tpope/vim-abolish'
+"Plugin 'tpope/vim-abolish'
 
 " ctrl-p plugin for quicker way to find file
 " Plugin 'ctrlpvim/ctrlp.vim'
-set runtimepath^=C:\Users\pragadhe\vimfiles\bundle\ctrlp.vim
+"set runtimepath^=C:\Users\pragadhe\vimfiles\bundle\ctrlp.vim
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
@@ -31,8 +31,8 @@ set runtimepath^=C:\Users\pragadhe\vimfiles\bundle\ctrlp.vim
 "Plugin 'user/L9', {'name': 'newL9'}
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+"call vundle#end()            " required
+"filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -44,7 +44,6 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
-
 
 
 colorscheme desert
