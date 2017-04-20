@@ -54,6 +54,9 @@ How to use Macbook Pro
     8. Uninstalling Eclipse
     9. Avoiding "resource is out of sync with the filesystem"
     10. Keyboard Shortcuts
+    11. How to switch between tabs
+    12. Color Theme - Dark
+    13. Find path of a file
 34. Basic GREP
 35. Basic FIND
 36. Basic Head with Find
@@ -73,6 +76,9 @@ How to use Macbook Pro
 50. Select multiple files
 51. Make Bootable disk from OSX Mavericks image
 52. How to use scp
+53. Full screen apps keep switching places
+54. Bind failed - Address already in use Find process listening on a port
+55. Allow permissions for Wireshark to capture over wifi
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -284,8 +290,10 @@ Windows Shortcuts:
     http://githowto.com/making_changes
     a. git config --global merge.tool vimdiff
     b. git config --global core.editor vim
+    c. git config --global user.name=Pragad
+    d. git config --global user.email=pragad@komprise.com
          git config --list
-         user.name=syncmr
+         user.name=Pragad
          user.email=talk2pragadheesh@gmail.com
          credential.helper=osxkeychain
          core.editor=vim
@@ -501,6 +509,9 @@ Windows Shortcuts:
 
     am. See git diff after commit
         git show COMMIT_HASH (got from git log)
+
+    an. Git diff after git add
+        git diff --staged
 
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
@@ -846,6 +857,15 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     13. Find path of a file:
         alt + enter
 
+    14. Creating a new project from terminal
+        - Create a folder
+        - copy the right pom.xml into it
+        - Base pom.xml will just include all modules that are going to be in it
+        - Create appropriate sub folders and copy the right pom.xml
+
+        - Do mvn eclipse:clean eclipse:eclipse
+        - Then go to eclipse and import the project
+        - Import just the subproject that you are interested in
 34. Basic GREP
     -n displays the line number
     -w search full word
@@ -962,6 +982,21 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 
 52. How to use scp
     scp kompuser@10.1.155.49:~/log/observer_Migration_NFS_data.log ~/Komprise/Team/Important_Observer_Logs/
+
+53. Full screen apps keep switching places
+    Go to System Preferences > Mission Control and make sure that "Automatically rearrange spaces based on recent use" is not ticked.
+
+54. Bind failed - Address already in use Find process listening on a port
+    lsof -i:PORT_NUMBER
+    lsof -i:54222
+    kill PID
+
+55. Allow permissions for Wireshark to capture over wifi
+http://stackoverflow.com/questions/41126943/wireshark-you-dont-have-permission-to-capture-on-that-device-mac
+
+56. Move MacVim to Application, Allow text files to be opened by default using MacVim
+    mv /usr/local/Cellar/macvim/8.0-121/MacVim.app /Applications/
+    ln -s /Applications/MacVim.app /usr/local/Cellar/macvim/8.0-121/
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -1045,3 +1080,9 @@ http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-
 4. Tmux
     - yum install epel-release
     - sudo yum install tmux
+
+5. Git
+    - sudo yum install git-all
+
+6. Mvn:
+    http://stackoverflow.com/questions/7532928/how-do-i-install-maven-with-yum
