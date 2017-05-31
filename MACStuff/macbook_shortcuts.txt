@@ -57,6 +57,7 @@ How to use Macbook Pro
     11. How to switch between tabs
     12. Color Theme - Dark
     13. Find path of a file
+33b. Maven Issues
 34. Basic GREP
 35. Basic FIND
 36. Basic Head with Find
@@ -76,9 +77,12 @@ How to use Macbook Pro
 50. Select multiple files
 51. Make Bootable disk from OSX Mavericks image
 52. How to use scp
+52b. Scp hidden files
 53. Full screen apps keep switching places
 54. Bind failed - Address already in use Find process listening on a port
 55. Allow permissions for Wireshark to capture over wifi
+56. Move MacVim to Application, Allow text files to be opened by default using MacVim
+57. Change file access times for all files and directories recursively
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -90,7 +94,16 @@ Windows Shortcuts:
 7. Windows Spotlight Lockscreen Images Location
 8. Set JAVA_HOME
 9. Create Symlink on Windows and List Symlinks on cmd prompt through dir
-
+----------------------------------------
+CentOS
+1. Find CentOS Version
+2. List all software installed through yum
+3. whereis 
+4. Tmux
+5. Git
+6. Mvn:
+7. Disable firewall / Open port on fireall
+8. TCP dump
 -------------------------------------------------------------------------------------------------
 
 0. MAC KEYS
@@ -513,6 +526,17 @@ Windows Shortcuts:
     an. Git diff after git add
         git diff --staged
 
+    ao. How to remove local (untracked) files from the current Git working tree?
+        Step 1 is to show what will be deleted by using the -n option:
+            git clean -n
+        Clean Step - beware: this will delete files:
+            git clean -f
+
+    ap. Git checkout a new branch
+        Make sure there are no staged or uncommited files
+        $ git fetch
+        $ git checkout v2.4
+
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
 
@@ -849,6 +873,8 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
             cmd + shift + r
         8. Search for a class
            cmd + shift + t
+        9. Code refactoring / Renaming all variables in a block
+           opt + cmd + r
 
     11. http://stackoverflow.com/questions/2332330/eclipse-hotkey-how-to-switch-between-tabs
     12. Color Theme : Dark
@@ -866,12 +892,21 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
         - Do mvn eclipse:clean eclipse:eclipse
         - Then go to eclipse and import the project
         - Import just the subproject that you are interested in
+
+33b. Maven Issues
+    cd ~/.m2
+    sudo rm -rf changenotify-common/
+    mvn clean install -DskipTests
+    mvn eclispe:clean eclipse:eclipse
+
 34. Basic GREP
     -n displays the line number
     -w search full word
     -F searches literal string
         grep -F ".foo(" .
 
+    CAT and GREP
+    cat foo.log | grep -v too \ long | grep -v network
     grep -ir "fleshscore" .
     grep -r -i "split" --include \*.h --include \*.cpp . | more
     grep -ir "vserver.*create" abc.log* | more
@@ -983,6 +1018,9 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 52. How to use scp
     scp kompuser@10.1.155.49:~/log/observer_Migration_NFS_data.log ~/Komprise/Team/Important_Observer_Logs/
 
+52b. Scp hidden files
+    scp -rp src/. user@server:dest/
+
 53. Full screen apps keep switching places
     Go to System Preferences > Mission Control and make sure that "Automatically rearrange spaces based on recent use" is not ticked.
 
@@ -997,6 +1035,11 @@ http://stackoverflow.com/questions/41126943/wireshark-you-dont-have-permission-t
 56. Move MacVim to Application, Allow text files to be opened by default using MacVim
     mv /usr/local/Cellar/macvim/8.0-121/MacVim.app /Applications/
     ln -s /Applications/MacVim.app /usr/local/Cellar/macvim/8.0-121/
+
+57. Change file access times for all files and directories recursively
+    find . -type d -exec touch -h -a -m -t 201512180130 * {} +
+    find . -type f -exec touch -h -a -m -t 201512180130 * {} +
+
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -1086,3 +1129,13 @@ http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-
 
 6. Mvn:
     http://stackoverflow.com/questions/7532928/how-do-i-install-maven-with-yum
+
+7. Disable firewall / Open port on fireall
+    sudo firewall-cmd --remove-port=54222/tcp --permanent
+    sudo firewall-cmd --list-ports
+
+    sudo systemctl disable firewalld
+    sudo systemctl stop firewalld
+
+8. TCP dump
+    sudo tcpdump -i ens160 -vvv -X -n net 10.1.10.240
