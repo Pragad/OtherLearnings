@@ -21,6 +21,8 @@ How to use Macbook Pro
     c. Open new tab in the same folder as existing one
     d. Using Alt + f and Alt + b to move forward/backward by word
     e. Count number of files inside a directory
+    f. Allow Tmux to access iterm's clipboard
+    g. iterm vs mac terminal
 12. Find my Macbook's details:
 13. Firefox:
 14. Spectacle:
@@ -83,6 +85,8 @@ How to use Macbook Pro
 55. Allow permissions for Wireshark to capture over wifi
 56. Move MacVim to Application, Allow text files to be opened by default using MacVim
 57. Change file access times for all files and directories recursively
+58. Split a file into multiple files
+59. Find where USB drives are mounted
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -176,6 +180,9 @@ CentOS
         brew install ctags
         http://ricostacruz.com/til/navigate-code-with-ctags
 
+    13. Install Python pip
+        sudo easy_install pip
+
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
 
@@ -268,6 +275,9 @@ CentOS
     f. Allow Tmux to access iterm's clipboard
         http://apple.stackexchange.com/questions/208387/copy-to-clipboard-from-tmux-in-el-capitan
         "Applications in terminal may access clipboard"
+
+    g. iterm vs mac terminal
+        https://apple.stackexchange.com/questions/25143/what-is-the-difference-between-iterm2-and-terminal
 
 12. Find my Macbook's details:
     In terminal: system_profiler | more
@@ -423,6 +433,7 @@ CentOS
        3) Good to go now
 
     x1. Using VIMDIFF to Resolve Merge Conflict
+        http://www.rosipov.com/blog/use-vimdiff-as-git-mergetool/
         https://gist.github.com/karenyyng/f19ff75c60f18b4b8149
 
         :diffg RE  # get from REMOTE
@@ -735,6 +746,9 @@ https://coolestguidesontheplanet.com/how-to-compress-and-uncompress-files-and-fo
 
        Compress a .tgz file
        - tar -zcvf archive_name.tar.gz folder_to_compress
+        
+       Uncompress all .tgz files and delete the original
+       - for file in *.tar.gz; do tar xzvf "${file}" && rm "${file}"; done
 
     b. TAR.BZ2 file
        Uncompress:
@@ -1039,6 +1053,13 @@ http://stackoverflow.com/questions/41126943/wireshark-you-dont-have-permission-t
 57. Change file access times for all files and directories recursively
     find . -type d -exec touch -h -a -m -t 201512180130 * {} +
     find . -type f -exec touch -h -a -m -t 201512180130 * {} +
+
+58. Split a file into multiple files
+    split -l 1000 foo.txt foo_split.txt
+    cat new* > newimage.jpg
+
+59. Find where USB drives are mounted
+    /Volumes
 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:

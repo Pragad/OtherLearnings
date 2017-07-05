@@ -1,0 +1,71 @@
+1. What is Node JS
+2. Installing Node JS and NPM
+3. Node JS vs Angular JS and jQuery
+4. Hello world JS program
+5. Error: listen EACCES 0.0.0.0:80 OSx Node.js
+------------------------------------------------------------------------------------------------------------------------
+1. What is Node JS
+
+2. Installing Node JS and NPM
+http://blog.teamtreehouse.com/install-node-js-npm-mac
+   brew install node
+
+3. Node JS vs Angular JS and jQuery
+    https://www.quora.com/What-is-the-difference-between-Angular-js-and-Node-js
+
+    So when we develop any web app, what do we need?
+
+    The answer is mainly 3 things.
+    First is, front end, second is server and third is database.
+    Whatever you see in the computer screen while using any web app is front end for example Facebook page, Google search results, Flipkart shopping page etc. In the old days pages were designed with simple html, then came JavaScript and CSS. JavaScript helped a lot to add behavior to the page like adding popups, adding animations, client side input validation.After some time, some libraries were developed for JavaScript, the most famous one being jQuery. Developers found jQuery could do a lot of work in lesser lines of code than JavaScript, because jQuery is built over JavaScript. Now AngularJS is also a JavaScript framework which is very famous now a days to do front end development, because by AngularJS you can do a lot of work in less code and time. Like data binding, validation etc. So its a front end development tool for web developers.
+
+    Now the second part is server. Server means the system doing a lot of your tasks and is located somewhere else in any corner of the world. What are the tasks which you work on the server side? Answer is fetching data from database, processing them to required output and sending the processed data to the client side, which is the end user. Node.js is a framework based on JavaScript which is used to perform server side tasks. Whatever you do on the server side you can do in Node.js, like PHP is another server side language. When you send data to the client side after processing, it is then the task of the client side language to handle and display it to user. This is what angular does.
+
+    Angular
+    Angular is an open source JavaScript framework developed initially by Google that supercharges HTML with additional tags to create powerful single page applications. As stated in the official web page it is: 
+    HTML enhanced for web apps!
+
+    More technically, it is a flavor of an MVC framework useful when designing front-end web applications (and even hybrid mobile applications if you use in conjunction with the ionic framework). 
+
+
+    Node
+    On the other hand, node is a platform built on top of Google's V8 JavaScript engine (what powers chrome for instance). It was designed to build scalable network applications with high emphasize on speed and data-intensive usage. As stated in the nodejs website: 
+
+    Node.js® is a platform built on Chrome's JavaScript runtime for easily building fast, scalable network applications
+
+    Since then inception of the project in 2009, node gained large adoption for building the server side of many web applications. It is also used for managing JavaScript packages using the npm tool (a package manager for node modules).
+
+    Conclusion
+    Angular and node are different tools. Nevertheless, they (partially) use JavaScript syntax. Moreover, both can be combined to create isomorphic applications, i.e. applications that are build with the same language on the back and front-ends. If you go a little further and use MongoDB as your data store,  you can build your entire infrastructure using JavaScript flavored tools. The MEAN stack is build on this observation. 
+
+    This is a huge gain for developers since they can focus on learning only one language and be full-stack developers. 
+
+    Angular
+    Angular: Superheroic JavaScript MVW Framework
+    Node
+    Nodejs: Node.js
+    The V8 engine page: V8 JavaScript Engine
+    Npm: npm
+    MEAN
+    MongoDB: MongoDB
+    MEAN stack: http://mean.io/
+    Isomorphic JavaScript: Isomorphic JavaScript - The future of web app development
+
+    jQuery, Node JS and Angular JS
+    jQuery
+    jQuery is a library that does a lot of things for you. It contains a lot of handy, commonly-used functions so that you don't have to write this code yourself. It's sort of the difference between being a carpenter in the stone age, or having an array of power tools at your disposal.
+
+    AngularJS
+    AngularJS is a framework used to build front-end, graphical user interfaces (GUIs) for interactive web sites and web applications. It makes a powerful combination when used alongside Node.js
+
+    Node.js
+    Node is a framework used to build back-end web services, such as API REST endpoints that pull data for you in the background. You can hook up buttons and GUI elements to these endpoints using AngularJS to build rich, data-driven web applications and web reports. Being RESTful, these services wait around until the front end sends them a request (the user clicks a button) and they execute a database query or read a file and spit some data back out, which the web application can then display to the user.
+
+4. Hello world JS program
+    https://www.sitepoint.com/an-introduction-to-node-js/
+    https://www.sitepoint.com/creating-a-http-server-in-node-js/
+
+5. Error: listen EACCES 0.0.0.0:80 OSx Node.js
+
+    To give root access to node and start server on port 80 you can do
+    sudo node app.js
