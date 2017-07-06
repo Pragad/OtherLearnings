@@ -14,8 +14,8 @@ import os, base64, requests, urllib
 class Fitbit():
 
     # All information must be as on the https://dev.fitbit.com/apps page.
-    CLIENT_ID     = '228GMJ'
-    CLIENT_SECRET = '79f5f0af25bbc80153eed0f2e8403c33'
+    CLIENT_ID     = ''
+    CLIENT_SECRET = ''
     REDIRECT_URI  = 'http://localhost:8000/signin'
 
     # Decide which information the FitBit.py should have access to.
@@ -146,7 +146,7 @@ print(auth_url)
 
 # TODO: 
 # 1. From auth_url remove '+' from the Scope
-#    https://www.fitbit.com/oauth2/authorize?scope=a+c+t+i+v+i+t+y&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fsignin&response_type=code&client_id=228GMJ
+#    https://www.fitbit.com/oauth2/authorize?scope=a+c+t+i+v+i+t+y&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fsignin&response_type=code&client_id=
 # 2. Copy the auth_url in the browser. It will ask permissions to access Fitbit. Once you give ok, URL of  the new page will have access_code
 # 3. Access code is all numbers and remove the last few characters from #
 # 4. Same URL below
@@ -157,10 +157,5 @@ print(access_code)
 token = z.GetAccessToken(access_code)
 print("\nACCESS TOKEN:")
 print(token)
-# ReAuth link
-# https://www.fitbit.com/oauth2/authorize?scope=activity&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fsignin&response_type=code&client_id=228GMJ
-
-# Access Code below
-# http://localhost:8000/signin?code=9333a1969532fa56aab6a0cc008607712d745b29#_=_
 
 # {'access_token': u'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyN1g2MlQiLCJhdWQiOiIyMjhHTUoiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJ3YWN0IiwiZXhwIjoxNDk5MTg1MTg5LCJpYXQiOjE0OTkxNTYzODl9.0wO8puAfAyWOjiTZmRBBNTMDhtVvehCx5zujeq4-6M8', 'refresh_token': u'dd019e8051f9de18554152c16fe14c9236a53cff620a881e52c4788c77a4685a'}
