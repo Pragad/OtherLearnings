@@ -1,6 +1,10 @@
-a.out
-*.swp
 .DS_Store
+
+# C++ files
+a.out
+
+# VIM temp files
+*.swp
 
 # Doc directories
 doc/
@@ -26,6 +30,9 @@ build/
 *.jar
 *.war
 *.ear
+
+# Python  temp files
+*.pyc
 
 # Local configuration file (sdk path, etc)
 local.properties
