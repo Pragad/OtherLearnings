@@ -1,3 +1,15 @@
+// Compile Using:
+// g++ -std=c++11 BingSearch.cpp -stdlib=libc++ -lcpprest -lssl -lcrypto -lboost_system -lboost_thread-mt -lboost_chrono-mt -L/usr/local/opt/openssl/lib -I/usr/local/opt/openssl/include
+//
+// PATH Variable:
+// /usr/local/opt/openssl/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+//
+// Export Flags:
+// $export LDFLAGS=-L/usr/local/opt/openssl/lib
+// $export CPPFLAGS=-I/usr/local/opt/openssl/include
+// $export CXXFLAGS=-I/usr/local/opt/openssl/include
+// $export CFLAGS=-I/usr/local/opt/openssl/include
+//
 #include <cpprest/http_client.h>
 #include <cpprest/filestream.h>
 

@@ -157,5 +157,7 @@ print(access_code)
 token = z.GetAccessToken(access_code)
 print("\nACCESS TOKEN:")
 print(token)
-
 # {'access_token': u'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyN1g2MlQiLCJhdWQiOiIyMjhHTUoiLCJpc3MiOiJGaXRiaXQiLCJ0eXAiOiJhY2Nlc3NfdG9rZW4iLCJzY29wZXMiOiJ3YWN0IiwiZXhwIjoxNDk5MTg1MTg5LCJpYXQiOjE0OTkxNTYzODl9.0wO8puAfAyWOjiTZmRBBNTMDhtVvehCx5zujeq4-6M8', 'refresh_token': u'dd019e8051f9de18554152c16fe14c9236a53cff620a881e52c4788c77a4685a'}
+
+# Sample API call
+response = z.ApiCall(token, '/1/user/-/profile.json')
