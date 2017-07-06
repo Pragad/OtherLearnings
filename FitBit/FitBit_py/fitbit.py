@@ -22,7 +22,7 @@ class Fitbit():
     # Options: 'activity', 'heartrate', 'location', 'nutrition',
     #          'profile', 'settings', 'sleep', 'social', 'weight'
     #API_SCOPES    = ('activity', 'heartrate', 'location', 'nutrition', 'profile', 'settings', 'sleep', 'social', 'weight')
-    API_SCOPES    = ('activity')
+    API_SCOPES    = ('activity', 'profile')
 
     # These settings should probably not be changed.
     API_SERVER    = 'api.fitbit.com'
@@ -140,8 +140,8 @@ class Fitbit():
             raise Exception("Something went wrong requesting (%s): %s" % (resp['errors'][0]['errorType'], resp['errors'][0]['message']))
 
 z = Fitbit()
-print(z)
 auth_url = z.GetAuthorizationUri()
+print("\nRemove '+' from AUTH URL and paste on the browser to get access token: ")
 print(auth_url)
 
 # TODO: 
@@ -151,9 +151,11 @@ print(auth_url)
 # 3. Access code is all numbers and remove the last few characters from #
 # 4. Same URL below
 #    http://localhost:8000/signin?code=63ba7c4e264b9f70aefa1699a9959d2101383484#_=_
-access_code = '63ba7c4e264b9f70aefa1699a9959d2101383484'
+access_code = '008288d790b3a975d8db6c4cac828c5da9845dcc'
+print("\nACCESS CODE:")
 print(access_code)
 token = z.GetAccessToken(access_code)
+print("\nACCESS TOKEN:")
 print(token)
 # ReAuth link
 # https://www.fitbit.com/oauth2/authorize?scope=activity&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fsignin&response_type=code&client_id=228GMJ
