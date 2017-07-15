@@ -1,4 +1,6 @@
 // https://www.sitepoint.com/creating-a-http-server-in-node-js/
+// Run using 'sudo' to give permission to access to port 80
+// sudo node web_server.js
 var http = require("http");
 var server = http.createServer(function(request, response) {
   response.writeHead(200, {"Content-Type": "text/html"});

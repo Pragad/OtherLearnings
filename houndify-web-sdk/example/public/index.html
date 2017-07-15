@@ -2,6 +2,7 @@
 
   <head>
     <script src="js/houndify-web-sdk.min.js"></script>
+    <script type="text/javascript" src="bower_components/jso/build/jso.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.min.css">
   </head>
 
@@ -56,6 +57,14 @@
         Longitude: -121.973968
       };
 
+	  var jso = new JSO({
+		providerID: "fitbit",
+		client_id: clientID,
+		redirect_uri: "http://localhost:3446",
+		authorization: "https://www.fitbit.com/oauth2/authorize",
+		//scopes: { request: ["https://www.googleapis.com/auth/userinfo.profile"]}
+		scopes: "activity"
+	  });
 
       //INITIALIZE HOUNDIFY CLIENT
       var myClient = new Houndify.HoundifyClient({

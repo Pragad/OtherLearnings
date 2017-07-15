@@ -483,6 +483,7 @@ CentOS
 
     ad. Changing the Commit message
         https://help.github.com/articles/changing-a-commit-message/
+        git commit --amend
 
     ae. Git config user name for a specific directory
         git config user.name "Pragad"
@@ -656,8 +657,8 @@ CentOS
     Convert TAB to spaces
         :retab
 
-    Delete all lines matching a pattern
-        :g/pikki/d
+    VIM Delete all lines matching a pattern
+        :g/PIKKI/d
         :.,+21g/foo/d   - "delete any lines containing the string "foo" from the current one through the next 21 lines"
         :.,$v/bar/d     - "from here to the end of the file, delete any lines which DON'T contain the string "bar."
     

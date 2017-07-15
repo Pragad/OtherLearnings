@@ -1,0 +1,20 @@
+{
+  "name": "bowerInit",
+  "description": "bower Initialization file",
+  "main": "",
+  "authors": [
+    "Pragad <pragad@komprise.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Pragad/OtherLearnings",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jso": "^2.0.3"
+  }
+}
