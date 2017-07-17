@@ -3,6 +3,8 @@
 3. Node JS vs Angular JS and jQuery
 4. Hello world JS program
 5. Error: listen EACCES 0.0.0.0:80 OSx Node.js
+6. Multiple sources for a javascript file
+7. Installing a bower package: “no-json No bower.json file to save to”
 ------------------------------------------------------------------------------------------------------------------------
 1. What is Node JS
 
@@ -66,6 +68,23 @@ http://blog.teamtreehouse.com/install-node-js-npm-mac
     https://www.sitepoint.com/creating-a-http-server-in-node-js/
 
 5. Error: listen EACCES 0.0.0.0:80 OSx Node.js
-
     To give root access to node and start server on port 80 you can do
     sudo node app.js
+
+6. Multiple sources for a javascript file
+https://stackoverflow.com/questions/14460231/how-do-you-import-multiple-javascript-files-in-html-index-file-without-the-bloat
+
+	It is not possible to load multiple javascript files in a single <script> element.
+
+	You have to have to have an individual <script> element for each script you are referencing..
+
+	<script type="text/javascript"
+	  src="http://localhost:9020/wordplus/root/child/?b=scripts&f=soundmanager2.js"></script>
+	<script type="text/javascript"
+	  src="http://localhost:9020/wordplus/root/child/?b=scripts&f=vars.js"></script>
+
+7. Installing a bower package: “no-json No bower.json file to save to”
+https://stackoverflow.com/questions/17969342/installing-a-bower-package-no-json-no-bower-json-file-to-save-to
+
+	You can run to create the json file in the current directory.
+		bower init

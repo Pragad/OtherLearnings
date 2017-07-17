@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>Sample Google API using Hello JS</p>
+
+    <button onclick="hello('google').login()">google</button>
+    <button onclick="hello('google').logout()">logout</button>
+	<script src="node_modules/hellojs/dist/hello.all.js"></script>
+	<script>
+	  hello.init({
+		google: "481211777270-ga2tvke7l0i5k7m18l2lk8paoe0118tg.apps.googleusercontent.com"
+	  }, {redirect_uri: 'http://127.0.0.1:5000'});
+	</script>
+
+    <script>
+    hello.on('auth.login', function (auth) {
+
+            hello(auth.network).api('/me').then(function (r) {
+                    var lab = document.createElement("div");
+                    lab.id = "pic_and_greet";
+                    lab.innerHTML = '<img src="' + r.thumbnail + '" /> Hey ' + r.name;
+                    document.body.appendChild(lab);
+                    });
+            });
+
+    hello.on('auth.logout', function () {
+        var lab = document.getElementById("pic_and_greet");
+        if (lab != null) document.body.removeChild( lab );
+        });
+
+    </script>
+
+    <!--
+    <script>
+    function myFunction() {
+        var x = document.createElement("BUTTON");
+        var t = document.createTextNode("Click me");
+        x.appendChild(t);
+        document.body.appendChild(x);
+    }
+    </script>
+    -->
+</body>
+</html>
