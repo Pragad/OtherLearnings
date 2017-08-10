@@ -33,7 +33,8 @@ router.use(session({
 // redirect the user to the Fitbit authorization page
 router.get("/authorize", function (req, res) {
     // request access to the user's activity, heartrate, location, nutrion, profile, settings, sleep, social, and weight scopes
-    res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight',CALLBACK_URL));
+    //res.redirect(client.getAuthorizeUrl('activity heartrate location nutrition profile settings sleep social weight',CALLBACK_URL));
+    res.redirect(client.getAuthorizeUrl('profile',CALLBACK_URL));
 });
 
 // handle the callback from the Fitbit authorization flow
@@ -71,5 +72,5 @@ router.get('/profile.json', function(req, res) {
 
 // launch the server
 router.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
-  console.log('server listening');
+  console.log('server listening. Open http://localhost:3000/');
 });

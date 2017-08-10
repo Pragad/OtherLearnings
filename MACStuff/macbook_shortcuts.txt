@@ -87,6 +87,9 @@ How to use Macbook Pro
 57. Change file access times for all files and directories recursively
 58. Split a file into multiple files
 59. Find where USB drives are mounted
+60. Using mount
+61. List only hidden files
+62. Find all users and groups
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -108,6 +111,8 @@ CentOS
 6. Mvn:
 7. Disable firewall / Open port on fireall
 8. TCP dump
+9. Find disk usage
+10. Convert permissions to numeric value
 -------------------------------------------------------------------------------------------------
 
 0. MAC KEYS
@@ -534,9 +539,11 @@ CentOS
 
     am. See git diff after commit
         git show COMMIT_HASH (got from git log)
+        git diff b357b7b0277d907398fd900d983d53b0edeea2a1^ b357b7b0277d907398fd900d983d53b0edeea2a1
 
     an. Git diff after git add
         git diff --staged
+
 
     ao. How to remove local (untracked) files from the current Git working tree?
         Step 1 is to show what will be deleted by using the -n option:
@@ -548,6 +555,9 @@ CentOS
         Make sure there are no staged or uncommited files
         $ git fetch
         $ git checkout v2.4
+
+    aq. How to undo 'git add' before commit? git remove a file
+        git reset <file>
 
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
@@ -1046,14 +1056,18 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 
 55. Allow permissions for Wireshark to capture over wifi
 http://stackoverflow.com/questions/41126943/wireshark-you-dont-have-permission-to-capture-on-that-device-mac
+    cd /dev
+    sudo chown pragad:admin bp*
+    ls -la | grep bp
+    sudo chown pragad:admin bpf5
 
 56. Move MacVim to Application, Allow text files to be opened by default using MacVim
     mv /usr/local/Cellar/macvim/8.0-121/MacVim.app /Applications/
     ln -s /Applications/MacVim.app /usr/local/Cellar/macvim/8.0-121/
 
 57. Change file access times for all files and directories recursively
-    find . -type d -exec touch -h -a -m -t 201512180130 * {} +
-    find . -type f -exec touch -h -a -m -t 201512180130 * {} +
+    sudo find . -type d -exec touch -h -a -m -t 201512180130 * {} +
+    sudo find . -type f -exec touch -h -a -m -t 201512180130 * {} +
 
 58. Split a file into multiple files
     split -l 1000 foo.txt foo_split.txt
@@ -1062,6 +1076,20 @@ http://stackoverflow.com/questions/41126943/wireshark-you-dont-have-permission-t
 59. Find where USB drives are mounted
     /Volumes
 
+60. Using mount
+    sudo mount -t nfs 10.1.10.243:/vol_dev_nfs ~/MyMounts/mountMyNfs/
+    sudo mount -t nfs 10.1.10.254:/ifs/Mehdi_mixed ~/mountTest
+    sudo mount -t nfs ka_ip:/kc /UNC/ka_ip/komprise
+
+61. List only hidden files
+    ls -ld .?* 
+     -l     use a long listing format
+     -d, --directory
+            list  directory entries instead of contents, and do not derefer¿ence symbolic links
+     .?* will only state hidden files 
+
+62. Find all users and groups
+    dscacheutil -q user | grep -A 3 -B 2 -e uid:\ 5'[0-9][0-9]'
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -1143,7 +1171,7 @@ http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-
    - locates sources and binary files
 
 4. Tmux
-    - yum install epel-release
+    - sudo yum install epel-release
     - sudo yum install tmux
 
 5. Git
@@ -1161,3 +1189,22 @@ http://stackoverflow.com/questions/10938635/setting-up-the-path-for-maven-3-0-4-
 
 8. TCP dump
     sudo tcpdump -i ens160 -vvv -X -n net 10.1.10.240
+
+9. Find disk usage
+https://www.tecmint.com/how-to-check-disk-space-in-linux/
+    df - h
+
+10. Convert permissions to numeric value
+https://unix.stackexchange.com/questions/379654/how-to-map-chmod-access-permissions-to-an-integer
+    perl -le 'print +(stat "FPolicy API xml v1.2 schema.pdf")[2]'
+
+11. Useful commands
+    sudo net ads testjoin
+    sudo -E testparm -s
+    sudo -E testparm -S
+    realm list
+
+12. Find all users and groups
+    getent passwd
+    getent group
+
