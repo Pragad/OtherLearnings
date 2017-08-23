@@ -938,6 +938,10 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     grep -ir "replay" mgwd.log* | grep -v "cifs_server_security" | grep "cifs" | more
     grep -r "Problem mounting volume" ./*/kompuser/log/observer.log
 
+    Grep with Line numbers
+    Komprise_FpolicyLogs_2017-08-17 $grep -rl "updateStatusTable\[disconnect]:: Modified entry vs\[[0-9][0-9][0-9]] policy\[komprise-" .
+    Komprise_FpolicyLogs_2017-08-17 $grep -rl "updateStatusTable\[disconnect]:: Modified entry vs\[[0-9][0-9]] policy\[komprise-" .
+
     Grep exclude words:
         grep -v "unwanted_word" file    
 
