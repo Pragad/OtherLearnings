@@ -512,6 +512,10 @@ CentOS
     ah. Git Stash to stash your local changes
         git stash
 
+        Git stash with unmerged changes
+        git reset --mixed
+        git stash
+
     ai. Git create new branch
         git checkout -b KOMPRISE-6277 : Create a branch
 
