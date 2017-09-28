@@ -90,6 +90,7 @@ How to use Macbook Pro
 60. Using mount
 61. List only hidden files
 62. Find all users and groups
+63. Find Python version
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -676,6 +677,9 @@ CentOS
         :.,+21g/foo/d   - "delete any lines containing the string "foo" from the current one through the next 21 lines"
         :.,$v/bar/d     - "from here to the end of the file, delete any lines which DON'T contain the string "bar."
     
+    VIM Delete all lines NOT matching a pattern
+        :%g!/PIKKI/d 
+
     Scroll two split panes together:
         :set scrollbind
         :set noscrollbind
@@ -1098,6 +1102,9 @@ http://stackoverflow.com/questions/41126943/wireshark-you-dont-have-permission-t
 
 62. Find all users and groups
     dscacheutil -q user | grep -A 3 -B 2 -e uid:\ 5'[0-9][0-9]'
+
+63. Find Python version
+    python -V
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
