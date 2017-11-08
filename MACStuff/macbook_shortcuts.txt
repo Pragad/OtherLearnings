@@ -91,6 +91,8 @@ How to use Macbook Pro
 61. List only hidden files
 62. Find all users and groups
 63. Find Python version
+64. TheFuck
+65. GREP and SED
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -1105,6 +1107,40 @@ http://stackoverflow.com/questions/41126943/wireshark-you-dont-have-permission-t
 
 63. Find Python version
     python -V
+
+64. TheFuck
+        Install with Python 3
+        $brew install thefuck --HEAD
+        $thefuck git brnch
+        $fuck rules
+
+65. GREP and SED
+https://unix.stackexchange.com/questions/402409/using-grep-with-wc-in-shell-script-if-block
+https://stackoverflow.com/questions/47084756/how-to-add-lines-after-a-pattern-using-sed/47090995#47090995
+http://www.grymoire.com/Unix/Sed.html#uh-6
+
+    GREP:
+        -q: silent
+        \s: white space, matches tabs and space
+
+    SED:
+        -i: Will replace inplace i.e. changes on the file instead of printing them
+
+   if grep -q "\s*oplocks\s=" $smb_conf; then
+    echo "smb.conf aleady has oplocks setting"
+else
+    echo "Adding level2 oplocks = no and oplocks = no to smb.conf in [komprise], [komprise-internal] and [kt] share"
+    sudo -E sed -i 's/nt acl support = yes/nt acl support = yes\n\tlevel2 oplocks = no\n\toplocks = no/' $smb_conf
+    if [ $(grep "\s*oplocks\s=" $smb_conf | wc -l) -eq 6 ]
+    then
+        echo "smb.conf updated with level2 oplocks = no and oplocks = no"
+        sudo systemctl restart smb
+    else
+        echo "ERROR: Failed to add level2 oplocks = no and oplocks = no to [komprise], [kt] and [komprise-internal] section of smb.conf"
+    fi
+fi
+
+ 
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed

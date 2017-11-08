@@ -1,0 +1,6 @@
+#!/usr/bin/expect -f
+# custom grep query
+spawn grep -nr "$argv" /Users/pragad/Komprise/Code/kpsrc/kdc --include \*.java
+
+interact
+
