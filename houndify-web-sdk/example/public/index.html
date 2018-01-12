@@ -57,15 +57,6 @@
         Longitude: -121.973968
       };
 
-	  var jso = new JSO({
-		providerID: "fitbit",
-		client_id: clientID,
-		redirect_uri: "http://localhost:3446",
-		authorization: "https://www.fitbit.com/oauth2/authorize",
-		//scopes: { request: ["https://www.googleapis.com/auth/userinfo.profile"]}
-		scopes: "activity"
-	  });
-
       //INITIALIZE HOUNDIFY CLIENT
       var myClient = new Houndify.HoundifyClient({
 
@@ -203,6 +194,15 @@
         reader.readAsArrayBuffer(file);
         document.getElementById("query").value = "...";
       }
+
+      var jso = new JSO({
+        providerID: "fitbit",
+        client_id: clientID,
+        redirect_uri: "http://localhost:3446",
+        authorization: "https://www.fitbit.com/oauth2/authorize",
+        //scopes: { request: ["https://www.googleapis.com/auth/userinfo.profile"]}
+        scopes: "activity"
+      });
 
     </script>
 
