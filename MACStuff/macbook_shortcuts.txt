@@ -194,6 +194,8 @@ CentOS
     13. Install Python pip
         sudo easy_install pip
 
+    14. Python
+
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
 
@@ -737,9 +739,12 @@ CentOS
     
     g. Install Macvim
        This has clipboard support
-       sudo chown -R $USER /usr/eocal
-       brew install macvim --with-override-system-vim
-       alias vim='mvim -v'
+       First fix homebrew permissions. This is optional
+           sudo chown -R $USER /usr/local
+       Install XCode. Open XCode and install additional components
+           sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+           brew install macvim --with-override-system-vim
+           alias vim='mvim -v'
 
 21. .DS_Store file in MAC
     http://apple.stackexchange.com/questions/69467/consequences-of-deleting-ds-store
