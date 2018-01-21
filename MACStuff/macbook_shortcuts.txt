@@ -129,6 +129,45 @@ CentOS
     ⇪  - Capslock
 
 1. Software to be installed
+    ----------------------------------------------------------------------------
+    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    brew cask install google-chrome
+    brew cask install karabiner-elements
+    brew cask install firefox
+    brew cask install iterm2
+    brew cask install spectacle
+    brew cask install google-backup-and-sync
+    brew cask install java
+    brew install python3
+    python3 -V
+    sudo pip3.6 install pandas
+
+    git clone https://github.com/Pragad/LearnCpp.git
+    git clone https://github.com/Pragad/OtherLearnings.git
+    git clone https://github.com/Pragad/Algos.git
+    git clone https://github.com/Pragad/LearnJava.git
+    git clone https://github.com/Pragad/LearnPython.git
+    git clone https://github.com/Pragad/ConfigFiles.git
+
+    ln -s ~/ConfigFiles/.bash_profile ~/.bash_profile
+    ln -s ~/ConfigFiles/.vimrc ~/.vimrc
+    ln -s ~/ConfigFiles/.gitconfig ~/.gitconfig
+    ln -s ~/ConfigFiles/.gitignore ~/.gitignore
+
+    MacVim for Clipboard support:
+        sudo chown -R $USER /usr/local
+    Install XCode. Open XCode and install additional components
+        sudo xcode-select -s /Applications/Xcode.app/Contents/Developer
+        brew install macvim --with-override-system-vim
+    In .bashrc
+        alias vim='mvim -v'
+ 
+    Preferences to be changes:
+    1. Change "Tap on Click" on trackpad
+    2. Change iTerm2 to reuse "pwd" when opening new session
+    3. Karabiner-elements to change Esc -> Caps and R.Opt -> R.Ctrl
+    ----------------------------------------------------------------------------
+
     -1. Tap to click
         http://osxdaily.com/2014/01/28/enable-tap-to-click-mac-trackpad/
 
