@@ -142,6 +142,8 @@ CentOS
     python3 -V
     sudo pip3.6 install pandas
 
+    Install ClipMenu from https://github.com/naotaka/ClipMenu/files/1093000/ClipMenu_0.4.3.dmg.gz
+
     git clone https://github.com/Pragad/LearnCpp.git
     git clone https://github.com/Pragad/OtherLearnings.git
     git clone https://github.com/Pragad/Algos.git
@@ -166,6 +168,11 @@ CentOS
     1. Change "Tap on Click" on trackpad
     2. Change iTerm2 to reuse "pwd" when opening new session
     3. Karabiner-elements to change Esc -> Caps and R.Opt -> R.Ctrl
+    4. In Users & Groups add the following apps at Login
+        Karabiner
+        Spectacle
+        ClipMenu
+        GoogleDrive
     ----------------------------------------------------------------------------
 
     -1. Tap to click
