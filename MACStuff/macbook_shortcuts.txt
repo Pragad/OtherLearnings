@@ -130,6 +130,7 @@ CentOS
 
 1. Software to be installed
     ----------------------------------------------------------------------------
+    Install homebrew first and use that to install all other software
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     brew cask install google-chrome
     brew cask install karabiner-elements
@@ -164,7 +165,7 @@ CentOS
     In .bashrc
         alias vim='mvim -v'
  
-    Preferences to be changes:
+    Preferences to be changed:
     1. Change "Tap on Click" on trackpad
     2. Change iTerm2 to reuse "pwd" when opening new session
     3. Karabiner-elements to change Esc -> Caps and R.Opt -> R.Ctrl

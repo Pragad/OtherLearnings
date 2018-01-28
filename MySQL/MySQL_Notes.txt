@@ -1,0 +1,10 @@
+mysql -uroot -p
+SHOW DATABASES;
+SHOW TABLES;
+CREATE DATABASE test;
+USE test;
+SHOW TABLES;
+create table user (name VARCHAR(50), age INT);
+show tables;
+select * from user;
+describe user;
