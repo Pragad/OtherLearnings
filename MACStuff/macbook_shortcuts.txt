@@ -243,6 +243,20 @@ CentOS
 
     14. Python
 
+    15. MySQL:
+        https://www.macminivault.com/install-mysql-on-macos-sierra/
+        brew install mysql
+        brew services start mysql
+        mysql_secure_installation
+
+            Validate Password Plugin you can have MySQL enforce strong passwords by enabling this, but it is optional
+            Remove anonymous users we recommend doing this
+            Disallow root login remotely we recommend doing this as well if you need to access your databases remotely, this should be done with a specific user with rights to that database
+            Remove test database and access to it we recommend this
+            Reload privilege tables now choose yes
+
+        mysql -uroot -p
+
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
 
