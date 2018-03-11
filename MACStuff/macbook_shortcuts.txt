@@ -96,6 +96,7 @@ How to use Macbook Pro
 66. Diff between two directories
 67. Argument list too long error for rm, cp, mv commands
 68. Sort a CSV file using bash sort
+69. Eclipse shortcuts
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -761,6 +762,10 @@ CentOS
     Count number of matches of a pattern
         :%s/pattern//gn
 
+    Upper case / Lower case
+        gU - Upper case
+        gu - Lower case
+
 19. pushd and popd
     popd - Just changes the order of the stack. It can also pop the first element
     out of the stack
@@ -1265,6 +1270,23 @@ https://stackoverflow.com/questions/11289551/argument-list-too-long-error-for-rm
 
 68. Sort a CSV file using bash sort
     sort --field-separator=';' --key=2,1,3
+
+69. Eclipse shortcuts
+    Automatically import -> Cmd + Shift + O (O and not zero)
+    Correct indentation -> Cmd + i
+    Rename all instances of variable -> Cmd + alt + h
+    Open all functions -> Cmd + o
+    Find all usage -> Ctrl + Alt + h
+    Open a file / resource dialog -> Cmd + Shift + r
+    Delete current line -> Cmd + d
+    System.out.println -> sysout + ctrl + space
+    Open Search Dialog -> Ctrl + h
+
+    Cmd + left click - Go to the definition of the item
+    Cmd + Shift + p - With a bracket selected: jump to the matching closing or opening bracket
+    Cmd + / - Comment/uncomment all selected lines with //
+    Cmd + Shift + / - Comment selected block with /* ... */
+    Cmd + Shift + \ - Uncomment /* ... */ selected block
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
