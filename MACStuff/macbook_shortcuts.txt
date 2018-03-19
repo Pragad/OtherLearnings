@@ -30,7 +30,9 @@ How to use Macbook Pro
 15b. Get all threads in a process
 16. GIT
 17. BASH Shortcuts
+17b. Color scheme in BASH
 18. VIM Read/Shorctus
+18b. Installing Vundle and NerdTree
 19. pushd and popd
 20. Setting up MAC:
 21. .DS_Store file in MAC
@@ -62,6 +64,7 @@ How to use Macbook Pro
 33b. Maven Issues
 34. Basic GREP
 35. Basic FIND
+35a. FIND files of specific type
 36. Basic Head with Find
 37. Add custom search engine in Chrome
 38. How to run a maven project
@@ -620,7 +623,6 @@ CentOS
     an. Git diff after git add
         git diff --staged
 
-
     ao. How to remove local (untracked) files from the current Git working tree?
         Step 1 is to show what will be deleted by using the -n option:
             git clean -n
@@ -663,6 +665,21 @@ CentOS
     - that's why you tend to see it chained as do_something && do_something_else_that_depended_on_something
     Eg: observer restart && tail -f ~/log/observer.log
         If observer restarts successfully, then look at the logs
+
+17b. Color scheme in BASH
+    In your .bash_profile set CLICOLOR before setting TERM:
+
+    # Set CLICOLOR if you want Ansi Colors in iTerm2 
+    export CLICOLOR=1
+
+    # Set colors to match iTerm2 Terminal Colors
+    export TERM=xterm-256color
+    save bash file and source:
+
+    source ~/.bash_profile 
+    Then, in your iTerm2 Preferences > Profiles > Terminal > Report Terminal Type, set to either xterm-256color or xterm
+
+    Close iTerm2, restart it and type ls. That did the trick for me.
 
 18. VIM Read/Shorctus
     http://vim.wikia.com/wiki/Using_command-line_history
@@ -765,6 +782,12 @@ CentOS
     Upper case / Lower case
         gU - Upper case
         gu - Lower case
+
+18b. Installing Vundle and NerdTree
+        git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+    After updating .vimrc
+        Launch vim and run :PluginInstall
 
 19. pushd and popd
     popd - Just changes the order of the stack. It can also pop the first element
@@ -1058,6 +1081,9 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
 35. Basic FIND
     find . -iname "*binary*"
+
+35a. FIND files of specific type
+    find . -name "*.h" -type f
 
 36. Basic Head with Find
     Display the top 20 lines of all cpp files
