@@ -100,6 +100,8 @@ How to use Macbook Pro
 67. Argument list too long error for rm, cp, mv commands
 68. Sort a CSV file using bash sort
 69. Eclipse shortcuts
+70. How to discover number of *logical* cores on Mac OS X?
+
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -260,6 +262,34 @@ CentOS
             Reload privilege tables now choose yes
 
         mysql -uroot -p
+
+    16. Maven (mvn)
+        brew install maven
+
+    17. ZMQ
+        brew install zmq
+        brew install cmake
+
+    18. Protbuf - C++
+        brew install autoconf
+        brew install automake
+        brew install libtool
+        brew install unzip
+
+        Download Protobuf release package from https://github.com/google/protobuf/releases
+        $ ./configure
+        $ make
+        $ make check
+        $ sudo make install
+
+        Protobuf - Java
+        https://github.com/google/protobuf/tree/master/java
+            Go to Java directory that has pom.xml
+            /Users/pragad/Pragad/ProtoBuf/protobuf-3.5.1/java
+            After building protoc for C++, perform the below
+            mvn test
+
+        brew install bezel
 
 1. Scroll up with 3 fingers.
     Goto Dashboard; Can add new ones
@@ -949,6 +979,7 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 33. ECLIPSE
     1. Install Eclipse on Mac:
        http://www.cs.dartmouth.edu/~cs5/install/eclipse-osx/
+       brew cask install eclipse-java
 
     2. Add Tomcat to your project
        http://crunchify.com/step-by-step-guide-to-setup-and-install-apache-tomcat-server-in-eclipse-development-environment-ide/
@@ -1313,6 +1344,12 @@ https://stackoverflow.com/questions/11289551/argument-list-too-long-error-for-rm
     Cmd + / - Comment/uncomment all selected lines with //
     Cmd + Shift + / - Comment selected block with /* ... */
     Cmd + Shift + \ - Uncomment /* ... */ selected block
+
+    Next and previous occurrences of the work
+        Cmd + k, Cmd + shift + k
+
+70. How to discover number of *logical* cores on Mac OS X?
+    sysctl -n hw.ncpu
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
