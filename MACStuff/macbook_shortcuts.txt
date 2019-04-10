@@ -92,6 +92,7 @@ How to use Macbook Pro
 59. Find where USB drives are mounted
 60. Using mount
 61. List only hidden files
+61b. List all files that match an extension recursively
 62. Find all users and groups
 63. Find Python version
 64. TheFuck
@@ -101,7 +102,7 @@ How to use Macbook Pro
 68. Sort a CSV file using bash sort
 69. Eclipse shortcuts
 70. How to discover number of *logical* cores on Mac OS X?
-
+71. IntelliJ Shortcuts
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -125,6 +126,9 @@ CentOS
 8. TCP dump
 9. Find disk usage
 10. Convert permissions to numeric value
+----------------------------------------
+Linux / RH:
+1. Find linux version and distribution
 -------------------------------------------------------------------------------------------------
 
 0. MAC KEYS
@@ -146,6 +150,10 @@ CentOS
     brew cask install google-backup-and-sync
     brew cask install java
     brew install python3
+    brew cask install spacelauncher
+    brew cask install usage
+    brew cask install itsycal
+    brew cask install toggl
     python3 -V
     sudo pip3.6 install pandas
 
@@ -309,7 +317,7 @@ CentOS
     Cmd + ] - Go Forward
 
     Cut & Paste:
-        Command+C copies the files or documents, note they won�t be �cut� yet
+        Command+C copies the files or documents, note they won¿t be ¿cut¿ yet
         Command+Option+V pastes the documents into the new location, cutting it from the prior locating and moving it to the new location
 
 6. Terminal Commands:
@@ -323,8 +331,8 @@ CentOS
        . ~/.bash_profile
 
     c. Move word by word
-        Esc+F to move to the beginning of the next word - Mapped it to � + f
-        Esc+B to move to the beginning of the current word �  + b
+        Esc+F to move to the beginning of the next word - Mapped it to ¿ + f
+        Esc+B to move to the beginning of the current word ¿  + b
 
     d. Mounted Drive will be under /Volumes
 
@@ -386,6 +394,12 @@ CentOS
 
     g. iterm vs mac terminal
         https://apple.stackexchange.com/questions/25143/what-is-the-difference-between-iterm2-and-terminal
+
+    h. Use option and arrow keys to jump words
+        https://medium.com/@jonnyhaynes/jump-forwards-backwards-and-delete-a-word-in-iterm2-on-mac-os-43821511f0a
+
+    i. Delete words
+        https://apple.stackexchange.com/questions/154292/iterm-going-one-word-backwards-and-forwards
 
 12. Find my Macbook's details:
     In terminal: system_profiler | more
@@ -449,7 +463,7 @@ CentOS
 	b. git status - should now be happy but will list untracked files.
 	c. git add README.md
        git add --all : This adds all the files
-	d. git commit -m “Add Readme.txt”
+	d. git commit -m âAdd Readme.txtâ
 	e. git remote add origin https://github.com/SyncMr/MyShortcuts.git
 	e. git remote add origin https://github.com/SyncMr/Algos.git
 
@@ -483,6 +497,8 @@ CentOS
        So pull the contents to your local repo and then update git
        git pull origin master
        git push
+
+       git pull --rebase origin mainline
 
     n. Getting GIT repositories on a new system:
         Use "git clone" to get the new repositories
@@ -583,7 +599,7 @@ CentOS
 
     ab. Accidently Pushing .classpath to GIT
         If you accidently pushed these before to the central repository, you may use the following git commands to remove them from the central repository.
-        Or if you already used �git add� or �git commit� to add or commit them to your local repository.
+        Or if you already used git add or git commit to add or commit them to your local repository.
 
             git rm -r target/
             git rm -r --cached target/
@@ -667,6 +683,22 @@ CentOS
     aq. How to undo 'git add' before commit? git remove a file
         git reset <file>
 
+    ar. How to remove a file that is mistakenly added to git commit
+        git reset --soft HEAD^ 
+        or
+
+        git reset --soft HEAD~1
+        Then reset the unwanted files in order to leave them out from the commit:
+
+        git reset HEAD path/to/unwanted_file
+        Now commit again, you can even re-use the same commit message:
+
+        git commit -c ORIG_HEAD  
+
+    as. Before doing git rebase
+        git branch -u origin/mainline
+        git pull --rebase
+
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
 
@@ -675,7 +707,7 @@ CentOS
     Ctrl + L    Clears the Screen, similar to the clear command
     Ctrl + U    Clears the line before the cursor position. If you are at the end of the line, clears the entire line.
     Ctrl + H    Same as backspace
-    Ctrl + R    Let’s you search through previously used commands; Cycle through bash's history
+    Ctrl + R    Letâs you search through previously used commands; Cycle through bash's history
     Ctrl + C    Kill whatever you are running
     Ctrl + D    Exit the current shell
     Ctrl + Z    Puts whatever you are running into a suspended background process. fg restores it.
@@ -845,10 +877,10 @@ CentOS
         - Open Keyboard Preference and Change Modifier Keys
             - Change Caps Lock Key to Control
         - Add the following text replacement words
-            (cmd) ⌘
-            (shift) ⇧
-            (opt) ⌥
-            (ctrl) ⌃
+            (cmd) â
+            (shift) â§
+            (opt) â¥
+            (ctrl) â
 
     e. Display date along with Clock
         - Open Data and time preferences -> Clock -> Show data & Use a 24 hour format
@@ -1159,13 +1191,13 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 42. Close file without Saving changes
 http://apple.stackexchange.com/questions/154046/how-to-quit-without-saving-using-just-the-keyboard
 
-    Try either command �+Delete for Apple or standard applications,
-    And command �+D if that does not work
+    Try either command ¿+Delete for Apple or standard applications,
+    And command ¿+D if that does not work
 
 43. Allow ssh on mac
 http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 
-    Go to �System Preferences�. Under �Internet & Networking� there is a �Sharing� icon. Run that. In the list that appears, check the �Remote Login� option.
+    Go to ¿System Preferences¿. Under ¿Internet & Networking¿ there is a ¿Sharing¿ icon. Run that. In the list that appears, check the ¿Remote Login¿ option.
 
 44. Find size of a directory including all its sub directories
     du -sh .
@@ -1196,6 +1228,7 @@ http://stackoverflow.com/questions/6313929/how-do-i-open-port-22-in-os-x-10-6-7
 
 52. How to use scp
     scp kompuser@10.1.155.49:~/log/observer_Migration_NFS_data.log ~/Komprise/Team/Important_Observer_Logs/
+    scp -r src/Lab126VestaNesoFloorplanSdk/* pthirumu@10.219.178.95:~/workplace/MacDeviceVestaFloorplanService/src/Lab126VestaNesoFloorplanSdk/
 
 52b. Scp hidden files
     scp -rp src/. user@server:dest/
@@ -1239,8 +1272,11 @@ http://stackoverflow.com/questions/41126943/wireshark-you-dont-have-permission-t
     ls -ld .?* 
      -l     use a long listing format
      -d, --directory
-            list  directory entries instead of contents, and do not derefer�ence symbolic links
+            list  directory entries instead of contents, and do not derefer¿ence symbolic links
      .?* will only state hidden files 
+
+61b. List all files that match an extension recursively
+    find . -name "*java" -type f -exec ls -l {} \;
 
 62. Find all users and groups
     dscacheutil -q user | grep -A 3 -B 2 -e uid:\ 5'[0-9][0-9]'
@@ -1350,6 +1386,15 @@ https://stackoverflow.com/questions/11289551/argument-list-too-long-error-for-rm
 
 70. How to discover number of *logical* cores on Mac OS X?
     sysctl -n hw.ncpu
+
+71. IntelliJ Shortcuts
+    Opt + Enter - Auto imports
+    SHIFT TWO times 
+        and you can search anything, both class and method in the project
+    cmd + F12  
+        will show all members of the current class in a popup windown and let you pick up one. It works exactly like the ctrl + o shortcut in eclipse
+    Command + Option + O
+        Opens up the Symbol lookup that you can jump to most of the methods/functions in your currently opened document
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -1468,3 +1513,12 @@ https://unix.stackexchange.com/questions/379654/how-to-map-chmod-access-permissi
     getent passwd
     getent group
 
+13. Terminator Shortcuts
+    Split terminals horizontally: Ctrl + Shift + O
+    Split terminals vertically: Ctrl + Shift + E
+
+---------------------------------------------------------------------------------------
+Linux RH:
+1. Find linux version and distribution
+    uname -a
+    cat /proc/version
