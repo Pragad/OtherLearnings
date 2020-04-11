@@ -103,6 +103,8 @@ How to use Macbook Pro
 69. Eclipse shortcuts
 70. How to discover number of *logical* cores on Mac OS X?
 71. IntelliJ Shortcuts
+72. Sort lines
+73. Find duplicate lines in a file and count how many time each line was duplicated?
 ----------------------------------------
 Windows Shortcuts:
 1. Software to be installed
@@ -699,6 +701,16 @@ Linux / RH:
         git branch -u origin/mainline
         git pull --rebase
 
+    at. Working with work and personal git accounts
+        git add files
+        git commit -m "message"
+        git remote set-url origin https://github.com/Pragad/LearnJava.git
+        git push
+
+    au. 
+        git branch --set-upstream-to=origin/mainline DurableGeometry
+        git rebase -i
+
 17. BASH Shortcuts
     source ~/.bash_profile - How to reload .bash_profile from the command line
 
@@ -750,6 +762,10 @@ Linux / RH:
     Sort in VIM:
         :sort
         :%sort u // deletes duplicate lines
+    
+    Sort numbers
+        : https://webdevetc.com/blog/sort-text-in-vim
+        :sort n
 
     Reload a file that has been modified
     http://unix.stackexchange.com/questions/149209/refresh-changed-content-of-file-opened-in-vim
@@ -1142,6 +1158,9 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     Grep either or
         grep -e "foo" -e "bar" ./*/a.log* > grepLog.txt
 
+    Multiple words
+        find . | xargs zgrep "SearchString" | grep -e foo -e bar -e hello
+
 35. Basic FIND
     find . -iname "*binary*"
 
@@ -1395,6 +1414,16 @@ https://stackoverflow.com/questions/11289551/argument-list-too-long-error-for-rm
         will show all members of the current class in a popup windown and let you pick up one. It works exactly like the ctrl + o shortcut in eclipse
     Command + Option + O
         Opens up the Symbol lookup that you can jump to most of the methods/functions in your currently opened document
+
+72. Sort lines
+https://vim.fandom.com/wiki/Sort_lines
+
+    Sort in Reverse
+    :%sort!
+
+73. Find duplicate lines in a file and count how many time each line was duplicated?
+    sort <file> | uniq -c
+
 -------------------------------------------------------------------------------------------------
 Windows Shortcuts:
 1. Software to be installed
