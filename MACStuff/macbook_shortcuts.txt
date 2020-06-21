@@ -1127,6 +1127,10 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     https://stackoverflow.com/questions/6426363/how-can-i-have-grep-not-print-out-no-such-file-or-directory-errors
     -s or --no-messages Supress No Such File or directory
         grep -irs
+    https://askubuntu.com/questions/271242/grep-list-each-file-once
+    -l List each file only once
+        This just lists the file name and not the search matches
+        grep -irsl
 
     CAT and GREP
     cat foo.log | grep -v too \ long | grep -v network
