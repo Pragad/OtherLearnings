@@ -1124,6 +1124,9 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
     -w search full word
     -F searches literal string
         grep -F ".foo(" .
+    https://stackoverflow.com/questions/6426363/how-can-i-have-grep-not-print-out-no-such-file-or-directory-errors
+    -s or --no-messages Supress No Such File or directory
+        grep -irs
 
     CAT and GREP
     cat foo.log | grep -v too \ long | grep -v network
@@ -1139,6 +1142,10 @@ http://stackoverflow.com/questions/104322/how-do-you-install-boost-on-macos
 
     Grep exclude words:
         grep -v "unwanted_word" file    
+
+    Grep exclude directories:
+        grep -r "SearchString" . --exclude-dir={env,build,release-info}
+        grep -r "SearchString" . --exclude-dir={/*env,build/*,/*release-info/*}
 
     Grep whole words:
         grep -wir "split" . --include \*.h --include \*.cpp . | more
