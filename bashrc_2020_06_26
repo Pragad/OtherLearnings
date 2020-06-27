@@ -1,13 +1,14 @@
 export EDITOR=vim
 
+#===========================================================
 # Change the way BASH prompt gets displayed
 export PS1="\W \$"
 #PS1='\[\e[s\e[1;1H\e[42m\e[K\h \u ipaddress\e[0m\e[u\]\w \$ '
-
+#===========================================================
 # Make Bash behave like VIM
 # https://superuser.com/questions/485139/how-can-i-make-my-shell-behave-like-vim
 set -o vi
-
+#===========================================================
 # Add colors to bash
 # http://stackoverflow.com/questions/1550288/os-x-terminal-colors
 # https://unix.stackexchange.com/questions/148/colorizing-your-terminal-and-shell-environment
@@ -20,8 +21,7 @@ export LSCOLORS=GxFxCxDxBxegedabagaced
 alias grep='grep --color=auto'
 
 #export LS_COLORS='no=00:fi=00:di=00;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arj=01;31:*.taz=01;31:*.lzh=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.fli=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.ogg=01;35:*.mp3=01;35:*.wav=01;35:*.xml=00;31:'
-
-
+#===========================================================
 # Enable bash programmable completion features in interactive shells
 if [ -f /usr/share/bash-completion/bash_completion ]; then
 	. /usr/share/bash-completion/bash_completion
@@ -33,14 +33,11 @@ export HISTSIZE=100000
 export HISTFILESIZE=500000
 export HISTCONTROL="ignoreboth:erasedups"
 export HISTIGNORE="pwd:ls:ll:cd ..:cd:exit"
-
+#===========================================================
 #Auto cd to a directory
 # https://apple.stackexchange.com/questions/55412/cd-to-a-directory-by-typing-its-name
 shopt -s autocd
-
-alias vi=vim
-alias cls=clear
-
+#===========================================================
 # Change directory aliases
 alias home='cd ~'
 alias cd..='cd ..'
@@ -50,7 +47,6 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias bd='cd -'
 
-#cd shortcuts
 alias cdmine='cd ~/Pragad/ItsMine'
 alias cdam='cd ~/Pragad/Amazon'
 alias cdte='cd ~/Pragad/Amazon/Team'
@@ -66,10 +62,7 @@ alias cdcp='cd ~/Pragad/Code/LearnCpp'
 alias cdpy='cd ~/Pragad/Code/LearnPython'
 alias cdja='cd ~/Pragad/Code/LearnJava'
 alias cdot='cd ~/Pragad/Code/OtherLearnings'
-
-## Colorize the ls output ##
-## alias ls='ls --color=auto'
-
+#===========================================================
 ## Use a long listing format ##
 alias ll="ls -lhA"
 alias lh="ls -lhAt"
@@ -77,21 +70,21 @@ alias lh="ls -lhAt"
 ## Show hidden files ##
 alias l.='ls -d .* --color=auto'
 alias ld="ls -l | egrep '^d'" # directories only
-
+#===========================================================
 ## Build C++ file using gcc##
 alias mkcp='g++ -std=c++11'
 
-
+#===========================================================
 # Search running processes
 alias p="ps aux | grep "
 alias topcpu="/bin/ps -eo pcpu,pid,user,args | sort -k 1 -r | head -10"
-
+#==========================================================
 # Search files in the current folder
 alias f="find . | grep "
-
+#==========================================================
 # Count all files (recursively) in the current folder
 alias countfiles="for t in files links directories; do echo \`find . -type \${t:0:1} | wc -l\` \$t; done 2> /dev/null"
-
+#==========================================================
 # Alias's for safe and forced reboots
 alias rebootsafe='sudo shutdown -r now'
 alias rebootforce='sudo shutdown -r -n now'
@@ -99,7 +92,7 @@ alias rebootforce='sudo shutdown -r -n now'
 
 # Get IP address for Mac
 alias getip='ipconfig getifaddr en0'
-
+#==========================================================
 #Git shortcuts
 alias gstat='echo "git status" ; git status'
 alias gdiff='echo "git diff" ; git diff'
@@ -111,33 +104,45 @@ alias gam='echo "git commit --amend" ; git commit --amend'
 alias gbase='echo "git pull --rebase" ; git pull --rebase'
 alias glog='echo "git log oneline" ; git log --pretty=oneline'
 alias gpush='echo "git push origin master" ; git push origin master'
-
+#==========================================================
 #Applications
 alias ch="open -a 'Google Chrome'"
 alias ff="open -a 'Firefox'"
-alias coverage="open build/brazil-documentation/coverage/"
-
-
-#alias vim='mvim -v'
-#alias python='python3'
-
+#==========================================================
 ## VIM aliases
 alias vimac='vim ~/Pragad/Code/OtherLearnings/MACStuff/macbook_shortcuts.txt'
 alias vihire='vim ~/Pragad/Amazon/NewHire/NewHireNotes.txt'
 alias viam='vim ~/Pragad/Amazon/Team/AmazonLearnings.txt'
 alias vimrc='vim ~/.vimrc'
 alias bashrc='vim ~/.bashrc'
-
+#==========================================================
 alias srcbashrc='echo "source ~/.bashrc" ; source ~/.bashrc'
 alias srcvimrc='source ~/.vimrc'
+#===========================================================
+# Customized Grep
+# https://stackoverflow.com/questions/62606770/save-common-grep-patterns-in-bashrc
 
+function mygrep {
+    s=${1:-"main"}
+    e=${2:-"env,build,release-info"}
+    i=${3:-\*.java}
+    grep -irs "$s" . "--exclude-dir={$e}" --include "$i"
+}
+
+#===========================================================
+# Centos
+#alias cdpr='cd /home/kompuser/pragadtmp'
+#alias cdjni='cd /home/kompuser/pragadtmp/Code/kpsrc/kjni'
+#==========================================================
 # How do I make Bash' tab complete automatically cycle through options OSX
+
 #bind '"\t":menu-complete'
 
 # From Work
 #export P4DIFF=vimdiff
 
 # The Fuck
+
 # https://github.com/nvbn/thefuck#experimental-instant-mode
 #eval $(thefuck --alias)
 # You can use whatever you want as an alias, like for Mondays:
