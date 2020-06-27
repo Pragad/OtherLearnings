@@ -1,0 +1,110 @@
+export EDITOR=vim
+
+# Change the way BASH prompt gets displayed
+export PS1="\W \$"
+
+# Make Bash behave like VIM
+# https://superuser.com/questions/485139/how-can-i-make-my-shell-behave-like-vim
+set -o vi
+
+# Add colors to bash
+# http://stackoverflow.com/questions/1550288/os-x-terminal-colors
+export CLICOLOR=1
+export LSCOLORS=GxFxCxDxBxegedabagaced
+
+alias vi=vim
+alias cls=clear
+
+## a quick way to get out of current directory ##
+alias ..='cd ..'
+
+## get rid of command not found ##
+alias cd..='cd ..'
+
+## Colorize the grep command output for ease of use (good for log files)##
+alias grep='grep --color=auto'
+
+## Colorize the ls output ##
+## alias ls='ls --color=auto'
+
+## Use a long listing format ##
+alias ll="ls -lhA"
+alias lh="ls -lhAt"
+
+## Show hidden files ##
+alias l.='ls -d .* --color=auto'
+
+## Build C++ file using gcc##
+alias mkcp='g++ -std=c++11'
+
+# Get IP address for Mac
+alias getip='ipconfig getifaddr en0'
+
+#cd shortcuts
+alias cdmine='cd ~/Pragad/ItsMine'
+alias cdal='cd ~/Pragad/Code/Algos'
+alias cdcp='cd ~/Pragad/Code/LearnCpp'
+alias cdpy='cd ~/Pragad/Code/LearnPython'
+alias cdja='cd ~/Pragad/Code/LearnJava'
+alias cdot='cd ~/Pragad/Code/OtherLearnings'
+
+#Git shortcuts
+alias gstat='echo "git status" ; git status'
+alias gdiff='echo "git diff" ; git diff'
+alias gadd='echo "git add" ; git add '
+alias gbr='echo "git branch" ; git branch'
+alias gch='echo "git checkout" ; git checkout '
+alias gco='echo "git commit " ; git commit '
+alias gam='echo "git commit --amend" ; git commit --amend'
+alias gbase='echo "git pull --rebase" ; git pull --rebase'
+alias glog='echo "git log oneline" ; git log --pretty=oneline'
+
+#Applications
+alias ch="open -a 'Google Chrome'"
+alias ff="open -a 'Firefox'"
+alias coverage="open build/brazil-documentation/coverage/"
+
+
+#alias vim='mvim -v'
+#alias python='python3'
+
+## VIM aliases
+alias vimac='vim ~/Pragad/Code/OtherLearnings/MACStuff/macbook_shortcuts.txt'
+alias vihire='vim ~/Pragad/Amazon/NewHire/NewHireNotes.txt'
+alias viam='vim ~/Pragad/Amazon/Team/AmazonLearnings.txt'
+alias vimrc='vim ~/.vimrc'
+alias bashrc='vim ~/.bashrc'
+
+alias srcbashrc='echo "source ~/.bashrc" ; source ~/.bashrc'
+alias srcvimrc='source ~/.vimrc'
+
+# How do I make Bash' tab complete automatically cycle through options OSX
+#bind '"\t":menu-complete'
+
+# From Work
+#export P4DIFF=vimdiff
+
+#export LS_COLORS='di=01;33'
+##export LS_COLORS='di=01;37'
+
+#shopt -s histappend
+#export PROMPT_COMMAND='history -a; history -n'
+
+#Auto cd to a directory
+# https://apple.stackexchange.com/questions/55412/cd-to-a-directory-by-typing-its-name
+shopt -s autocd
+
+export HISTSIZE=100000
+export HISTFILESIZE=500000
+export HISTCONTROL="ignoreboth:erasedups"
+export HISTIGNORE="pwd:ls:ll:cd ..:cd:exit"
+
+#alias ls='ls --color=yes'
+
+# The Fuck
+# https://github.com/nvbn/thefuck#experimental-instant-mode
+#eval $(thefuck --alias)
+# You can use whatever you want as an alias, like for Mondays:
+#eval $(thefuck --alias FUCK)
+export PATH=$BRAZIL_CLI_BIN:$PATH
+
